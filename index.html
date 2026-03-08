@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sigma ELMS - Interface Computer College</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/landing-page.css">
+</head>
+
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="image/icc-logo.jpg" alt="ICC Logo" class="school-logo">
+            <div>
+                <h1>Interface Computer College</h1>
+                <span>Senior High School ELMS</span>
+            </div>
+        </div>
+        <button class="login-btn-nav" id="openLoginBtn">Login</button>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="hero-text">
+            <h2>Start Your Learning Journey</h2>
+            <p>Access your classes, modules, and track your performance with our integrated grading analytics.</p>
+        </div>
+
+        <!-- Custom Image Slider & Static Apply Button -->
+        <div class="slider-section">
+            <div class="slider-wrapper">
+                <!-- Navigation Dots (Moved inside) -->
+                <div class="dots-container" id="dotsContainer"></div>
+
+                <!-- Invisible Click Zones for Left/Right Navigation -->
+                <div class="nav-overlay left" onclick="prevSlide()"></div>
+                <div class="nav-overlay right" onclick="nextSlide()"></div>
+
+                <div class="slider-container" id="slider">
+                    <!-- Slides -->
+                    <div class="slide" onclick="handleSlideClick(this)">
+                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&q=80"
+                            alt="Students in campus">
+                    </div>
+                    <div class="slide" onclick="handleSlideClick(this)">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80"
+                            alt="Classroom">
+                    </div>
+                    <div class="slide" onclick="handleSlideClick(this)">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800&q=80"
+                            alt="Group Study">
+                    </div>
+                    <div class="slide" onclick="handleSlideClick(this)">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80"
+                            alt="Computer Lab">
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATIC Apply Now Button below the slider images -->
+            <div class="apply-btn-wrapper">
+                <button class="apply-now-btn" onclick="alert('Proceed to Application Form...')">Apply Now</button>
+            </div>
+        </div>
+
+        <!-- Added Info Section for Scrolling & Content Verification -->
+        <div class="info-section">
+            <div class="info-card">
+                <h3>Academic Excellence</h3>
+                <p>Equipping Senior High School students with the skills needed for college and future careers through
+                    modern digital tools.</p>
+            </div>
+            <div class="info-card">
+                <h3>Track Your Progress</h3>
+                <p>Our Grade Monitoring Analytics provide real-time updates on student performance, helping identify
+                    areas for improvement instantly.</p>
+            </div>
+            <div class="info-card">
+                <h3>Interactive Modules</h3>
+                <p>Engage with course materials seamlessly. Teachers can upload comprehensive modules and quizzes
+                    accessible anywhere, anytime.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <h4>Interface Computer College</h4>
+        <p>SIGMA: AI-Integrated E-Learning Management System with Student Information and Grade Monitoring Analytics for
+            Senior High School.</p>
+        <p style="margin-top: 1rem; color: #9ca3af; font-size: 0.8rem;">&copy; 2026 ICC. All rights reserved.</p>
+    </footer>
+
+    <!-- Simplified Educational Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="login-box">
+            <button class="close-btn" id="closeLoginBtn">&times;</button>
+            <div class="login-header">
+                <img src="image/icc-logo.jpg" alt="ICC Logo" class="modal-logo">
+                <p>Enter your school credentials to access your dashboard.</p>
+            </div>
+            <form id="landingLoginForm"
+                onsubmit="event.preventDefault(); alert('Logging in... (Database connection coming soon!)');">
+                <div class="form-group">
+                    <label for="schoolId">School ID</label>
+                    <input type="text" id="schoolId" required placeholder="e.g. 2024-0001">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-submit">Sign In</button>
+            </form>
+            <div class="login-footer">
+                <a href="javascript:void(0)" onclick="showLoginHelp()">Forgot ID or Password?</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Guide Modal (Slides from Top) -->
+    <div class="modal-overlay help-overlay" id="helpModal">
+        <div class="help-box">
+            <button class="close-btn" id="closeHelpBtn">&times;</button>
+            <div class="help-header">
+                <span class="help-icon">🎓</span>
+                <h2>Login Assistance</h2>
+            </div>
+            <div class="help-content">
+                <div class="help-item">
+                    <h4>1. Forgot School ID?</h4>
+                    <p>Please check your School ID card or Registration Form. If you still can't find it, visit the Registrar's Office or contact your Class Adviser.</p>
+                </div>
+                <div class="help-item">
+                    <h4>2. Forgot Password?</h4>
+                    <p>The default password is usually your Birthday (YYYYMMDD). For manual resets, please visit the School ICT Department.</p>
+                </div>
+                <div class="help-item">
+                    <h4>3. Need more help?</h4>
+                    <p>Visit the ICT Lab for a manual credential reset or system access support.</p>
+                </div>
+            </div>
+            <button class="btn-submit" onclick="closeHelp()">Got it!</button>
+        </div>
+    </div>
+
+    <!-- Scripts for Slider and Modal -->
+    <script src="js/landing-page.js"></script>
+</body>
+
+</html>
