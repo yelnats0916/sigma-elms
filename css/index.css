@@ -85,26 +85,20 @@ main {
     z-index: 2;
 }
 
-/* SLIDE IMAGE — uses contain to show full image without cropping */
+/* SLIDE IMAGE — uses cover to stretch and fill the entire slide area */
 .slide img,
 .slide-img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     position: relative;
     z-index: 2;
 }
 
-/* SLIDE BLUR BACKGROUND — fills gaps from aspect ratio mismatch */
+/* SLIDE BLUR BACKGROUND — hidden (no longer needed with cover mode) */
 .slide-blur-bg {
-    position: absolute;
-    inset: -10px;
-    z-index: 1;
-    background-size: cover;
-    background-position: center;
-    filter: blur(18px) brightness(0.55);
-    transform: scale(1.05);
+    display: none;
 }
 
 
@@ -266,32 +260,10 @@ main {
 
 
 /* =============================================================
-   RESPONSIVE: Phone Portrait (max-width: 767px)
-   Fixed footer pinned to bottom of viewport
-   ============================================================= */
-@media (max-width: 767px) and (orientation: portrait) {
-
-    /* FOOTER FIXED — stays at bottom of screen on phones */
-    footer {
-        position: fixed !important;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-    }
-}
-
-
-/* =============================================================
    RESPONSIVE: Surface Duo (540x720 portrait)
-   Prevents fixed footer from overlapping login form text
+   Smaller logo and tighter spacing for medium-sized phones
    ============================================================= */
 @media (min-width: 500px) and (max-width: 767px) and (orientation: portrait) {
-
-    /* PHONE CONTENT — extra bottom padding to clear fixed footer */
-    .md\:hidden {
-        padding-bottom: 80px !important;
-    }
 
     /* PHONE LOGO — smaller logo for medium phones */
     .md\:hidden img {
@@ -390,6 +362,74 @@ main {
     }
 }
 
+
+/* =============================================================
+   RESPONSIVE: iPad Pro Portrait (1024px – 1180px, portrait)
+   Overrides desktop 60/40 split — shows tablet-style centered login
+   ============================================================= */
+@media (min-width: 1024px) and (max-width: 1180px) and (orientation: portrait) {
+
+    /* BACKGROUND — matches footer color to eliminate white gap at bottom */
+    html, body {
+        background-color: var(--primary-dark) !important;
+    }
+
+    /* SLIDER HIDDEN — hide the image slider in portrait */
+    .hidden.md\:flex > div:first-child {
+        display: none !important;
+    }
+
+    /* LOGIN PANEL — fullscreen centered (same as tablet portrait) */
+    .login-panel {
+        width: 100% !important;
+        height: calc(100vh - 82px) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 4rem !important;
+        border-left: none !important;
+        overflow: hidden !important;
+    }
+
+    /* LOGIN FORM — constrained width for readability */
+    .login-panel form {
+        max-width: 480px !important;
+        width: 100% !important;
+    }
+
+    /* LOGIN LOGO — larger logo for tablet portrait */
+    .login-panel img {
+        width: 14rem !important;
+        height: 14rem !important;
+        margin-bottom: 3rem !important;
+    }
+
+    /* LOGIN LABEL — slightly larger text */
+    .login-panel label {
+        font-size: 1.1rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    /* LOGIN INPUT — larger touch targets */
+    .login-panel input {
+        font-size: 1.1rem !important;
+        padding: 1rem 1.25rem !important;
+    }
+
+    /* LOGIN BUTTON — tablet-sized button */
+    .login-panel .sign-in-btn {
+        font-size: 1.1rem !important;
+        padding: 1rem !important;
+        margin-top: 1rem !important;
+    }
+
+    /* FORGOT LINK — larger tap target */
+    .login-panel .forgot-link {
+        font-size: 1rem !important;
+        margin-top: 1.5rem !important;
+    }
+}
 
 /* =============================================================
    RESPONSIVE: Landscape General (max-height: 500px)
@@ -532,6 +572,24 @@ main {
     /* LOGIN PANEL PADDING — tighter padding for tablet */
     .login-panel {
         padding: 2rem 1.5rem !important;
+    }
+
+    /* SLIDE IMAGE — cinematic mode: show full image without cropping */
+    .slide img,
+    .slide-img {
+        object-fit: contain !important;
+    }
+
+    /* SLIDE BLUR BACKGROUND — re-enable blurred fill behind image */
+    .slide-blur-bg {
+        display: block !important;
+        position: absolute;
+        inset: -10px;
+        z-index: 1;
+        background-size: cover;
+        background-position: center;
+        filter: blur(18px) brightness(0.55);
+        transform: scale(1.05);
     }
 }
 
