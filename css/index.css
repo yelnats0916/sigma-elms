@@ -2,671 +2,281 @@
     --primary: #15803d; 
     --primary-dark: #166534;
     --primary-light: #dcfce7;
-    --text-main: #1f2937;
-    --text-muted: #6b7280;
-    --bg-color: #f9fafb;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Inter', sans-serif;
 }
 
 body, html {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    overflow-x: hidden; /* Prevent horizontal scrolling/whitespace on mobile */
-    display: flex;
-    flex-direction: column;
+    font-family: 'Inter', sans-serif;
     min-height: 100vh;
 }
 
-/* Prevent scrolling when modal is open */
+/* Lock page to viewport — no scroll on desktop */
+html, body {
+    height: 100%;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+/* Allow scroll on mobile */
+@media (max-width: 1023px) {
+    html, body {
+        overflow: auto;
+        max-height: none;
+        height: auto;
+    }
+}
+
+/* Scroll Lock when Modal is open */
 body.modal-open, html.modal-open {
     overflow: hidden !important;
     height: 100% !important;
 }
 
-/* Top Navigation Bar */
-.navbar {
-    background-color: #ffffff;
-    border-bottom: 2px solid var(--primary);
-    padding: 1rem 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    z-index: 50;
-    position: sticky;
-    top: 0;
+
+
+/* --- Desktop Slider (isolated, never touched by mobile slider JS) --- */
+#sliderDesktop {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    overflow: hidden;
 }
 
-.navbar-brand {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.ds-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    z-index: 1;
 }
 
-.navbar-brand .school-logo {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
+.ds-slide.ds-active {
+    opacity: 1;
+    z-index: 2;
 }
 
-.navbar-brand h1 {
-    font-size: 1.5rem;
-    color: var(--primary-dark);
-    font-weight: 700;
+/* --- Green Login Panel --- */
+.login-panel {
+    background: linear-gradient(160deg, #14532d 0%, #15803d 60%, #166534 100%);
 }
 
-.navbar-brand span {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    font-weight: 500;
+.login-panel input {
+    background: #ffffff;
+    border-color: rgba(255,255,255,0.4);
+    color: #1a1a1a;
 }
 
-.login-btn-nav {
-    padding: 0.6rem 1.5rem;
-    background-color: white;
-    color: var(--primary);
-    border: 2px solid var(--primary);
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
+.login-panel input::placeholder {
+    color: #9ca3af;
 }
 
-.login-btn-nav:hover {
-    background-color: var(--primary);
+.login-panel input:focus {
+    background: #ffffff;
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.25);
+}
+
+.login-panel label {
+    color: rgba(255,255,255,0.85);
+}
+
+.login-panel .sign-in-btn {
+    background: #FFD000;
+    color: #ffffff;
+}
+
+.login-panel .sign-in-btn:hover {
+    background: #FFE44D;
+    color: #ffffff;
+}
+
+.login-panel .forgot-link {
+    color: rgba(255,255,255,0.75);
+}
+
+.login-panel .forgot-link:hover {
     color: white;
 }
 
-/* Main Content Section */
-main {
-    flex: 1;
-    padding: 3rem 0 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* --- Green Footer --- */
+.green-footer {
+    background: linear-gradient(135deg, #14532d 0%, #15803d 100%);
+    color: rgba(255,255,255,0.8);
 }
 
-.hero-text {
-    text-align: center;
-    margin-bottom: 2rem;
-    max-width: 800px;
-    padding: 0 20px;
+.green-footer h4 {
+    color: white;
 }
 
-.hero-text h2 {
-    font-size: 2.5rem;
-    color: var(--text-main);
-    margin-bottom: 1rem;
+.green-footer p {
+    color: rgba(255,255,255,0.65);
 }
 
-.hero-text p {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    line-height: 1.6;
+/* --- Slider dots --- */
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-/* Custom Image Slider Layout */
-.slider-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 5rem;
+.dot.active {
+    background-color: #15803d;
+    transform: scale(1.3);
+    box-shadow: 0 0 8px rgba(21,128,61,0.4);
 }
 
-.slider-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 1400px;
-    height: 450px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* --- Apply Now button (educational: clean, no pulse) --- */
+.apply-now-btn {
+    /* optional: animation: pulse 3s infinite; + @keyframes pulse for livelier CTA */
 }
 
+/* --- Desktop: full-width fade slider (overrides carousel) --- */
+@media (min-width: 1024px) {
+    footer{
+        display:none;
+    }
+    #slider .slide {
+        left: 0 !important;
+        width: 100% !important;
+        transform: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        filter: none !important;
+        opacity: 0 !important;
+        transition: opacity 0.7s ease !important;
+        z-index: 1 !important;
+    }
+    #slider .slide.active {
+        opacity: 1 !important;
+        z-index: 2 !important;
+    }
+    #slider .slide.prev,
+    #slider .slide.next,
+    #slider .slide.hidden-left,
+    #slider .slide.hidden-right {
+        opacity: 0 !important;
+        z-index: 1 !important;
+    }
+}
+
+/* --- Slider: 3D carousel only (layout is Tailwind in HTML) --- */
 .slider-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    perspective: 1000px;
-    transform-style: preserve-3d;
+    perspective: none;
+    transform-style: flat;
 }
 
 .slide {
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 50%;
-    width: 55%; 
+    width: 76%;
     height: 100%;
-    border-radius: 12px;
+    border-radius: 0px;
     transition: transform 0.6s ease, filter 0.6s ease, opacity 0.6s ease;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     overflow: hidden;
-    background-color: #ddd; 
-    margin-top: -225px; /* Half of height to center vertically */
+    margin-top: 0;
 }
 
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* Active Center Slide */
 .slide.active {
-    transform: translate(-50%, 0) scale(1) translateZ(0);
+    transform: translateX(-50%);
     z-index: 10;
     filter: grayscale(0);
-    cursor: default; /* Not clickable */
 }
-
-/* Left/Right Clickable Targets */
-.nav-overlay {
-    position: absolute;
-    top: 0;
-    width: 15%; 
-    height: 100%;
-    z-index: 20;
-    cursor: pointer;
-}
-.nav-overlay.left { left: 0; }
-.nav-overlay.right { right: 0; }
 
 .slide.prev {
-    transform: translate(-105%, 0) scale(0.85) translateZ(-100px);
+    transform: translateX(-112%);
     z-index: 5;
-    filter: grayscale(100%) brightness(0.6);
+    filter: grayscale(40%) brightness(0.7);
     cursor: pointer;
 }
 
 .slide.next {
-    transform: translate(5%, 0) scale(0.85) translateZ(-100px);
+    transform: translateX(12%);
     z-index: 5;
-    filter: grayscale(100%) brightness(0.6);
+    filter: grayscale(40%) brightness(0.7);
     cursor: pointer;
 }
 
 .slide.hidden-left {
-    transform: translate(-150%, 0) scale(0.7) translateZ(-200px);
+    transform: translateX(-160%);
     opacity: 0;
     z-index: 1;
     pointer-events: none;
 }
 
 .slide.hidden-right {
-    transform: translate(50%, 0) scale(0.7) translateZ(-200px);
+    transform: translateX(60%);
     opacity: 0;
     z-index: 1;
     pointer-events: none;
 }
 
-/* The Apply Now Button - Static under the slider */
-.apply-btn-wrapper {
-    margin-top: -25px; /* Pull it up slightly over the bottom of the slider */
-    z-index: 30; /* Keep it above the slides */
-    position: relative;
-}
-
-.dots-container {
-    position: absolute;
-    bottom: 40px; /* Inside the slider near the bottom */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 12px;
-    z-index: 40;
-}
-
-.dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #cbd5e1; /* Smooth grey */
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.dot.active {
-    background-color: var(--primary);
-    transform: scale(1.3);
-    box-shadow: 0 0 8px rgba(21, 128, 61, 0.3);
-}
-
-.dot:hover {
-    background-color: #94a3b8;
-}
-
-.apply-now-btn {
-    background-color: var(--primary);
-    color: white;
-    padding: 1rem 3rem;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 10px 20px rgba(21, 128, 61, 0.4);
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.apply-now-btn:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(21, 128, 61, 0.5);
-}
-
-/* Additional Content / Information Sections */
-.info-section {
-    width: 100%;
-    padding: 4rem 5%;
-    background-color: #ffffff;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-}
-
-.info-card {
-    flex: 1;
-    min-width: 300px;
-    max-width: 400px;
-    padding: 2.5rem;
-    background-color: var(--bg-color);
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.info-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-}
-
-.info-card h3 {
-    color: var(--primary-dark);
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-}
-
-.info-card p {
-    color: var(--text-muted);
-    line-height: 1.6;
-}
-
-/* Footer */
-footer {
-    background-color: #111827;
-    color: #d1d5db;
-    text-align: center;
-    padding: 3rem 5%;
-    margin-top: auto;
-}
-
-footer h4 {
-    color: #ffffff;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-}
-
-footer p {
-    font-size: 0.9rem;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.5;
-}
-
-/* Login Modal (Overlay) */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.modal-overlay.show {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.login-box {
-    background-color: white;
-    padding: 3rem 2.5rem;
-    width: 100%;
-    max-width: 420px;
-    border-radius: 12px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
-    position: relative;
-}
-
-.modal-overlay.show .login-box {
-    transform: translateY(0);
-}
-
-.close-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 1.5rem;
-    color: var(--text-muted);
-    cursor: pointer;
-    background: none;
-    border: none;
-}
-
-.close-btn:hover {
-    color: var(--text-main);
-}
-
-/* Help Modal Specific Styles */
-.help-overlay.show .help-box {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.help-box {
-    background-color: white;
-    padding: 2.5rem;
-    width: 90%;
-    max-width: 450px;
-    border-radius: 16px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    position: relative;
-    transform: translateY(-100px); /* Start from top */
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    border-top: 5px solid var(--primary);
-}
-
-.help-header {
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
-
-.help-icon {
-    font-size: 2.5rem;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.help-content {
-    text-align: left;
-    margin-bottom: 2rem;
-}
-
-.help-item {
-    margin-bottom: 1.2rem;
-}
-
-.help-item h4 {
-    color: var(--primary-dark);
-    font-size: 1rem;
-    margin-bottom: 0.3rem;
-}
-
-.help-item p {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    line-height: 1.4;
-}
-
-.login-box h2 {
-    font-size: 1.6rem;
-    color: var(--primary-dark);
-    margin-bottom: 0.5rem;
-    text-align: center;
-}
-
-.login-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.login-header p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
-
-.modal-logo {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    margin-bottom: 1rem;
-}
-
-.login-footer {
-    margin-top: 1.5rem;
-    text-align: center;
-}
-
-.login-footer a {
-    color: var(--primary);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-.login-footer a:hover {
-    text-decoration: underline;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-main);
-    margin-bottom: 0.5rem;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-.form-group input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary-light);
-}
-
-.btn-submit {
-    width: 100%;
-    padding: 0.9rem;
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.05rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: 1rem;
-}
-
-.btn-submit:hover {
-    background-color: var(--primary-dark);
-}
-
-/* Responsive Design */
-/* Tablet Landscape */
-@media (max-width: 1024px) {
-    .slide {
-        width: 70%; /* Make slide wider on landscape tablet */
-    }
-    .apply-now-btn {
-        padding: 0.9rem 2.5rem;
-        font-size: 1.1rem;
-    }
-}
-
-/* Tablet Portrait / Large Mobile */
+/* Tablet */
 @media (max-width: 820px) {
-    .hero-text h2 {
-        font-size: 2rem;
-    }
-    
     .slider-wrapper {
-        height: 380px; /* Adjust slider height */
+        height: 420px;
+        overflow: hidden;
     }
-    
-    .slide {
-        width: 85%; /* Expand center slide */
-        margin-top: -190px; 
-    }
-    
-    /* Shift the active center slide slightly left */
-    .slide.active {
-        transform: translate(-55%, 0) scale(1) translateZ(0);
-    }
-
-    /* Make the next slide peek out 1/8 to the right to imply swipeability */
-    .slide.next {
-        transform: translate(35%, 0) scale(0.9) translateZ(-50px);
-        opacity: 0.9;
-        filter: grayscale(0) brightness(0.6);
-    }
-
-    /* Hide the previous slide out of view */
-    .slide.prev {
-        transform: translate(-100%, 0) scale(0.8) translateZ(-100px);
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    /* Disable overlay targets in favor of swipe */
     .nav-overlay {
         display: none;
     }
-
-    /* Pull the Apply Now button definitively below the slider container */
-    .apply-btn-wrapper {
-        margin-top: 40px; 
-        margin-bottom: 20px;
+    .slide {
+        width: 100%;
+        margin-top: 0;
+        top: 0;
+        border-radius: 0;
     }
-    
-    /* Elevate the layout and structure for tablet screens */
-    .info-section {
-        padding: 3rem 2rem;
-        flex-direction: column; /* Stack cards vertically for tablet reading */
-        align-items: center;
-        gap: 2.5rem;
+    .slide.active {
+        transform: translateX(-50%);
+        filter: grayscale(0);
     }
-    
-    .info-card {
-        min-width: 100%; 
-        padding: 2.5rem 1.5rem;
-        border-radius: 16px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Softer drop shadow for tablet elements */
+    .slide.next {
+        transform: translateX(100%);
+        opacity: 0;
+        pointer-events: none;
     }
-    
-    .navbar-brand h1 {
-        font-size: 1.2rem;
+    .slide.prev {
+        transform: translateX(-150%);
+        opacity: 0;
+        pointer-events: none;
     }
 }
 
-/* Phone View (Small Screens) */
-@media (max-width: 480px) {
-    main {
-        display: flex;
-        flex-direction: column;
+/* Mobile: vertical stack */
+@media (max-width:1023px){
+    #mainNav{
+        justify-content:space-between;
+    }
+    .green-footer{
+        border-top:1px solid rgba(255,255,255,0.2);
+        }
+
+    .slider-wrapper{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        margin:0 auto;
+        width:95%;
+        max-width:900px;
     }
 
-    .hero-text {
-        order: 2; /* Move description text below the images/button */
-        margin-top: 2rem;
-        font-size: 0.9rem;
+    .slider-container{
+        width:100%;
+        margin:auto;
     }
-
-    .hero-text h2 {
-        font-size: 1.8rem;
-    }
-
-    .slider-section {
-        display: flex;
-        flex-direction: column;
-        order: 1; /* Move pictures and button to the very top */
-    }
-
-    .apply-btn-wrapper {
-        order: -1; /* Move button to the top of the images */
-        margin-top: 0;
-        margin-bottom: 2rem;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .apply-now-btn {
-        width: 90%; /* Make button wide on phone */
-        padding: 1rem;
-    }
-
-    /* Make Login Box smaller on phone */
-    .login-box, .help-box {
-        padding: 2rem 1.5rem;
-        max-width: 350px;
-        width: 92%;
-    }
-
-    .login-box h2 {
-        font-size: 1.4rem;
-    }
-
-    .modal-logo {
-        width: 60px;
-        height: 60px;
-    }
-
-    .slider-wrapper {
-        height: auto;
-        max-width: 100%;
-        overflow: visible;
-    }
-
-    .slider-container {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        perspective: none;
-        transform-style: flat;
-        gap: 15px;
-        padding: 0 5%;
-    }
-
     .slide {
-        position: relative; /* Stacking vertically */
+        position: relative;
         width: 100%;
         height: 220px;
         margin-top: 0 !important;
@@ -675,19 +285,5 @@ footer p {
         transform: none !important;
         opacity: 1 !important;
         filter: none !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        display: block !important; /* No hiding/sliding logic */
-    }
-
-    .nav-overlay {
-        display: none !important;
-    }
-
-    .dots-container {
-        display: none;
-    }
-
-    .info-section {
-        order: 3;
     }
 }
