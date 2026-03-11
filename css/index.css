@@ -1,289 +1,598 @@
+/* =============================================================
+   SIGMA ELMS — Login Page Stylesheet
+   Interface Computer College | Senior High School ELMS
+   ============================================================= */
+
+
+/* ===== VARIABLES: ICC Brand Colors ===== */
 :root {
-    --primary: #15803d; 
+    --primary: #15803d;
     --primary-dark: #166534;
     --primary-light: #dcfce7;
+    --icc-yellow: #FFD000;
 }
 
+
+/* ===== RESET: Universal Box-Sizing & Base Styles ===== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body, html {
+body,
+html {
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
-}
-
-/* Lock page to viewport — no scroll on desktop */
-html, body {
-    height: 100%;
-    max-height: 100vh;
-    overflow: hidden;
-}
-
-/* Allow scroll on mobile */
-@media (max-width: 1023px) {
-    html, body {
-        overflow: auto;
-        max-height: none;
-        height: auto;
-    }
-}
-
-/* Scroll Lock when Modal is open */
-body.modal-open, html.modal-open {
-    overflow: hidden !important;
-    height: 100% !important;
-}
-
-
-
-/* --- Desktop Slider (isolated, never touched by mobile slider JS) --- */
-#sliderDesktop {
-    position: relative;
     width: 100%;
-    flex: 1;
-    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto !important;
 }
 
-.ds-slide {
+
+/* ===== LAYOUT: Modal Lock & Page Structure ===== */
+
+/* MODAL LOCK — prevents background scroll when any modal is open */
+body.modal-open,
+html.modal-open {
+    overflow: hidden !important;
+}
+
+/* NAVIGATION — fixed top bar height */
+nav {
+    border-bottom: 2px solid #15803d;
+    height: 82px;
+}
+
+/* MAIN — ensures page scroll is never blocked by main container */
+main {
+    overflow: visible !important;
+}
+
+
+/* ===== COMPONENTS: Image Slider ===== */
+
+/* SLIDER CONTAINER — fills parent, no offset */
+#slider,
+#mobileSlider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    left: 0 !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    overflow: hidden !important;
+}
+
+/* SLIDE — absolute-positioned for crossfade transitions */
+.slide {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.8s ease-in-out;
     z-index: 1;
+    overflow: hidden;
 }
 
-.ds-slide.ds-active {
+/* SLIDE ACTIVE — visible slide on top */
+.slide.active {
     opacity: 1;
     z-index: 2;
 }
 
-/* --- Green Login Panel --- */
-.login-panel {
-    background: linear-gradient(160deg, #14532d 0%, #15803d 60%, #166534 100%);
+/* SLIDE IMAGE — uses contain to show full image without cropping */
+.slide img,
+.slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    position: relative;
+    z-index: 2;
 }
 
-.login-panel input {
-    background: #ffffff;
-    border-color: rgba(255,255,255,0.4);
-    color: #1a1a1a;
+/* SLIDE BLUR BACKGROUND — fills gaps from aspect ratio mismatch */
+.slide-blur-bg {
+    position: absolute;
+    inset: -10px;
+    z-index: 1;
+    background-size: cover;
+    background-position: center;
+    filter: blur(18px) brightness(0.55);
+    transform: scale(1.05);
 }
 
-.login-panel input::placeholder {
-    color: #9ca3af;
+
+/* ===== COMPONENTS: Slider Dots ===== */
+
+/* DOTS CONTAINER — hidden by default, shown on hover */
+#dotsContainer,
+#mobileDotsContainer {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
-.login-panel input:focus {
-    background: #ffffff;
-    border-color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(255,255,255,0.25);
+/* DOTS HOVER — reveals dots when hovering over slider area */
+[class*="relative"]:hover>#dotsContainer,
+.slider-wrapper:hover>#mobileDotsContainer {
+    opacity: 1;
+    pointer-events: auto;
 }
 
-.login-panel label {
-    color: rgba(255,255,255,0.85);
-}
-
-.login-panel .sign-in-btn {
-    background: #FFD000;
-    color: #ffffff;
-}
-
-.login-panel .sign-in-btn:hover {
-    background: #FFE44D;
-    color: #ffffff;
-}
-
-.login-panel .forgot-link {
-    color: rgba(255,255,255,0.75);
-}
-
-.login-panel .forgot-link:hover {
-    color: white;
-}
-
-/* --- Green Footer --- */
-.green-footer {
-    background: linear-gradient(135deg, #14532d 0%, #15803d 100%);
-    color: rgba(255,255,255,0.8);
-}
-
-.green-footer h4 {
-    color: white;
-}
-
-.green-footer p {
-    color: rgba(255,255,255,0.65);
-}
-
-/* --- Slider dots --- */
+/* DOT — individual navigation indicator */
 .dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #cbd5e1;
+    background-color: rgba(255, 255, 255, 0.3);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
+/* DOT ACTIVE — highlighted current slide indicator */
 .dot.active {
-    background-color: #15803d;
-    transform: scale(1.3);
-    box-shadow: 0 0 8px rgba(21,128,61,0.4);
+    background-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
+    box-shadow: none;
 }
 
-/* --- Apply Now button (educational: clean, no pulse) --- */
-.apply-now-btn {
-    /* optional: animation: pulse 3s infinite; + @keyframes pulse for livelier CTA */
+
+/* ===== COMPONENTS: Social Icons (Footer) ===== */
+
+/* SOCIAL ICON — glassmorphic circular button */
+.social-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
-/* --- Desktop: full-width fade slider (overrides carousel) --- */
+/* SOCIAL ICON HOVER — lift effect */
+.social-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+}
+
+
+/* ===== COMPONENTS: Modals & Z-Index Layers ===== */
+
+/* MODAL OVERLAYS — stacking order for popup modals */
+#loginModal,
+#helpModal,
+#sigmaAiPopup {
+    z-index: 200 !important;
+}
+
+/* SIGMA FAB — floating action button (bottom-right corner) */
+#sigmaFab {
+    z-index: 1050 !important;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+    box-shadow: none !important;
+}
+
+/* SIGMA FAB SHADOW — drop shadow on the chat icon */
+#sigmaFab svg {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+
+/* =============================================================
+   DESKTOP STYLES (min-width: 1024px)
+   Login panel with white background on the right side
+   ============================================================= */
 @media (min-width: 1024px) {
-    footer{
-        display:none;
+
+    /* MAIN — auto height for desktop layout */
+    main {
+        height: auto;
+        overflow: visible;
     }
-    #slider .slide {
-        left: 0 !important;
-        width: 100% !important;
-        transform: none !important;
-        border-radius: 0 !important;
+
+    /* LOGIN PANEL — white card filling right 40% of viewport */
+    .login-panel {
+        background: white;
+        color: #1a1a1a;
+        height: calc(100vh - 82px);
+        overflow: hidden !important;
+        z-index: 10;
+        position: relative;
+    }
+
+    /* LOGIN INPUT — dark border on light background */
+    .login-panel input {
+        background: #fdfdfd !important;
+        border: 2px solid #9ca3af !important;
+        color: #1a1a1a !important;
+        transition: all 0.2s ease !important;
         box-shadow: none !important;
-        filter: none !important;
-        opacity: 0 !important;
-        transition: opacity 0.7s ease !important;
-        z-index: 1 !important;
+        outline: none !important;
     }
-    #slider .slide.active {
-        opacity: 1 !important;
-        z-index: 2 !important;
+
+    /* LOGIN INPUT HOVER/FOCUS — solid black border on interaction */
+    .login-panel input:hover,
+    .login-panel input:focus {
+        border-color: #000000 !important;
+        background: #ffffff !important;
+        outline: none !important;
+        box-shadow: none !important;
     }
-    #slider .slide.prev,
-    #slider .slide.next,
-    #slider .slide.hidden-left,
-    #slider .slide.hidden-right {
-        opacity: 0 !important;
-        z-index: 1 !important;
+
+    /* LOGIN LABEL — dark gray text */
+    .login-panel label {
+        color: #374151;
+    }
+
+    /* LOGIN BUTTON — ICC yellow with white text */
+    .login-panel .sign-in-btn {
+        background: var(--icc-yellow);
+        color: #ffffff !important;
+        box-shadow: none !important;
+        transform: none !important;
+        transition: all 0.2s ease;
+    }
+
+    /* LOGIN BUTTON HOVER — lighter yellow on hover */
+    .login-panel .sign-in-btn:hover {
+        background: #fde047;
+        color: #ffffff !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+    /* FORGOT LINK HOVER — underline on hover */
+    .login-panel .forgot-link:hover {
+        color: #000000 !important;
+        text-decoration: underline;
     }
 }
 
-/* --- Slider: 3D carousel only (layout is Tailwind in HTML) --- */
-.slider-container {
-    perspective: none;
-    transform-style: flat;
-}
 
-.slide {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 76%;
-    height: 100%;
-    border-radius: 0px;
-    transition: transform 0.6s ease, filter 0.6s ease, opacity 0.6s ease;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    overflow: hidden;
-    margin-top: 0;
-}
+/* =============================================================
+   RESPONSIVE: Phone Portrait (max-width: 767px)
+   Fixed footer pinned to bottom of viewport
+   ============================================================= */
+@media (max-width: 767px) and (orientation: portrait) {
 
-.slide.active {
-    transform: translateX(-50%);
-    z-index: 10;
-    filter: grayscale(0);
-}
-
-.slide.prev {
-    transform: translateX(-112%);
-    z-index: 5;
-    filter: grayscale(40%) brightness(0.7);
-    cursor: pointer;
-}
-
-.slide.next {
-    transform: translateX(12%);
-    z-index: 5;
-    filter: grayscale(40%) brightness(0.7);
-    cursor: pointer;
-}
-
-.slide.hidden-left {
-    transform: translateX(-160%);
-    opacity: 0;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.slide.hidden-right {
-    transform: translateX(60%);
-    opacity: 0;
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* Tablet */
-@media (max-width: 820px) {
-    .slider-wrapper {
-        height: 420px;
-        overflow: hidden;
+    /* FOOTER FIXED — stays at bottom of screen on phones */
+    footer {
+        position: fixed !important;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
     }
+}
+
+
+/* =============================================================
+   RESPONSIVE: Surface Duo (540x720 portrait)
+   Prevents fixed footer from overlapping login form text
+   ============================================================= */
+@media (min-width: 500px) and (max-width: 767px) and (orientation: portrait) {
+
+    /* PHONE CONTENT — extra bottom padding to clear fixed footer */
+    .md\:hidden {
+        padding-bottom: 80px !important;
+    }
+
+    /* PHONE LOGO — smaller logo for medium phones */
+    .md\:hidden img {
+        width: 6rem !important;
+        height: 6rem !important;
+    }
+
+    /* PHONE LOGO SPACING — tighter margin below logo */
+    .md\:hidden .mb-6 {
+        margin-bottom: 1rem !important;
+    }
+}
+
+
+/* =============================================================
+   RESPONSIVE: Tablet & Mobile Shared (max-width: 1023px)
+   Styles shared across all non-desktop viewports
+   ============================================================= */
+@media (max-width: 1023px) {
+
+    /* NAV OVERLAY — hidden on mobile/tablet */
     .nav-overlay {
         display: none;
     }
-    .slide {
+
+    /* SLIDER WRAPPER — 16:9 aspect ratio for mobile slider */
+    .slider-wrapper {
+        position: relative;
         width: 100%;
-        margin-top: 0;
-        top: 0;
-        border-radius: 0;
-    }
-    .slide.active {
-        transform: translateX(-50%);
-        filter: grayscale(0);
-    }
-    .slide.next {
-        transform: translateX(100%);
-        opacity: 0;
-        pointer-events: none;
-    }
-    .slide.prev {
-        transform: translateX(-150%);
-        opacity: 0;
-        pointer-events: none;
+        aspect-ratio: 16/9;
+        overflow: hidden;
     }
 }
 
-/* Mobile: vertical stack */
-@media (max-width:1023px){
-    #mainNav{
-        justify-content:space-between;
-    }
-    .green-footer{
-        border-top:1px solid rgba(255,255,255,0.2);
-        }
 
-    .slider-wrapper{
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        margin:0 auto;
-        width:95%;
-        max-width:900px;
+/* =============================================================
+   RESPONSIVE: Tablet Portrait (768px – 1023px)
+   Full-width centered login form with enlarged elements
+   ============================================================= */
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    /* BACKGROUND — matches footer color to eliminate white gap at bottom */
+    html, body {
+        background-color: var(--primary-dark) !important;
     }
 
-    .slider-container{
-        width:100%;
-        margin:auto;
+    /* LOGIN PANEL — fullscreen centered layout */
+    .login-panel {
+        width: 100% !important;
+        height: calc(100vh - 82px) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 4rem !important;
+        border-left: none !important;
+        overflow: hidden !important;
     }
-    .slide {
-        position: relative;
-        width: 100%;
-        height: 220px;
+
+    /* LOGIN FORM — constrained width for readability */
+    .login-panel form {
+        max-width: 480px !important;
+        width: 100% !important;
+    }
+
+    /* LOGIN LOGO — larger logo for tablet */
+    .login-panel img {
+        width: 14rem !important;
+        height: 14rem !important;
+        margin-bottom: 3rem !important;
+    }
+
+    /* LOGIN LABEL — slightly larger text for tablet */
+    .login-panel label {
+        font-size: 1.1rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    /* LOGIN INPUT — larger touch targets for tablet */
+    .login-panel input {
+        font-size: 1.1rem !important;
+        padding: 1rem 1.25rem !important;
+    }
+
+    /* LOGIN BUTTON — tablet-sized button */
+    .login-panel .sign-in-btn {
+        font-size: 1.1rem !important;
+        padding: 1rem !important;
+        margin-top: 1rem !important;
+    }
+
+    /* FORGOT LINK — larger tap target for tablet */
+    .login-panel .forgot-link {
+        font-size: 1rem !important;
+        margin-top: 1.5rem !important;
+    }
+}
+
+
+/* =============================================================
+   RESPONSIVE: Landscape General (max-height: 500px)
+   Compact layout for all devices in landscape with short viewport
+   ============================================================= */
+@media (max-height: 500px) and (orientation: landscape) {
+
+    /* NAV COMPACT — shorter navbar for landscape */
+    nav {
+        height: 56px !important;
+        padding-top: 0.25rem !important;
+        padding-bottom: 0.25rem !important;
+    }
+
+    /* NAV LOGO COMPACT — smaller logo in landscape nav */
+    nav img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    /* NAV TITLE COMPACT — smaller title text */
+    nav h1 {
+        font-size: 1rem !important;
+    }
+
+    /* MAIN OFFSET — adjusted for shorter navbar */
+    main {
+        margin-top: 56px !important;
+    }
+
+    /* FOOTER COMPACT — minimal padding, icons only */
+    footer {
+        padding: 0.5rem 1rem !important;
+    }
+
+    /* FOOTER COPYRIGHT HIDDEN — hide text to save space */
+    footer .text-center {
+        display: none !important;
+    }
+
+    /* FOOTER ICON SPACING — remove bottom margin from icon row */
+    footer .mb-2 {
+        margin-bottom: 0 !important;
+    }
+
+    /* LOGIN LOGO VISIBLE — keep logo but make it small */
+    .login-panel > .flex.flex-col.items-center {
+        display: flex !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* LOGIN LOGO SIZE — tiny logo for landscape */
+    .login-panel > .flex.flex-col.items-center img {
+        width: 3rem !important;
+        height: 3rem !important;
+    }
+
+    /* LOGIN PANEL COMPACT — centered with minimal padding */
+    .login-panel {
+        padding: 1rem 2rem !important;
+        height: auto !important;
+        min-height: calc(100vh - 56px) !important;
+        overflow: visible !important;
+        justify-content: center !important;
+    }
+}
+
+
+/* =============================================================
+   RESPONSIVE: Phone Landscape (max-width: 767px, short viewport)
+   Compact centered login form for phones rotated sideways
+   ============================================================= */
+@media (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
+
+    /* PHONE LOGO VISIBLE — show logo on phone landscape */
+    .md\:hidden > .flex.flex-col.items-center {
+        display: flex !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* PHONE LOGO SIZE — small logo for phone landscape */
+    .md\:hidden > .flex.flex-col.items-center img {
+        width: 3rem !important;
+        height: 3rem !important;
+    }
+
+    /* PHONE FORM CONTAINER — centered with tight padding */
+    .md\:hidden {
+        min-height: calc(100vh - 56px) !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 1rem 2rem !important;
+        padding-bottom: 1rem !important;
+    }
+
+    /* PHONE FORM WIDTH — constrained for readability */
+    .md\:hidden form {
+        max-width: 400px !important;
+        width: 100% !important;
+    }
+
+    /* PHONE FORM SPACING — tighter gaps between fields */
+    .md\:hidden form .mb-4,
+    .md\:hidden form .mb-5 {
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* PHONE INPUT COMPACT — smaller inputs for landscape */
+    .md\:hidden form input {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.875rem !important;
+    }
+
+    /* PHONE BUTTON COMPACT — smaller button for landscape */
+    .md\:hidden form button {
+        padding: 0.5rem !important;
+        font-size: 0.875rem !important;
+    }
+
+    /* PHONE FORGOT LINK — tighter top margin */
+    .md\:hidden .mt-4 {
+        margin-top: 0.5rem !important;
+    }
+}
+
+
+/* =============================================================
+   RESPONSIVE: Tablet Landscape (1024px – 1400px)
+   Slightly smaller logo and tighter padding for tablet landscape
+   ============================================================= */
+@media (min-width: 1024px) and (max-width: 1400px) and (orientation: landscape) {
+
+    /* LOGIN LOGO — medium-sized logo for tablet landscape */
+    .login-panel img {
+        width: 12rem !important;
+        height: 12rem !important;
+        margin-top: 2rem !important;
+    }
+
+    /* LOGIN PANEL PADDING — tighter padding for tablet */
+    .login-panel {
+        padding: 2rem 1.5rem !important;
+    }
+}
+
+
+/* =============================================================
+   RESPONSIVE: Nest Hub (1024px wide, ≤650px tall)
+   Compact login form for short desktop-class viewport
+   ============================================================= */
+@media (min-width: 1024px) and (max-height: 650px) and (orientation: landscape) {
+
+    /* LOGIN PANEL — compact centered layout */
+    .login-panel {
+        padding: 1rem 2rem !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+    }
+
+    /* LOGIN LOGO — small logo for short viewport */
+    .login-panel img {
+        width: 5rem !important;
+        height: 5rem !important;
         margin-top: 0 !important;
-        left: 0 !important;
-        top: 0 !important;
-        transform: none !important;
-        opacity: 1 !important;
-        filter: none !important;
+    }
+
+    /* LOGIN LOGO SPACING — tight margin below logo */
+    .login-panel .flex.flex-col.items-center.mb-8 {
+        margin-bottom: 1rem !important;
+    }
+
+    /* LOGIN LABEL — smaller text for compact form */
+    .login-panel label {
+        font-size: 0.8rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    /* LOGIN INPUT — compact inputs */
+    .login-panel input {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* LOGIN BUTTON — compact button */
+    .login-panel .sign-in-btn {
+        padding: 0.5rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* LOGIN FORM SPACING — tighter gaps between fields */
+    .login-panel form .mb-5,
+    .login-panel form .mb-6 {
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* FORGOT LINK — smaller text and tighter spacing */
+    .login-panel .forgot-link {
+        font-size: 0.8rem !important;
+        margin-top: 0.5rem !important;
+    }
+
+    /* FORGOT LINK CONTAINER — reduced top margin */
+    .login-panel .mt-6 {
+        margin-top: 0.5rem !important;
     }
 }
