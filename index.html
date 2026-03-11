@@ -4,6 +4,7 @@
 <!-- =============================================================
      HEAD: Meta, Fonts, CSS, Tailwind Config
      ============================================================= -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -53,13 +54,13 @@
     <!-- =============================================================
          MAIN: Page Content Area
          ============================================================= -->
-    <main class="flex-1 mt-[82px]">
+    <main class="flex-1 mt-[82px] flex flex-col">
 
         <!-- DESKTOP/TABLET LAYOUT: 60% slider + 40% login (desktop), 100% login (tablet) -->
-        <div class="hidden md:flex w-full m-0 p-0 overflow-hidden">
+        <div class="hidden md:flex w-full m-0 p-0">
 
             <!-- IMAGE SLIDER: Auto-rotating campus photos (desktop only, hidden on tablet) -->
-            <div class="w-[60%] relative overflow-hidden lg:h-[calc(100vh-82px)] lg:block hidden">
+            <div class="w-[60%] relative overflow-hidden lg:min-h-[calc(100vh-82px)] lg:block hidden">
                 <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex gap-3" id="dotsContainer"></div>
                 <div class="w-full h-full relative left-0 overflow-hidden" id="slider">
                     <!-- Slides injected by JS -->
@@ -68,7 +69,7 @@
 
             <!-- LOGIN PANEL: Desktop/tablet login form (right side on desktop, full width on tablet) -->
             <div
-                class="login-panel w-full lg:w-[40%] flex flex-col justify-start px-12 py-12 bg-white border-l border-t border-b border-gray-200 lg:h-[calc(100vh-82px)] overflow-hidden">
+                class="login-panel w-full lg:w-[40%] flex flex-col justify-start px-12 py-12 bg-white border-l border-t border-b border-gray-200 lg:min-h-[calc(100vh-82px)]">
 
                 <!-- LOGIN LOGO -->
                 <div class="flex flex-col items-center mb-8">
@@ -102,8 +103,9 @@
         </div>
 
         <!-- PHONE LAYOUT: Mobile-only login form (visible below 768px) -->
+
         <div class="md:hidden flex flex-col items-center justify-center bg-white px-8"
-             style="min-height: calc(100vh - 82px); padding-bottom: 60px;">
+            style="min-height: calc(100vh - 82px); padding-bottom: 0;">
 
             <!-- PHONE LOGO -->
             <div class="flex flex-col items-center mb-6">

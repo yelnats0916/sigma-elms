@@ -204,8 +204,7 @@ main {
     .login-panel {
         background: white;
         color: #1a1a1a;
-        height: calc(100vh - 82px);
-        overflow: hidden !important;
+        min-height: calc(100vh - 82px);
         z-index: 10;
         position: relative;
     }
@@ -306,21 +305,21 @@ main {
 @media (min-width: 768px) and (max-width: 1023px) {
 
     /* BACKGROUND — matches footer color to eliminate white gap at bottom */
-    html, body {
+    html,
+    body {
         background-color: var(--primary-dark) !important;
     }
 
     /* LOGIN PANEL — fullscreen centered layout */
     .login-panel {
         width: 100% !important;
-        height: calc(100vh - 82px) !important;
+        min-height: calc(100vh - 82px) !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
         padding: 4rem !important;
         border-left: none !important;
-        overflow: hidden !important;
     }
 
     /* LOGIN FORM — constrained width for readability */
@@ -370,26 +369,26 @@ main {
 @media (min-width: 1024px) and (max-width: 1180px) and (orientation: portrait) {
 
     /* BACKGROUND — matches footer color to eliminate white gap at bottom */
-    html, body {
+    html,
+    body {
         background-color: var(--primary-dark) !important;
     }
 
     /* SLIDER HIDDEN — hide the image slider in portrait */
-    .hidden.md\:flex > div:first-child {
+    .hidden.md\:flex>div:first-child {
         display: none !important;
     }
 
     /* LOGIN PANEL — fullscreen centered (same as tablet portrait) */
     .login-panel {
         width: 100% !important;
-        height: calc(100vh - 82px) !important;
+        min-height: calc(100vh - 82px) !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
         padding: 4rem !important;
         border-left: none !important;
-        overflow: hidden !important;
     }
 
     /* LOGIN FORM — constrained width for readability */
@@ -476,13 +475,13 @@ main {
     }
 
     /* LOGIN LOGO VISIBLE — keep logo but make it small */
-    .login-panel > .flex.flex-col.items-center {
+    .login-panel>.flex.flex-col.items-center {
         display: flex !important;
         margin-bottom: 0.5rem !important;
     }
 
     /* LOGIN LOGO SIZE — tiny logo for landscape */
-    .login-panel > .flex.flex-col.items-center img {
+    .login-panel>.flex.flex-col.items-center img {
         width: 3rem !important;
         height: 3rem !important;
     }
@@ -505,13 +504,13 @@ main {
 @media (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
 
     /* PHONE LOGO VISIBLE — show logo on phone landscape */
-    .md\:hidden > .flex.flex-col.items-center {
+    .md\:hidden>.flex.flex-col.items-center {
         display: flex !important;
         margin-bottom: 0.5rem !important;
     }
 
     /* PHONE LOGO SIZE — small logo for phone landscape */
-    .md\:hidden > .flex.flex-col.items-center img {
+    .md\:hidden>.flex.flex-col.items-center img {
         width: 3rem !important;
         height: 3rem !important;
     }
@@ -652,5 +651,87 @@ main {
     /* FORGOT LINK CONTAINER — reduced top margin */
     .login-panel .mt-6 {
         margin-top: 0.5rem !important;
+    }
+}
+
+
+/* =============================================================
+   FOOTER: Scroll-only footer — never fixed, always at page bottom
+   ============================================================= */
+
+/* BASE FOOTER — never fixed, always in document flow */
+footer {
+    position: relative !important;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* DESKTOP FOOTER — shown only on scroll, sits below the 100vh content */
+@media (min-width: 1024px) {
+    footer {
+        padding: 0.75rem 2rem !important;
+    }
+
+    /* Ensure main is flex-col so footer stacks below */
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* TABLET FOOTER — compact size for tablet screens */
+@media (min-width: 768px) and (max-width: 1023px) {
+    footer {
+        padding: 0.4rem 1.5rem !important;
+    }
+
+    footer .flex.items-center.gap-4.mb-2 {
+        margin-bottom: 0.15rem !important;
+        gap: 0.75rem !important;
+    }
+
+    footer .text-center {
+        font-size: 8px !important;
+        letter-spacing: 0.05em !important;
+    }
+
+    footer .fa-brands {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* PHONE FOOTER — smallest footer for mobile */
+@media (max-width: 767px) {
+    footer {
+        padding: 0.35rem 1rem !important;
+    }
+
+    footer .flex.items-center.gap-4.mb-2 {
+        margin-bottom: 0.1rem !important;
+        gap: 0.5rem !important;
+    }
+
+    footer .text-center {
+        font-size: 7px !important;
+        letter-spacing: 0.04em !important;
+    }
+
+    footer .fa-brands {
+        font-size: 0.7rem !important;
+    }
+
+    footer .text-white\/30 {
+        font-size: 8px !important;
+    }
+}
+
+/* iPad Pro portrait — compact footer */
+@media (min-width: 1024px) and (max-width: 1180px) and (orientation: portrait) {
+    footer {
+        padding: 0.4rem 1.5rem !important;
+    }
+
+    footer .text-center {
+        font-size: 8px !important;
     }
 }
