@@ -127,9 +127,10 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    /* INIT LOGIN FORMS — bind submit handlers to both desktop and mobile forms */
+    /* INIT LOGIN FORMS — bind submit handlers to desktop, mobile, and modal forms */
     handleLogin('landingLoginForm', 'schoolId');
     handleLogin('mobileLoginForm', 'mobileSchoolId');
+    handleLogin('modalLoginForm', 'modalSchoolId');
 
     /* PHONE HELP LINK — opens help modal from the phone layout forgot link */
     const helpPhoneBtn = document.getElementById('openHelpPhoneBtn');
@@ -257,9 +258,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!ui.sigma.messages) return;
         const msg = document.createElement('div');
         msg.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'}`;
-        msg.innerHTML = `<div class="max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
-            role === 'user' ? 'bg-icc text-white' : 'bg-white border border-gray-200 text-gray-800 shadow-sm'
-        }">${text}</div>`;
+        msg.innerHTML = `<div class="max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${role === 'user' ? 'bg-icc text-white' : 'bg-white border border-gray-200 text-gray-800 shadow-sm'
+            }">${text}</div>`;
         ui.sigma.messages.appendChild(msg);
         ui.sigma.messages.scrollTop = ui.sigma.messages.scrollHeight;
     }
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
             typing.remove();
             const lower = val.toLowerCase();
             const match = FAQ.find(f => f.kw.some(k => lower.includes(k))) ||
-                         (lower.includes('log') ? FAQ.find(f => f.kw.includes('login')) : null);
+                (lower.includes('log') ? FAQ.find(f => f.kw.includes('login')) : null);
             addSigmaMessage('assistant', match ? match.a : "I'm sorry, I don't have information on that yet. Please visit the ICT Department (Room 204) for direct assistance! 📍");
         }, 800);
     }
