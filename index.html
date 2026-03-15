@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- CSS: Custom Stylesheet -->
-    <link rel="stylesheet" href="css/index.css?v=4.0">
+    <link rel="stylesheet" href="css/index.css">
 
     <!-- TAILWIND: CDN + ICC Custom Color Config -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -56,11 +56,11 @@
          ============================================================= -->
     <main class="flex-1 mt-[82px] flex flex-col">
 
-        <!-- DESKTOP/TABLET LAYOUT: 60% slider + 40% login (desktop), 100% login (tablet) -->
-        <div class="hidden md:flex w-full m-0 p-0">
+        <!-- DESKTOP/TABLET LAYOUT: 65% slider + 35% login (desktop), 100% login (tablet) -->
+        <div class="hidden md:flex flex-1 w-full m-0 p-0">
 
-            <!-- IMAGE SLIDER: Auto-rotating campus photos (desktop only, hidden on tablet) -->
-            <div class="w-[60%] relative overflow-hidden lg:min-h-[calc(100vh-82px)] lg:block hidden">
+            <!-- IMAGE SLIDER: Auto-rotating campus photos (desktop only) -->
+            <div class="w-[65%] relative overflow-hidden lg:block hidden">
                 <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex gap-3" id="dotsContainer"></div>
                 <div class="w-full h-full relative left-0 overflow-hidden" id="slider">
                     <!-- Slides injected by JS -->
@@ -69,7 +69,7 @@
 
             <!-- LOGIN PANEL: Desktop/tablet login form (right side on desktop, full width on tablet) -->
             <div
-                class="login-panel w-full lg:w-[40%] flex flex-col justify-start px-12 py-12 bg-white border-l border-t border-b border-gray-200 lg:min-h-[calc(100vh-82px)]">
+                class="login-panel w-full lg:w-[35%] flex flex-col justify-start px-12 py-12 bg-white border-l border-t border-b border-gray-200">
 
                 <!-- LOGIN LOGO -->
                 <div class="flex flex-col items-center mb-8">
@@ -103,8 +103,8 @@
         </div>
 
         <!-- PHONE LAYOUT: Mobile-only login form (visible below 768px) -->
-        <div class="md:hidden flex flex-col items-center justify-center bg-white px-8"
-            style="min-height: calc(100vh - 82px); padding-bottom: 0;">
+        <div class="md:hidden flex-1 flex flex-col items-center justify-center bg-white px-8"
+            style="padding-bottom: 0;">
 
             <!-- PHONE LOGO -->
             <div class="flex flex-col items-center mb-6">
@@ -137,7 +137,7 @@
         </div>
 
         <!-- FOOTER: Social links and copyright -->
-        <footer class="bg-icc-dark text-white px-8 py-4">
+        <footer class="bg-icc-dark text-white px-8 py-4 hidden md:block portrait:block">
             <div class="max-w-7xl mx-auto flex flex-col items-center">
                 <!-- Social Icons -->
                 <div class="flex items-center gap-4 mb-2">

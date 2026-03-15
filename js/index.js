@@ -142,9 +142,9 @@ document.addEventListener('DOMContentLoaded', function () {
     /* SLIDER CONFIG — image paths and alt text for all slides */
     const SLIDER_CONFIG = [
         { src: 'image/Campus.jpg', alt: 'Campus' },
-        { src: 'image/Classroom.jpg', alt: 'Classroom' },
-        { src: 'image/Study.jpg', alt: 'Study' },
-        { src: 'image/ComputerLab.jpg', alt: 'Computer Lab' }
+        { src: 'image/ICC image3.jpg', alt: 'Classroom' },
+        { src: 'image/ICC image2.jpg', alt: 'Study' },
+        { src: 'image/ICC image.jpg', alt: 'Computer Lab' }
     ];
 
     /**
@@ -162,9 +162,8 @@ document.addEventListener('DOMContentLoaded', function () {
         `).join('');
     }
 
-    /* INJECT SLIDES — populate both desktop and mobile slider containers */
+    /* INJECT SLIDES — populate desktop slider container */
     initSliderContent('slider');
-    initSliderContent('mobileSlider');
 
     /**
      * CREATE SLIDER — initializes auto-play slider with dot navigation.
@@ -228,13 +227,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return { next, prev, jumpTo };
     }
 
-    /* INIT SLIDERS — create both desktop and mobile slider instances */
+    /* INIT SLIDER — create desktop slider instance */
     const mainSlider = createSlider('slider', 'dotsContainer');
-    const mobileSlider = createSlider('mobileSlider', 'mobileDotsContainer');
-
-    /* GLOBAL SLIDER CONTROLS — exposed for mobile arrow buttons */
-    window.nextSlide = () => mobileSlider?.next();
-    window.prevSlide = () => mobileSlider?.prev();
 
 
     /* ===== SIGMA AI: FAQ Chatbot with keyword matching ===== */
