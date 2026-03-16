@@ -3,12 +3,173 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale 1.0, user-scalable=no">
-    <title>ICC e-Learning Management System - Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Student Dashboard - ICC ELMS</title>
 
-    <link rel="student.css" href="css/student.css">
+    <!-- FONTS: Google Inter + Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- CSS: Student Stylesheet -->
+    <link rel="stylesheet" href="css/student.css">
+
+    <!-- TAILWIND: CDN + ICC Custom Color Config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        icc: '#15803d',
+                        'icc-light': '#dcfce7',
+                        'icc-dark': '#14532d',
+                        'icc-yellow': '#FFD000',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
+<body class="bg-gray-50 min-h-screen font-['Inter'] flex flex-col overflow-x-hidden">
 
-</html>"
+    <!-- =============================================================
+         HEADER: Full-width Navigation Bar
+         ============================================================= -->
+    <header id="mainNav"
+        class="fixed top-0 left-0 w-full h-[82px] bg-gray-50 z-[60] flex items-center transition-all duration-300">
+
+        <!-- Sidebar Toggle Button -->
+        <button id="sidebarToggle"
+            class="w-[82px] h-[82px] flex items-center justify-center text-black hover:bg-gray-100 transition-colors focus:outline-none z-[70]">
+            <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+
+        <!-- Brand Logo (Stays beside toggle button) -->
+        <div class="flex items-center px-2">
+            <a href="student.html" class="no-underline">
+                <img src="image/ICC logo.jpg" alt="ICC Logo" class="w-12 h-12 object-contain">
+            </a>
+        </div>
+
+        <!-- Dashboard Title (Shifted Right and Stationary) -->
+        <div class="ml-32 flex items-center">
+            <h1 id="page-title" class="text-3xl font-bold text-black tracking-tight">Dashboard</h1>
+        </div>
+
+        <!-- Right Side Header Item (Profile Dropdown) -->
+        <div class="ml-auto relative pr-[5%]">
+            <button id="profileDropdownBtn"
+                class="relative w-12 h-12 rounded-full hover:bg-icc/5 focus:outline-none group flex items-center justify-center">
+                <div
+                    class="w-full h-full rounded-full bg-icc-light flex items-center justify-center text-icc text-lg font-bold">
+                    S
+                </div>
+                <!-- Status/Chevron Badge -->
+                <div
+                    class="absolute bottom-0 right-0 w-4 h-4 bg-white rounded-full border border-gray-100 shadow-sm flex items-center justify-center">
+                    <i class="fa-solid fa-chevron-down text-[8px] text-gray-400 group-hover:text-icc"
+                        id="dropdownChevron"></i>
+                </div>
+            </button>
+
+
+
+
+            <!-- Dropdown Menu -->
+            <div id="profileDropdownMenu"
+                class="absolute right-0 mt-2 w-60 bg-white rounded-xl shadow-lg border border-gray-100 py-2 hidden z-[100]">
+
+                <!-- User Header -->
+                <div class="px-4 py-3 border-b border-gray-100 mb-2">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-icc-light flex items-center justify-center text-icc text-sm font-bold border border-icc/10 flex-shrink-0 uppercase">
+                            <span>S</span>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <span class="text-sm font-bold text-gray-800 leading-tight">Stanley Garcia</span>
+                            <span class="text-[11px] text-gray-500 mt-0.5">stanley.garcia@icc.edu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#"
+                    class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-icc/5 hover:text-icc transition-colors no-underline">
+                    <div class="w-10 flex justify-center flex-shrink-0">
+                        <i class="fa-solid fa-gear"></i>
+                    </div>
+                    <span class="text-sm font-medium">Settings</span>
+                </a>
+                <hr class="my-1 border-gray-100">
+                <a href="index.html"
+                    class="flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors no-underline font-medium">
+                    <div class="w-10 flex justify-center flex-shrink-0">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <span class="text-sm">Logout</span>
+                </a>
+            </div>
+        </div>
+
+
+    </header>
+
+
+
+
+
+    <!-- =============================================================
+         SIDEBAR: Starts below Header
+         ============================================================= -->
+    <aside id="sidebar"
+        class="sidebar-collapsed fixed left-0 top-[82px] h-[calc(100vh-82px)] bg-icc z-50 overflow-y-auto transition-all duration-300">
+        <nav class="p-0 py-4 space-y-2">
+            <a href="#" id="nav-home"
+                class="flex items-center gap-0 h-16 text-white transition-all no-underline hover:bg-white/10 rounded-lg group">
+
+
+                <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-house text-2xl"></i>
+                    <span
+                        class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">Home</span>
+                </div>
+                <span class="full-label text-lg whitespace-nowrap overflow-hidden">Home</span>
+            </a>
+            <a href="#" id="nav-courses"
+                class="flex items-center gap-0 h-16 text-white transition-all no-underline hover:bg-white/10 rounded-lg group">
+                <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-book-bookmark text-2xl"></i>
+                    <span
+                        class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">Courses</span>
+                </div>
+                <span class="full-label text-lg whitespace-nowrap overflow-hidden">My Courses</span>
+            </a>
+        </nav>
+
+    </aside>
+
+
+
+
+
+    <!-- =============================================================
+         LAYOUT WRAPPER: Main content offset
+         ============================================================= -->
+    <div id="layout-wrapper" class="flex-1 mt-[82px] ml-64 flex flex-col min-h-screen transition-all duration-300">
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 p-8">
+            <!-- Dashboard Content will be added here -->
+            <div id="dashboard-content"
+                class="w-full h-full border-2 border-dashed border-gray-200 rounded-2xl flex items-center justify-center text-gray-400 min-h-[400px]">
+                Dashboard Content Area
+            </div>
+        </main>
+    </div>
+
+    <!-- SCRIPTS: Student Page JavaScript -->
+    <script src="js/student.js"></script>
+
+</body>
+
+</html>

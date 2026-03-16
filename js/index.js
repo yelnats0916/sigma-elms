@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!idValue) return alert("Please enter your Login ID.");
 
-            const target = idValue.startsWith('T') ? 'sigma-teacher-dashboard.html' : 'sigma-student-dashboard.html';
+            const target = idValue.startsWith('T') ? 'sigma-teacher-dashboard.html' : 'student.html';
             window.location.href = target;
         };
     }
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalForm.onsubmit = (e) => {
             e.preventDefault();
             const idValue = document.getElementById('modalSchoolId')?.value.trim().toUpperCase() || '';
-            if (idValue) window.location.href = idValue.startsWith('T') ? 'sigma-teacher-dashboard.html' : 'sigma-student-dashboard.html';
+            if (idValue) window.location.href = idValue.startsWith('T') ? 'sigma-teacher-dashboard.html' : 'student.html';
         };
     }
 
