@@ -29,7 +29,7 @@ html {
     padding: 0;
     overflow-x: hidden;
     overflow-y: auto !important;
-    background-color: var(--primary-dark) !important;
+    background-color: white !important;
 }
 
 
@@ -42,7 +42,7 @@ html.modal-open {
 }
 
 /* NAVIGATION — fixed top bar height */
-nav {
+#mainNav {
     border-bottom: 2px solid #15803d;
     height: 82px;
 }
@@ -151,38 +151,20 @@ main {
     transition: all 0.3s ease;
 }
 
-/* SOCIAL ICON HOVER — lift effect */
-.social-icon:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-3px);
+/* VISITED LINK STYLING — About link in footer */
+#footerAboutLink:visited {
+    color: var(--icc-yellow) !important;
+    text-decoration: underline !important;
 }
 
-
-/* ===== COMPONENTS: Modals & Z-Index Layers ===== */
+/* =============================================================
+   COMPONENTS: Modals & Z-Index Layers
+   ============================================================= */
 
 /* MODAL OVERLAYS — stacking order for popup modals */
 #loginModal,
-#helpModal,
-#sigmaAiPopup {
+#helpModal {
     z-index: 200 !important;
-}
-
-/* SIGMA FAB — floating action button (bottom-right corner) */
-#sigmaFab {
-    z-index: 1050 !important;
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: transparent !important;
-    border: none !important;
-    cursor: pointer;
-    box-shadow: none !important;
-}
-
-/* SIGMA FAB SHADOW — drop shadow on the chat icon */
-#sigmaFab svg {
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 
@@ -267,41 +249,16 @@ main {
 
 
 /* =============================================================
-   RESPONSIVE: Surface Duo (540x720 portrait)
-   Smaller logo and tighter spacing for medium-sized phones
-   ============================================================= */
-@media (min-width: 500px) and (max-width: 767px) and (orientation: portrait) {
-
-    /* PHONE LOGO — smaller logo for medium phones */
-    .md\:hidden img {
-        width: 6rem !important;
-        height: 6rem !important;
-    }
-
-    /* PHONE LOGO SPACING — tighter margin below logo */
-    .md\:hidden .mb-6 {
-        margin-bottom: 1rem !important;
-    }
-}
-
-
-/* =============================================================
-   RESPONSIVE: Tablet & Mobile Shared (max-width: 1023px)
-   Styles shared across all non-desktop viewports
+   RESPONSIVE: Tablet & Mobile (< 1024px)
    ============================================================= */
 @media (max-width: 1023px) {
-    /* Intentionally left empty for future shared mobile rules */
-}
 
+    /* MOBILE NAV & FAQ RESET */
+    #mainNav,
+    .login-panel {
+        box-shadow: none !important;
+    }
 
-/* =============================================================
-   RESPONSIVE: Tablet Portrait + iPad Pro Portrait
-   768px–1023px and 1024px–1180px portrait — identical login layout
-   ============================================================= */
-@media (min-width: 768px) and (max-width: 1023px),
-(min-width: 1024px) and (max-width: 1180px) and (orientation: portrait) {
-
-    /* LOGIN PANEL — fullscreen centered layout */
     .login-panel {
         width: 100% !important;
         flex: 1 !important;
@@ -309,170 +266,91 @@ main {
         flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
-        padding: 4rem !important;
-        border-left: none !important;
+        padding: 4rem 2rem !important;
+        background: white !important;
+        border: none !important;
+        outline: none !important;
     }
 
-    /* LOGIN FORM — constrained width for readability */
+    /* COMPACT FORM ELEMENTS FOR SMALLER SCREENS */
     .login-panel form {
         max-width: 480px !important;
         width: 100% !important;
     }
 
-    /* LOGIN LOGO — larger logo for tablet */
+    .login-panel img {
+        width: 10rem !important;
+        height: 10rem !important;
+        margin-bottom: 2rem !important;
+    }
+}
+
+/* TABLET SPECIFIC (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
     .login-panel img {
         width: 14rem !important;
         height: 14rem !important;
-        margin-bottom: 3rem !important;
     }
 
-    /* LOGIN LABEL — slightly larger text */
-    .login-panel label {
-        font-size: 1.1rem !important;
-        margin-bottom: 0.75rem !important;
-    }
-
-    /* LOGIN INPUT — larger touch targets */
-    .login-panel input {
-        font-size: 1.1rem !important;
-        padding: 1rem 1.25rem !important;
-    }
-
-    /* LOGIN BUTTON — tablet-sized button */
+    .login-panel label,
+    .login-panel input,
     .login-panel .sign-in-btn {
         font-size: 1.1rem !important;
-        padding: 1rem !important;
-        margin-top: 1rem !important;
-    }
-
-    /* FORGOT LINK — larger tap target */
-    .login-panel .forgot-link {
-        font-size: 1rem !important;
-        margin-top: 1.5rem !important;
     }
 }
 
 /* =============================================================
-   RESPONSIVE: Landscape General (max-height: 500px)
-   Compact layout for all devices in landscape with short viewport
+   RESPONSIVE: Landscape Short Viewports (max-height: 500px)
    ============================================================= */
 @media (max-height: 500px) and (orientation: landscape) {
-
-    /* NAV COMPACT — shorter navbar for landscape */
     nav {
         height: 56px !important;
-        padding-top: 0.25rem !important;
-        padding-bottom: 0.25rem !important;
     }
 
-    /* NAV LOGO COMPACT — smaller logo in landscape nav */
     nav img {
         width: 40px !important;
         height: 40px !important;
     }
 
-    /* NAV TITLE COMPACT — smaller title text */
     nav h1 {
         font-size: 1rem !important;
     }
 
-    /* MAIN OFFSET — adjusted for shorter navbar */
     main {
         margin-top: 56px !important;
     }
 
-    /* FOOTER COMPACT — minimal padding, icons only */
     footer {
         padding: 0.5rem 1rem !important;
     }
 
-    /* FOOTER COPYRIGHT HIDDEN — hide text to save space */
     footer .text-center {
         display: none !important;
     }
 
-    /* FOOTER ICON SPACING — remove bottom margin from icon row */
-    footer .mb-2 {
-        margin-bottom: 0 !important;
-    }
-
-    /* LOGIN LOGO VISIBLE — keep logo but make it small */
-    .login-panel>.flex.flex-col.items-center {
-        display: flex !important;
-        margin-bottom: 0.5rem !important;
-    }
-
-    /* LOGIN LOGO SIZE — tiny logo for landscape */
-    .login-panel>.flex.flex-col.items-center img {
-        width: 3rem !important;
-        height: 3rem !important;
-    }
-
-    /* LOGIN PANEL COMPACT — centered with minimal padding */
     .login-panel {
         padding: 1rem 2rem !important;
         height: auto !important;
         min-height: calc(100vh - 56px) !important;
-        overflow: visible !important;
+        background: white !important;
         justify-content: center !important;
     }
-}
 
-
-/* =============================================================
-   RESPONSIVE: Phone Landscape (max-width: 767px, short viewport)
-   Compact centered login form for phones rotated sideways
-   ============================================================= */
-@media (max-width: 767px) and (max-height: 500px) and (orientation: landscape) {
-
-    /* PHONE LOGO VISIBLE — show logo on phone landscape */
-    .md\:hidden>.flex.flex-col.items-center {
-        display: flex !important;
+    .login-panel img {
+        width: 3rem !important;
+        height: 3rem !important;
         margin-bottom: 0.5rem !important;
     }
 
-    /* PHONE LOGO SIZE — small logo for phone landscape */
-    .md\:hidden>.flex.flex-col.items-center img {
-        width: 3rem !important;
-        height: 3rem !important;
-    }
-
-    /* PHONE FORM CONTAINER — centered with tight padding */
-    .md\:hidden {
-        min-height: calc(100vh - 56px) !important;
-        justify-content: center !important;
-        align-items: center !important;
-        padding: 1rem 2rem !important;
-        padding-bottom: 1rem !important;
-    }
-
-    /* PHONE FORM WIDTH — constrained for readability */
-    .md\:hidden form {
+    .login-panel form {
         max-width: 400px !important;
         width: 100% !important;
     }
 
-    /* PHONE FORM SPACING — tighter gaps between fields */
-    .md\:hidden form .mb-4,
-    .md\:hidden form .mb-5 {
-        margin-bottom: 0.5rem !important;
-    }
-
-    /* PHONE INPUT COMPACT — smaller inputs for landscape */
-    .md\:hidden form input {
-        padding: 0.5rem 0.75rem !important;
-        font-size: 0.875rem !important;
-    }
-
-    /* PHONE BUTTON COMPACT — smaller button for landscape */
-    .md\:hidden form button {
+    .login-panel input,
+    .login-panel .sign-in-btn {
         padding: 0.5rem !important;
         font-size: 0.875rem !important;
-    }
-
-    /* PHONE FORGOT LINK — tighter top margin */
-    .md\:hidden .mt-4 {
-        margin-top: 0.5rem !important;
     }
 }
 
