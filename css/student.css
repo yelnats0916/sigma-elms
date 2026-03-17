@@ -1,0 +1,115 @@
+/* Global Transitions Control */
+.no-transition * {
+    transition: none !important;
+}
+
+/* Modern Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+    /* Darker neutral grey */
+}
+
+
+
+/* Sidebar transitions */
+#sidebar {
+    transition: width 0.3s ease-in-out;
+    width: 256px;
+    /* Default expanded width */
+}
+
+
+/* Rail Mode (Collapsed) */
+#sidebar.sidebar-collapsed {
+    width: 82px;
+}
+
+/* Toggle labels based on state */
+#sidebar .rail-label {
+    display: none;
+}
+
+#sidebar.sidebar-collapsed .rail-label {
+    display: block;
+}
+
+#sidebar.sidebar-collapsed .full-label {
+    opacity: 0;
+    width: 0;
+    pointer-events: none;
+}
+
+/* Ensure links don't wrap and items stay centered */
+#sidebar a {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 !important;
+}
+
+#sidebar .full-label {
+    transition: opacity 0.2s ease-in-out;
+}
+
+
+#profileDropdownMenu .w-9.h-9 span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+
+#profileDropdownMenu.dropdown-active {
+    display: block !important;
+}
+
+
+#profileDropdownBtn.active #dropdownChevron {
+    transform: rotate(180deg);
+}
+
+
+/* Main content wrapper transitions */
+
+#layout-wrapper {
+    transition: margin-left 0.3s ease-in-out;
+}
+
+
+/* Desktop Sidebar visibility */
+@media (min-width: 1024px) {
+    #sidebar.sidebar-collapsed {
+        width: 82px;
+    }
+}
+
+/* Mobile Sidebar behavior */
+@media (max-width: 1023px) {
+    #sidebar {
+        transform: translateX(-100%);
+    }
+
+    #sidebar.sidebar-visible {
+        transform: translateX(0);
+    }
+
+    #layout-wrapper {
+        margin-left: 0 !important;
+    }
+}
