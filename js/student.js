@@ -8,17 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageTitle = document.getElementById('page-title');
     const navLinks = document.querySelectorAll('#sidebar nav a');
 
-    // --- Sidebar State Persistence ---
-    const savedState = localStorage.getItem('sidebarState');
+    // --- Sidebar Default State ---
     const isMobile = window.innerWidth < 1024;
-
-    // Default is collapsed in HTML. Only remove if user explicitly wanted it expanded.
+    
+    // Sidebar always starts collapsed (sidebar-collapsed) on refresh.
+    // The HTML has this class by default, so we just ensure it stays that way.
     if (!isMobile) {
-        if (savedState === 'expanded') {
-            sidebar.classList.remove('sidebar-collapsed');
-        } else if (savedState === null) {
-            localStorage.setItem('sidebarState', 'collapsed'); // Keep default
-        }
+        sidebar.classList.add('sidebar-collapsed');
     }
 
 
@@ -73,37 +69,114 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Manage Sidebar State on Click
             const isMobile = window.innerWidth < 1024;
+            const navText = iconSpan ? iconSpan.textContent : '';
+
             if (isMobile && sidebar) {
                 // On mobile, hide the sidebar after picking a page
                 sidebar.classList.remove('sidebar-visible');
+            } else if (!isMobile && sidebar) {
+                // On desktop, collapse the sidebar when ANY link is clicked
+                sidebar.classList.add('sidebar-collapsed');
             }
-            // On desktop, we do NOT change the sidebar-collapsed state.
-            // It stays in whatever state the user set via the grid button.
+
+
+            // Dynamic Section Switching Logic
+            const sectionMap = {
+                'nav-home': 'section-home',
+                'nav-messages': 'section-messages',
+                'nav-courses': 'section-courses',
+                'nav-assignments': 'section-assignments',
+                'nav-grades': 'section-grades',
+                'nav-schedule': 'section-schedule',
+                'nav-board': 'section-board',
+                'nav-ai': 'section-ai',
+                'nav-journal': 'section-journal'
+            };
+
+            const targetSectionId = sectionMap[link.id];
+            if (targetSectionId) {
+                // Hide all sections
+                document.querySelectorAll('.dynamic-section').forEach(s => s.classList.add('hidden'));
+                // Show selected section
+                const targetSection = document.getElementById(targetSectionId);
+                if (targetSection) {
+                    targetSection.classList.remove('hidden');
+                }
+            }
 
             // Prevent default for all nav links to avoid reload "sliding"
             e.preventDefault();
         });
     });
 
-    // --- Profile Dropdown Logic ---
-
+    // --- Dropdown Logic (Profile, Notifications, Messages, & Create) ---
     const profileBtn = document.getElementById('profileDropdownBtn');
     const profileMenu = document.getElementById('profileDropdownMenu');
+    const notifBtn = document.getElementById('notifDropdownBtn');
+    const notifMenu = document.getElementById('notifDropdownMenu');
+    const msgBtn = document.getElementById('msgDropdownBtn');
+    const msgMenu = document.getElementById('msgDropdownMenu');
+    const createBtn = document.getElementById('createDropdownBtn');
+    const createMenu = document.getElementById('createDropdownMenu');
 
-    if (profileBtn && profileMenu) {
+    if (profileBtn && profileMenu && notifBtn && notifMenu && msgBtn && msgMenu && createBtn && createMenu) {
+        
+        const closeAllDropdowns = () => {
+            [profileMenu, notifMenu, msgMenu, createMenu].forEach(m => m.classList.add('hidden'));
+            [profileBtn, notifBtn, msgBtn, createBtn].forEach(b => b.classList.remove('active'));
+        };
+
+        // Toggle Profile
         profileBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            profileMenu.classList.toggle('hidden');
-            profileMenu.classList.toggle('dropdown-active');
-            profileBtn.classList.toggle('active');
+            const isHidden = profileMenu.classList.contains('hidden');
+            closeAllDropdowns();
+            if (isHidden) {
+                profileMenu.classList.remove('hidden');
+                profileBtn.classList.add('active');
+            }
         });
 
-        // Close dropdown when clicking outside
+        // Toggle Notifications
+        notifBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isHidden = notifMenu.classList.contains('hidden');
+            closeAllDropdowns();
+            if (isHidden) {
+                notifMenu.classList.remove('hidden');
+                notifBtn.classList.add('active');
+            }
+        });
+
+        // Toggle Messages
+        msgBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isHidden = msgMenu.classList.contains('hidden');
+            closeAllDropdowns();
+            if (isHidden) {
+                msgMenu.classList.remove('hidden');
+                msgBtn.classList.add('active');
+            }
+        });
+
+        // Toggle Create
+        createBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isHidden = createMenu.classList.contains('hidden');
+            closeAllDropdowns();
+            if (isHidden) {
+                createMenu.classList.remove('hidden');
+                createBtn.classList.add('active');
+            }
+        });
+
+        // Close when clicking outside
         window.addEventListener('click', (e) => {
-            if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
-                profileMenu.classList.add('hidden');
-                profileMenu.classList.remove('dropdown-active');
-                profileBtn.classList.remove('active');
+            if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target) &&
+                !notifBtn.contains(e.target) && !notifMenu.contains(e.target) &&
+                !msgBtn.contains(e.target) && !msgMenu.contains(e.target) &&
+                !createBtn.contains(e.target) && !createMenu.contains(e.target)) {
+                closeAllDropdowns();
             }
         });
     }

@@ -12,8 +12,47 @@
     --icc-yellow: #FFD000;
 }
 
+/* Modern Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #cbd5e1;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Show scrollbar on hover */
+.hover-scrollbar:hover::-webkit-scrollbar {
+    display: block;
+}
+.hover-scrollbar:hover {
+    -ms-overflow-style: auto;
+    scrollbar-width: thin;
+}
+
+
 
 /* ===== RESET: Universal Box-Sizing & Base Styles ===== */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -149,12 +188,6 @@ main {
     justify-content: center;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
-}
-
-/* VISITED LINK STYLING — About link in footer */
-#footerAboutLink:visited {
-    color: var(--icc-yellow) !important;
-    text-decoration: underline !important;
 }
 
 /* =============================================================
