@@ -7,7 +7,8 @@
     <title>Student Dashboard - ICC ELMS</title>
 
     <!-- FONTS: Google Inter + Font Awesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- CSS: Student Stylesheet -->
@@ -31,154 +32,66 @@
     </script>
 </head>
 
-<body class="bg-gray-50 min-h-screen font-['Inter'] flex flex-col overflow-x-hidden">
+<body class="bg-gray-50 min-h-screen font-['Outfit'] flex flex-col overflow-x-hidden">
+    <!-- BRAND LOGO BLOCK -->
+    <div id="logo-block"
+        class="fixed top-0 left-0 w-[200px] h-32 bg-white z-[80] flex items-center justify-center p-2 border-r border-b border-gray-100 transition-all duration-300">
+        <!-- Dashboard Logo (Large) -->
+        <div class="logo-large w-28 h-28 bg-white flex items-center justify-center transition-all">
+            <img src="image/ICC logo.jpg" alt="ICC Logo" class="w-full h-full object-contain">
+        </div>
+        <!-- Dashboard Logo (Small - Visible in compact) -->
+        <div class="logo-small hidden w-16 h-16 bg-white items-center justify-center transition-all">
+            <img src="image/ICC logo.jpg" alt="ICC Logo" class="w-full h-full object-contain">
+        </div>
+    </div>
 
     <!-- =============================================================
          HEADER: Full-width Navigation Bar
          ============================================================= -->
-    <header id="mainNav"
-        class="fixed top-0 left-0 w-full h-[82px] bg-gray-50 z-[60] flex items-center transition-all duration-300">
-
-        <!-- Sidebar Toggle Button -->
-        <div class="w-[82px] h-[82px] flex items-center justify-center">
-            <button id="sidebarToggle"
-                class="w-12 h-12 rounded-full flex items-center justify-center text-black hover:bg-gray-100 focus:outline-none z-[70]">
-                <i class="fa-solid fa-bars text-2xl"></i>
-            </button>
-        </div>
-
-        <!-- Brand Logo (Stays beside toggle button) -->
-        <div class="flex items-center px-2">
-            <a href="student.html" class="no-underline">
-                <img src="image/ICC logo.jpg" alt="ICC Logo" class="w-[64px] h-[64px] object-contain">
-            </a>
-        </div>
-
-        <!-- Dashboard Title (Shifted Right and Stationary) -->
-        <div class="ml-32 flex items-center">
-            <h1 id="page-title" class="text-3xl font-bold text-black tracking-tight">Dashboard</h1>
+    <header id="top-nav"
+        class="fixed top-0 right-0 left-[200px] h-16 bg-white z-[60] flex items-center justify-between px-8 border-b border-gray-100 transition-all duration-300">
+        <div class="flex items-center gap-4">
         </div>
 
         <!-- SEARCH BAR: Centered in Header -->
-        <div class="absolute left-1/2 -translate-x-1/2 w-full max-w-md hidden md:block">
+        <div class="absolute left-1/2 -translate-x-1/2 w-full max-w-sm hidden md:block">
             <div class="relative group">
                 <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+                    <i class="fa-solid fa-magnifying-glass text-gray-400 text-xs text-icc"></i>
                 </span>
-
-                <input type="text" placeholder="Search"
-                    class="block w-full pl-11 pr-4 py-2.5 bg-white border border-gray-200 rounded-full text-sm placeholder-gray-400 focus:outline-none focus:border-icc-yellow shadow-sm">
+                <input type="text" placeholder="Search resources..."
+                    class="block w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-full text-xs placeholder-gray-400 focus:outline-none focus:border-icc-yellow focus:ring-4 focus:ring-icc-yellow/5 transition-all shadow-sm">
             </div>
         </div>
-
-
-
         <!-- Right Side Header Items -->
 
         <div class="ml-auto flex items-center pr-6 gap-2">
             <!-- Create Button -->
             <div class="relative">
-                <button id="createDropdownBtn"
-                    class="flex items-center gap-2 px-4 h-10 rounded-full hover:bg-gray-100 transition-none font-bold text-sm focus:outline-none focus:ring-0 group text-gray-500">
-                    <i
-                        class="fa-solid fa-plus group-[.active]:rotate-45 group-[.active]:text-icc-yellow text-gray-400"></i>
-                    <span class="group-[.active]:text-icc-yellow">Create</span>
+                <button id="notesDropdownBtn"
+                    class="w-10 h-10 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200/50 focus:outline-none group">
+                    <i class="fa-regular fa-note-sticky text-xl group-[.active]:text-icc-yellow"></i>
                 </button>
 
-                <!-- Create Dropdown -->
-                <div id="createDropdownMenu"
-                    class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-100 py-2 hidden z-[100]">
-                    <a href="#"
-                        class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-icc/5 hover:text-icc transition-colors no-underline">
-                        <i class="fa-solid fa-pen-nib w-5"></i>
-                        <span class="text-sm font-medium">New Journal Entry</span>
-                    </a>
-                    <a href="#"
-                        class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-icc/5 hover:text-icc transition-colors no-underline">
-                        <i class="fa-solid fa-newspaper w-5"></i>
-                        <span class="text-sm font-medium">New Bulletin Post</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Messages -->
-            <div class="relative">
-                <button id="msgDropdownBtn"
-                    class="relative w-12 h-12 rounded-full hover:bg-icc/5 focus:outline-none group flex items-center justify-center">
-                    <i
-                        class="fa-solid fa-message text-xl text-gray-500 group-[.active]:text-icc-yellow transition-colors"></i>
-                    <div id="msgBadge"
-                        class="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden">
+                <!-- Scratchpad Dropdown -->
+                <div id="notesPanel"
+                    class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 hidden z-[100] flex flex-col overflow-hidden">
+                    <div class="px-4 py-3 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="font-bold text-gray-800 text-sm">Scratchpad</h3>
+                        <button id="clearNotesBtn"
+                            class="text-icc text-[10px] font-bold uppercase tracking-widest hover:underline">Clear</button>
                     </div>
-                </button>
-
-                <!-- Messages Dropdown -->
-                <div id="msgDropdownMenu"
-                    class="absolute right-[-56px] mt-2 w-[440px] bg-white rounded-xl shadow-lg border border-gray-100 py-2 hidden z-[100] h-[calc(100vh-120px)] flex flex-col">
-                    <div
-                        class="px-4 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50/50 rounded-t-xl">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-gray-900 uppercase tracking-widest">Inbox</span>
-                            <span
-                                class="text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full font-bold">3</span>
-                        </div>
-                        <button
-                            class="w-8 h-8 rounded-lg hover:bg-icc/10 text-icc flex items-center justify-center transition-all"
-                            title="Compose New Message">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                    <div class="p-4 h-64">
+                        <textarea id="scratchpadInput" placeholder="Type a quick reminder..."
+                            class="w-full h-full text-xs text-gray-600 bg-transparent border-none focus:ring-0 resize-none placeholder-gray-400 font-medium"></textarea>
+                    </div>
+                    <div class="px-4 py-2 border-t border-gray-50 bg-gray-50/30 flex justify-end items-center">
+                        <button id="saveNotesBtn"
+                            class="flex items-center gap-2 px-3 py-1.5 bg-icc text-white text-[10px] font-bold rounded-lg hover:bg-icc-dark transition-all">
+                            <i class="fa-regular fa-floppy-disk"></i>
+                            <span>Save Note</span>
                         </button>
-                    </div>
-                    <div class="flex-1 overflow-y-auto custom-scrollbar">
-                        <!-- Email Style Message 1 (Unread) -->
-                        <div
-                            class="px-4 py-3 border-b border-gray-50 hover:bg-icc/5 cursor-pointer transition-colors relative group">
-                            <div
-                                class="absolute left-2 top-1/2 -translate-y-1/2 w-1 h-8 bg-icc rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                            </div>
-                            <div class="flex justify-between items-start mb-1">
-                                <span class="text-xs font-bold text-gray-900">Dr. Aris (Coordinator)</span>
-                                <span class="text-[10px] text-icc font-bold">10:45 AM</span>
-                            </div>
-                            <h4 class="text-xs font-bold text-gray-800 truncate mb-0.5">Subject: Capstone Project
-                                Proposal Feedback</h4>
-                            <p class="text-[11px] text-gray-500 line-clamp-1">Following up on our meeting, I've reviewed
-                                your initial draft and have some suggestions...</p>
-                            <div class="flex items-center gap-2 mt-1">
-                                <i class="fa-solid fa-paperclip text-[10px] text-gray-400"></i>
-                                <span class="text-[9px] text-gray-400 font-medium">project_guide.pdf</span>
-                            </div>
-                        </div>
-
-                        <!-- Email Style Message 2 -->
-                        <div
-                            class="px-4 py-3 border-b border-gray-50 hover:bg-icc/5 cursor-pointer transition-colors relative group">
-                            <div class="flex justify-between items-start mb-1">
-                                <span class="text-xs font-medium text-gray-600">Registrar's Office</span>
-                                <span class="text-[10px] text-gray-400">Yesterday</span>
-                            </div>
-                            <h4 class="text-xs font-medium text-gray-700 truncate mb-0.5">Official: Enrollment
-                                Verification Received</h4>
-                            <p class="text-[11px] text-gray-400 line-clamp-1">Your request for enrollment verification
-                                for the second semester has been processed...</p>
-                        </div>
-
-                        <!-- Email Style Message 3 -->
-                        <div
-                            class="px-4 py-3 border-b border-gray-50 hover:bg-icc/5 cursor-pointer transition-colors relative group font-bold">
-                            <div class="flex justify-between items-start mb-1">
-                                <span class="text-xs font-bold text-gray-900">Prof. Maria Clara</span>
-                                <span class="text-[10px] text-icc">Mar 15</span>
-                            </div>
-                            <h4 class="text-xs font-bold text-gray-800 truncate mb-0.5">RESCHED: Advanced Calculus
-                                Consultation</h4>
-                            <p class="text-[11px] text-gray-600 line-clamp-1">Please note that our consultation session
-                                scheduled for Monday will be moved to...</p>
-                        </div>
-                    </div>
-                    <div class="px-4 py-2 border-t border-gray-50 bg-gray-50/30 text-center">
-                        <button
-                            class="text-[10px] font-bold text-gray-400 hover:text-icc uppercase tracking-widest">View
-                            All Mail</button>
                     </div>
                 </div>
             </div>
@@ -186,29 +99,24 @@
             <!-- Notifications (Academic Cap) -->
             <div class="relative">
                 <button id="notifDropdownBtn"
-                    class="relative w-12 h-12 rounded-full hover:bg-icc/5 focus:outline-none group flex items-center justify-center">
-                    <i
-                        class="fa-solid fa-bell text-xl text-gray-500 group-[.active]:text-icc-yellow transition-colors"></i>
-
-                    <!-- Notification Badge (hidden by default) -->
+                    class="relative w-10 h-10 rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center">
+                    <i class="fa-regular fa-bell text-xl text-gray-600 group-[.active]:text-icc-yellow"></i>
+                    <!-- Notification Badge -->
                     <div id="notifBadge"
-                        class="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden">
+                        class="absolute top-2 right-2 w-2 h-2 bg-icc-yellow rounded-full border-2 border-white hidden">
                     </div>
                 </button>
 
                 <!-- Notifications Dropdown -->
                 <div id="notifDropdownMenu"
-                    class="absolute right-[-56px] mt-2 w-[440px] bg-white rounded-xl shadow-lg border border-gray-100 py-2 hidden z-[100] h-[calc(100vh-120px)] flex flex-col">
-                    <!-- Notif Header -->
-                    <div class="px-4 py-3 border-b border-gray-100 mb-1">
+                    class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 hidden z-[100] h-[calc(100vh-120px)] flex flex-col overflow-hidden">
+                    <div class="px-4 py-3 border-b border-gray-50 bg-gray-50/50">
                         <span class="text-sm font-bold text-gray-900 uppercase tracking-widest">Notifications</span>
                     </div>
-
                     <div class="flex-1 overflow-y-auto">
-                        <!-- Empty State Example -->
                         <div class="px-6 py-12 text-center text-gray-400">
-                            <i class="fa-solid fa-bell-slash text-4xl mb-3 block opacity-20"></i>
-                            <p class="text-sm">No new academic alerts</p>
+                            <i class="fa-regular fa-bell-slash text-3xl mb-3 block opacity-20"></i>
+                            <p class="text-xs">No new academic alerts</p>
                         </div>
                     </div>
                 </div>
@@ -220,15 +128,12 @@
             <div class="relative">
 
                 <button id="profileDropdownBtn"
-                    class="relative w-12 h-12 rounded-full hover:bg-icc/5 focus:outline-none group flex items-center justify-center">
-                    <div
-                        class="w-full h-full rounded-full bg-icc-light flex items-center justify-center text-icc text-lg font-bold">
-                        S
-                    </div>
+                    class="relative w-10 h-10 rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center text-icc text-lg font-bold bg-icc-light">
+                    S
                     <!-- Status/Chevron Badge -->
                     <div
-                        class="absolute bottom-0 right-0 w-4 h-4 bg-white rounded-full border border-gray-100 shadow-sm flex items-center justify-center">
-                        <i class="fa-solid fa-chevron-down text-[8px] text-gray-400 group-hover:text-icc"
+                        class="absolute bottom-[-2px] right-[-2px] w-4 h-4 bg-white rounded-full border border-gray-100 shadow-sm flex items-center justify-center">
+                        <i class="fa-solid fa-chevron-down text-[8px] text-gray-400 group-hover:text-icc-yellow"
                             id="dropdownChevron"></i>
                     </div>
                 </button>
@@ -282,61 +187,47 @@
          SIDEBAR: Starts below Header
          ============================================================= -->
     <aside id="sidebar"
-        class="sidebar-collapsed fixed left-0 top-[82px] h-[calc(100vh-82px)] bg-icc z-50 overflow-y-auto transition-all duration-300">
+        class="fixed left-0 top-32 h-[calc(100vh-128px)] w-[220px] bg-icc z-[70] overflow-y-auto transition-all duration-300 border-r border-icc-dark/10">
         <nav class="p-0 py-4 flex flex-col h-full">
-            <a href="#" id="nav-home" title="Student Dashboard Home"
-                class="flex items-center gap-0 h-16 text-white transition-all no-underline bg-white/20 group">
-                <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-house text-2xl"></i>
-                    <span
-                        class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">Home</span>
+            <a href="#" id="nav-home" title="Dashboard Home"
+                class="flex items-center gap-0 h-14 text-white transition-all no-underline bg-white/20 group">
+                <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-house text-lg opacity-90"></i>
+                    <span class="rail-label">Home</span>
                 </div>
-                <span class="full-label text-lg whitespace-nowrap overflow-hidden font-medium">Home</span>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Home</span>
             </a>
             <a href="#" id="nav-courses" title="My Enrolled Courses"
-                class="flex items-center gap-0 h-16 text-white transition-all no-underline hover:bg-white/10 group">
-                <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-book-bookmark text-2xl"></i>
-                    <span
-                        class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">Courses</span>
+                class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
+                    <i class="fa-regular fa-bookmark text-lg"></i>
+                    <span class="rail-label">ICT</span>
                 </div>
-                <span class="full-label text-lg whitespace-nowrap overflow-hidden font-medium">My Courses</span>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">ICT Strand</span>
             </a>
-            <a href="#" id="nav-assignments" title="Assignments & Tasks"
-                class="flex items-center gap-0 h-16 text-white transition-all no-underline hover:bg-white/10 group">
-                <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-list-check text-2xl"></i>
-                    <span
-                        class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">Tasks</span>
+            <a href="#" id="nav-assignments" title="Assessments & Tasks"
+                class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
+                    <i class="fa-regular fa-clipboard text-lg"></i>
+                    <span class="rail-label">Tasks</span>
                 </div>
-                <span class="full-label text-lg whitespace-nowrap overflow-hidden font-medium">Assignments</span>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Assessments</span>
             </a>
-            <a href="#" id="nav-grades" title="Grades & Academic Progress"
-                class="flex items-center gap-0 h-16 text-white transition-all no-underline hover:bg-white/10 group">
-                <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-chart-simple text-2xl"></i>
-                    <span
-                        class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">Grades</span>
+            <a href="#" id="nav-grades" title="Academic Progress"
+                class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
+                    <i class="fa-regular fa-chart-bar text-lg"></i>
+                    <span class="rail-label">Grades</span>
                 </div>
-                <span class="full-label text-lg whitespace-nowrap overflow-hidden font-medium">My Grades</span>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Progress</span>
             </a>
-            <a href="#" id="nav-schedule" title="Weekly Class Schedule"
-                class="flex items-center gap-0 h-16 text-white transition-all no-underline hover:bg-white/10 group">
-                <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-calendar-days text-2xl"></i>
-                    <span
-                        class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">Schedule</span>
+            <a href="#" id="nav-attendance" title="Schedule & Attendance"
+                class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
+                    <i class="fa-regular fa-calendar-check text-lg"></i>
+                    <span class="rail-label">Attend</span>
                 </div>
-                <span class="full-label text-lg whitespace-nowrap overflow-hidden font-medium">Class Schedule</span>
-            </a>
-            <a href="#" id="nav-board" title="Bulletin Board & Community Blogs"
-                class="flex items-center gap-0 h-16 text-white transition-all no-underline hover:bg-white/10 group">
-                <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-newspaper text-2xl"></i>
-                    <span
-                        class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">Bulletin</span>
-                </div>
-                <span class="full-label text-lg whitespace-nowrap overflow-hidden font-medium">Bulletin Board</span>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Attendance</span>
             </a>
 
 
@@ -353,35 +244,46 @@
 
             <div class="mt-auto pb-4">
                 <a href="#" id="nav-messages" title="Official Student Mailbox"
-                    class="flex items-center gap-0 h-16 text-white transition-all no-underline hover:bg-white/10 group">
-                    <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
-                        <i class="fa-solid fa-envelope text-2xl"></i>
-                        <span
-                            class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">Inbox</span>
+                    class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                    <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
+                        <i class="fa-regular fa-envelope text-lg"></i>
+                        <span class="rail-label">Inbox</span>
                     </div>
-                    <span class="full-label text-lg whitespace-nowrap overflow-hidden font-medium">Inbox</span>
+                    <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Inbox</span>
                 </a>
-                <a href="#" id="nav-ai" title="Sigma AI - Your Intellectual Assistant"
-                    class="flex items-center gap-0 h-16 text-white transition-all no-underline hover:bg-white/10 group">
-                    <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
-                        <i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>
-                        <span
-                            class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">AI</span>
+                <a href="#" id="nav-ai" title="Sigma AI Assist"
+                    class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                    <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-bolt text-lg"></i>
+                        <span class="rail-label">Sigma AI</span>
                     </div>
-                    <span class="full-label text-lg whitespace-nowrap overflow-hidden font-medium">Sigma AI</span>
+                    <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Sigma AI</span>
                 </a>
-                <a href="#" id="nav-journal" title="My Private Journal"
-                    class="flex items-center gap-0 h-16 text-white transition-all no-underline hover:bg-white/10 group">
-                    <div class="w-[82px] flex flex-col items-center justify-center flex-shrink-0">
-                        <i class="fa-solid fa-pen-nib text-2xl"></i>
-                        <span
-                            class="rail-label text-[10px] mt-1 text-white/70 hidden uppercase font-bold tracking-wider">Journal</span>
+                <a href="#" id="nav-notes" title="My Quick Notes"
+                    class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                    <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
+                        <i class="fa-regular fa-file-lines text-lg"></i>
+                        <span class="rail-label">Notes</span>
                     </div>
-                    <span class="full-label text-lg whitespace-nowrap overflow-hidden font-medium">My Journal</span>
+                    <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Notes</span>
                 </a>
             </div>
         </nav>
 
+    </aside>
+
+    </aside>
+
+    <!-- Contextual Sub-Sidebar -->
+    <aside id="sub-sidebar"
+        class="fixed left-[82px] top-32 h-[calc(100vh-128px)] w-[200px] bg-white border-r border-gray-100 z-40 transition-all duration-300 translate-x-[-200px] flex flex-col shadow-sm hidden">
+        <div class="px-5 py-4 border-b border-gray-50 bg-gray-50/20">
+            <h3 id="sub-sidebar-title" class="font-extrabold text-icc text-[13px] uppercase tracking-wider">ICT Strand
+            </h3>
+        </div>
+        <div id="sub-sidebar-content" class="flex-1 overflow-y-auto p-2 space-y-1">
+            <!-- Dynamic content -->
+        </div>
     </aside>
 
 
@@ -392,763 +294,888 @@
          LAYOUT WRAPPER: Main content offset
          ============================================================= -->
     <div id="layout-wrapper"
-        class="flex-1 mt-[82px] ml-64 flex flex-col min-h-[calc(100vh-82px)] transition-all duration-300">
+        class="flex-1 mt-16 ml-[200px] flex flex-col min-h-[calc(100vh-64px)] transition-all duration-300">
         <!-- MAIN CONTENT AREA -->
         <main class="flex-1 p-8">
             <!-- Dynamic Sections Container -->
             <div id="content-sections" class="w-full h-full">
 
                 <!-- HOME / DASHBOARD SECTION -->
-                <!-- HOME / DASHBOARD SECTION -->
-                <section id="section-home" class="dynamic-section flex flex-row gap-8 items-start">
+                <section id="section-home" class="dynamic-section">
+                    <div class="max-w-[1600px] w-full flex flex-row gap-6 items-start">
+                        <!-- LEFT SIDEBAR: AI SIGMA & ONGOING -->
+                        <div class="w-80 flex-shrink-0 sticky top-[114px] h-[calc(100vh-146px)] flex flex-col gap-6">
 
-                    <!-- LEFT COLUMN: TASK MANAGEMENT (Independent Sticky Sidebar) -->
-                    <div class="w-80 flex-shrink-0 sticky top-[114px] h-[calc(100vh-146px)] flex flex-col gap-6">
-                        <!-- Dual Task Card -->
-                        <div
-                            class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col h-full overflow-hidden">
+                            <!-- AI SIGMA WIDGET (Redesigned) -->
+                            <div class="ai-sigma-widget rounded-2xl shadow-lg relative overflow-hidden">
+                                <!-- Top label bar -->
+                                <div class="flex items-center gap-2 px-5 pt-5 pb-3">
+                                    <i class="fa-solid fa-bolt text-icc-yellow text-base"></i>
+                                    <span class="text-[11px] font-black text-icc-yellow uppercase tracking-widest">Sigma
+                                        AI</span>
+                                </div>
 
-                            <!-- URGENT TASKS (DUE TODAY) -->
-                            <div class="flex flex-col h-1/2 min-h-0 border-b border-gray-100 pb-4 mb-4">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div
-                                        class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center text-red-600 flex-shrink-0">
-                                        <i class="fa-solid fa-hourglass-half text-lg"></i>
+                                <!-- Divider -->
+                                <div class="mx-5 border-t border-white/10"></div>
+
+                                <!-- Message body -->
+                                <div id="ai-summary-text" class="px-5 pt-4 pb-6 text-white">
+                                    <p class="text-lg font-black leading-snug mb-2">
+                                        Welcome back, <span class="text-icc-yellow">Stanley!</span>
+                                    </p>
+                                    <p class="text-sm text-white/80 leading-relaxed font-medium">
+                                        You have <strong class="text-white">8 active subjects</strong> in your
+                                        <strong class="text-white">ICT Strand</strong> profile.
+                                        Check out the <strong class="text-white">Reels</strong> to resume your latest
+                                        modules.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- ONGOING CLASS WIDGET -->
+                            <div
+                                class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-all">
+                                <div
+                                    class="bg-icc-yellow px-4 py-3 flex justify-between items-center border-b border-icc-yellow">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3 h-3 rounded-full bg-icc animate-pulse"></div>
+                                        <span
+                                            class="text-[10px] font-black text-gray-900 uppercase tracking-widest">ONGOING
+                                            CLASS</span>
                                     </div>
-                                    <div>
-                                        <h3 class="text-sm font-bold text-gray-800">Tasks</h3>
-                                        <p class="text-[10px] text-red-500 font-bold uppercase tracking-widest">Due
-                                            Today</p>
+                                    <div id="class-timer"
+                                        class="px-3 py-1 bg-white rounded-full text-[10px] font-bold text-gray-700 shadow-sm border border-white">
+                                        6h 21m remaining
                                     </div>
                                 </div>
-                                <div class="overflow-y-auto pr-2 custom-scrollbar space-y-3">
-                                    <div
-                                        class="p-3 rounded-xl border border-red-50 hover:bg-red-50/50 transition-all cursor-pointer">
-                                        <div class="flex justify-between items-start mb-1">
-                                            <span class="text-[9px] font-bold text-red-600 uppercase">Calculus</span>
-                                            <span class="text-[9px] text-gray-400">5:00 PM</span>
-                                        </div>
-                                        <h4 class="text-xs font-bold text-gray-800">Performance Task 2</h4>
-                                        <p class="text-[10px] text-red-600/70 font-medium">Critical: Final Submission
+
+                                <div class="p-5 flex flex-col">
+                                    <div>
+                                        <h3 class="text-lg font-black text-gray-800 leading-tight">Advanced Calculus
+                                        </h3>
+                                        <p class="text-sm text-gray-500 mt-1">Room 302 • Dr. Aris (9:00 AM - 11:00 AM)
                                         </p>
                                     </div>
-                                    <div
-                                        class="p-3 rounded-xl border border-gray-50 hover:bg-red-50/50 transition-all cursor-pointer">
-                                        <div class="flex justify-between items-start mb-1">
-                                            <span class="text-[9px] font-bold text-red-600 uppercase">Physics</span>
-                                            <span class="text-[9px] text-gray-400">11:59 PM</span>
+                                    <div class="border-t border-gray-100 my-4"></div>
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-5 h-5 bg-icc-yellow rounded-full flex items-center justify-center text-gray-900 text-[10px]">
+                                            <i class="fa-solid fa-arrow-right scale-75"></i>
                                         </div>
-                                        <h4 class="text-xs font-bold text-gray-800">Lab Report #4</h4>
+                                        <div>
+                                            <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">
+                                                NEXT CLASS</p>
+                                            <p class="text-xs font-bold text-gray-700">Physics 101 • 1:30 PM (Room 402)
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div
-                                        class="p-3 rounded-xl border border-gray-50 hover:bg-red-50/50 transition-all cursor-pointer">
-                                        <div class="flex justify-between items-start mb-1">
-                                            <span class="text-[9px] font-bold text-red-600 uppercase">ICT</span>
-                                            <span class="text-[9px] text-gray-400">4:00 PM</span>
-                                        </div>
-                                        <h4 class="text-xs font-bold text-gray-800">Database Schema Design</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CENTER COLUMN: MAIN CONTENT & ANALYTICS -->
+                        <div class="flex-1 min-w-0 flex flex-col gap-4 pb-12">
+
+                            <!-- SUBJECT REELS (Phase 7) -->
+                            <div id="home-reels-section">
+                                <div class="flex items-center justify-between mb-4 mt-4">
+                                    <div>
+                                        <h2 class="text-xl font-black text-gray-800 tracking-tight">Enrolled</h2>
                                     </div>
-                                    <div
-                                        class="p-3 rounded-xl border border-gray-50 hover:bg-red-50/50 transition-all cursor-pointer">
-                                        <div class="flex justify-between items-start mb-1">
-                                            <span class="text-[9px] font-bold text-red-600 uppercase">Filipino</span>
-                                            <span class="text-[9px] text-gray-400">Today</span>
-                                        </div>
-                                        <h4 class="text-xs font-bold text-gray-800">Panitikan Quiz</h4>
+                                </div>
+
+                                <div class="reels-wrapper group">
+                                    <!-- Smart Nav Buttons -->
+                                    <button id="reel-prev"
+                                        class="reels-nav-btn left w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center justify-center text-gray-500 hover:text-icc transition-all">
+                                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                                    </button>
+                                    <button id="reel-next"
+                                        class="reels-nav-btn right w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center justify-center text-gray-500 hover:text-icc transition-all">
+                                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                                    </button>
+
+                                    <div class="reels-container h-[320px]">
+                                        <!-- Dynamic Reels will be injected by JS -->
+                                        <div class="reel-card animate-pulse bg-gray-100"></div>
+                                        <div class="reel-card animate-pulse bg-gray-100"></div>
+                                        <div class="reel-card animate-pulse bg-gray-100"></div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- UPCOMING DEADLINES (FUTURE TASKS) -->
-                            <div class="flex flex-col h-1/2 min-h-0">
+                            <!-- Main Feed Item: School Announcement -->
+                            <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                                <div class="p-6">
+                                    <div class="flex items-center gap-3 mb-6">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-icc">
+                                            <i class="fa-solid fa-bullhorn text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-gray-800">Admin Announcement</h4>
+                                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                                                Important • 2h ago</p>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-3 leading-tight">Quarterly Examination
+                                        Schedule Released</h3>
+                                    <p class="text-sm text-gray-600 leading-relaxed mb-6">
+                                        The 2nd Quarter examinations will be held from March 25th to March 27th. Please
+                                        ensure all your clearance requirements are settled by the end of this week.
+                                    </p>
+                                    <div class="bg-icc-light h-48 rounded-xl flex items-center justify-center">
+                                        <i class="fa-solid fa-file-invoice text-icc/20 text-7xl"></i>
+                                    </div>
+                                </div>
+                                <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-between">
+                                    <button
+                                        class="text-xs font-bold text-gray-500 hover:text-icc flex items-center gap-2"><i
+                                            class="fa-solid fa-download"></i> Get Exam Schedule</button>
+                                    <button
+                                        class="text-xs font-bold text-gray-500 hover:text-icc flex items-center gap-2">Read
+                                        More <i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Recognition Rites -->
+                            <div
+                                class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all">
+                                <div class="h-44 bg-icc-light flex items-center justify-center text-icc/40 text-7xl">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span
+                                            class="px-2 py-0.5 bg-icc/10 text-icc text-[9px] font-bold uppercase rounded">Official</span>
+                                        <span class="text-[10px] text-gray-400 font-bold">Today</span>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-gray-800 mb-2">2nd Quarter Distinction Awards</h3>
+                                    <p class="text-sm text-gray-600 leading-relaxed mb-4">Congratulations to all
+                                        students
+                                        who made it to the Honor Roll! The formal recognition ceremony will take place
+                                        this
+                                        Friday at the Grand Ballroom.</p>
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex -space-x-2">
+                                            <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-200"></div>
+                                            <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-300"></div>
+                                            <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-400"></div>
+                                        </div>
+                                        <span class="text-[10px] text-gray-500 font-bold">+124 others recognized</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Campus Library -->
+                            <div
+                                class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600">
+                                            <i class="fa-solid fa-book-open"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-gray-800">Library Notice</h4>
+                                            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">New
+                                                Resources</p>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="bg-icc-yellow/20 text-icc-yellow text-[9px] font-extrabold px-2 py-1 rounded">Update</span>
+                                </div>
+                                <h3 class="text-base font-bold text-gray-800 mb-2">Extended Study Hours</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed mb-4">Starting next week, the campus
+                                    library
+                                    will remain open until 10 PM to support students preparing for finals. Coffee and
+                                    snacks
+                                    are permitted in designated areas.</p>
+                                <button class="text-xs font-bold text-icc hover:underline">Reserve a private study room
+                                    →</button>
+                            </div>
+
+                            <!-- System Update Card -->
+                            <div
+                                class="bg-gray-900 rounded-2xl p-6 shadow-lg text-white relative overflow-hidden group">
+                                <div
+                                    class="absolute -right-8 -top-8 w-32 h-32 bg-icc rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity">
+                                </div>
                                 <div class="flex items-center gap-3 mb-4">
                                     <div
-                                        class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 flex-shrink-0">
+                                        class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-icc">
+                                        <i class="fa-solid fa-bolt"></i>
+                                    </div>
+                                    <h4 class="text-xs font-bold uppercase tracking-widest opacity-70">ELMS Update v2.4
+                                    </h4>
+                                </div>
+                                <h3 class="text-lg font-bold mb-2">New: Sigma AI Voice</h3>
+                                <p class="text-sm opacity-80 leading-relaxed mb-4">You can now interact with Sigma AI
+                                    using
+                                    voice commands in the mobile app. Try it today for hands-free learning!</p>
+                                <div class="flex items-center gap-3">
+                                    <div class="px-3 py-1 rounded-full bg-icc text-[10px] font-bold">New Feature</div>
+                                    <div class="text-[10px] opacity-50">Released Mar 16</div>
+                                </div>
+                            </div>
+
+                            <!-- Sports News -->
+                            <div
+                                class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-icc-yellow/10 flex items-center justify-center text-icc-yellow">
+                                        <i class="fa-solid fa-trophy"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-gray-800">ICC Titans</h4>
+                                        <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Sports
+                                            •
+                                            Yesterday</p>
+                                    </div>
+                                </div>
+                                <h3 class="text-base font-bold text-gray-800 mb-2">Titans Sweep Regional Finals</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed mb-4">Our Varsity Basketball team has
+                                    secured the regional championship trophy! Join us for a celebratory pep rally this
+                                    Monday at the campus court.</p>
+                                <div class="grid grid-cols-2 gap-4 h-24">
+                                    <div
+                                        class="bg-gray-50 rounded-xl flex items-center justify-center text-gray-300 text-2xl">
+                                        <i class="fa-solid fa-image"></i>
+                                    </div>
+                                    <div
+                                        class="bg-gray-50 rounded-xl flex items-center justify-center text-gray-300 text-2xl">
+                                        <i class="fa-solid fa-image"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Engineering Workshop -->
+                            <div
+                                class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                        <i class="fa-solid fa-microchip"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-gray-800">STEM Lab</h4>
+                                        <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">
+                                            Workshop •
+                                            Mar 20</p>
+                                    </div>
+                                </div>
+                                <h3 class="text-base font-bold text-gray-800 mb-2">Robotics & Arduino Workshop</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed mb-4">Join our weekend intensive session
+                                    on
+                                    building autonomous robots. Open to all STEM students with basic C++ knowledge.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="w-80 flex-shrink-0 sticky top-[114px] h-[calc(100vh-146px)] overflow-y-auto pl-2 flex flex-col gap-6">
+
+                            <!-- MINI CALENDAR WIDGET -->
+                            <div
+                                class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col flex-shrink-0">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <h3 id="calendar-month-year" class="text-sm font-bold text-gray-800">March 2026
+                                        </h3>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button id="prevMonthBtn"
+                                            class="w-6 h-6 rounded-lg hover:bg-gray-50 flex items-center justify-center text-gray-400 transition-all"><i
+                                                class="fa-solid fa-chevron-left text-[10px]"></i></button>
+                                        <button id="nextMonthBtn"
+                                            class="w-6 h-6 rounded-lg hover:bg-gray-50 flex items-center justify-center text-gray-400 transition-all"><i
+                                                class="fa-solid fa-chevron-right text-[10px]"></i></button>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-7 gap-1 text-center mb-2">
+                                    <div class="text-[9px] font-bold text-gray-400 uppercase">Su</div>
+                                    <div class="text-[9px] font-bold text-gray-400 uppercase">Mo</div>
+                                    <div class="text-[9px] font-bold text-gray-400 uppercase">Tu</div>
+                                    <div class="text-[9px] font-bold text-gray-400 uppercase">We</div>
+                                    <div class="text-[9px] font-bold text-gray-400 uppercase">Th</div>
+                                    <div class="text-[9px] font-bold text-gray-400 uppercase">Fr</div>
+                                    <div class="text-[9px] font-bold text-gray-400 uppercase">Sa</div>
+                                </div>
+                                <div id="calendar-days-grid" class="grid grid-cols-7 gap-1 text-center">
+                                    <!-- Days are dynamically generated by JS -->
+                                </div>
+
+                                <!-- Dynamic Events/Tasks Dropdown Panel -->
+                                <div id="calendar-event-panel"
+                                    class="mt-4 p-5 bg-gray-50/80 rounded-2xl border border-gray-100 hidden animate-slide-down">
+                                    <div id="calendar-event-content" class="space-y-4">
+                                        <!-- Categories will be injected here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- UPCOMING DEADLINES (Moved from Left) -->
+                            <div
+                                class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col flex-shrink-0">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div
+                                        class="w-10 h-10 bg-icc-light rounded-lg flex items-center justify-center text-icc flex-shrink-0">
                                         <i class="fa-solid fa-calendar-days text-lg"></i>
                                     </div>
                                     <div>
                                         <h3 class="text-sm font-bold text-gray-800">Upcoming</h3>
-                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                                            Scheduled</p>
                                     </div>
                                 </div>
-                                <div class="overflow-y-auto pr-2 custom-scrollbar space-y-3">
-                                    <div
-                                        class="p-3 bg-gray-50/50 rounded-xl border border-gray-100 hover:bg-blue-50/30 transition-all cursor-pointer">
-                                        <div class="flex justify-between items-start mb-1">
-                                            <span class="text-[9px] font-bold text-blue-600 uppercase">CS Project</span>
-                                            <span class="text-[9px] text-gray-400">Tomorrow</span>
+                                <div class="space-y-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                                    <!-- Upcoming Categories with border-gray-200 dividers -->
+                                    <div class="space-y-4">
+                                        <div class="group/up">
+                                            <div class="flex justify-between items-start mb-1">
+                                                <p
+                                                    class="text-xs font-bold text-gray-800 group-hover/up:text-icc-yellow transition-colors">
+                                                    Performance Task 2</p>
+                                                <span
+                                                    class="text-[9px] font-bold text-icc uppercase tracking-widest">Due
+                                                    17th</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-400">Pre-Calculus • Submission</p>
                                         </div>
-                                        <h4 class="text-xs font-bold text-gray-700">Sorting Algorithm</h4>
-                                        <p class="text-[10px] text-gray-500">Mar 18 • 1 Day Left</p>
-                                    </div>
-                                    <div
-                                        class="p-3 bg-gray-50/50 rounded-xl border border-gray-100 hover:bg-blue-50/30 transition-all cursor-pointer">
-                                        <div class="flex justify-between items-start mb-1">
-                                            <span class="text-[9px] font-bold text-gray-500 uppercase">English</span>
-                                            <span class="text-[9px] text-gray-400">Mar 20</span>
+
+                                        <div class="border-t border-gray-200 my-4"></div>
+
+                                        <div class="group/up">
+                                            <div class="flex justify-between items-start mb-1">
+                                                <p
+                                                    class="text-xs font-bold text-gray-800 group-hover/up:text-icc-yellow transition-colors">
+                                                    Weekly Quiz #4</p>
+                                                <span
+                                                    class="text-[9px] font-bold text-icc uppercase tracking-widest">Due
+                                                    18th</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-400">Programming 1 • Online Test</p>
                                         </div>
-                                        <h4 class="text-xs font-bold text-gray-700">Creative Essay</h4>
-                                        <p class="text-[10px] text-gray-500">Mar 20 • 3 Days Left</p>
-                                    </div>
-                                    <div
-                                        class="p-3 bg-gray-50/50 rounded-xl border border-gray-100 hover:bg-blue-50/30 transition-all cursor-pointer">
-                                        <div class="flex justify-between items-start mb-1">
-                                            <span class="text-[9px] font-bold text-gray-500 uppercase">History</span>
-                                            <span class="text-[9px] text-gray-400">Mar 22</span>
-                                        </div>
-                                        <h4 class="text-xs font-bold text-gray-700">Quiz: Cold War</h4>
-                                        <p class="text-[10px] text-gray-500">Mar 22 • 5 Days Left</p>
-                                    </div>
-                                    <div
-                                        class="p-3 bg-gray-50/50 rounded-xl border border-gray-100 hover:bg-blue-50/30 transition-all cursor-pointer">
-                                        <div class="flex justify-between items-start mb-1">
-                                            <span class="text-[9px] font-bold text-gray-500 uppercase">Math</span>
-                                            <span class="text-[9px] text-gray-400">Mar 25</span>
-                                        </div>
-                                        <h4 class="text-xs font-bold text-gray-700">Unit Test: Integration</h4>
-                                        <p class="text-[10px] text-gray-500">Mar 25 • 8 Days Left</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- CENTER COLUMN: MAIN CONTENT & ANALYTICS (Drives Main Page Scroll) -->
-                    <div class="flex-1 flex flex-col gap-6">
-                        <!-- SIGMA AI ACADEMIC INSIGHT -->
-                        <div
-                            class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm group hover:shadow-md transition-all relative overflow-hidden">
-                            <div class="absolute top-0 right-0 p-2">
-                                <div class="w-8 h-8 rounded-full bg-icc/5 flex items-center justify-center text-icc"><i
-                                        class="fa-solid fa-sparkles text-xs"></i></div>
-                            </div>
-                            <div class="flex items-center gap-6 mb-4">
-                                <div
-                                    class="w-14 h-14 bg-icc rounded-2xl flex items-center justify-center text-white text-2xl flex-shrink-0">
-                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-gray-800">Sigma AI Insight</h3>
-                                    <p class="text-xs text-gray-500 italic">Academic Advisor Recommendation</p>
-                                </div>
-                            </div>
-                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 mb-4">
-                                <p class="text-sm text-gray-700 leading-relaxed font-medium">
-                                    "Stanley, I've analyzed your latest marks. You're showing great strength in <span
-                                        class="text-icc font-bold">Programming 1</span>, but your Calculus GPA is at
-                                    1.38. If you prioritize today's Performance Task, we can bring that up to a 1.25
-                                    before the quarter ends. You've got this!"
-                                </p>
-                            </div>
-                            <div class="grid grid-cols-1">
-                                <div
-                                    class="p-3 bg-white border border-gray-100 rounded-lg flex items-center justify-between">
-                                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Current
-                                        GWA Snapshot</span>
-                                    <span class="text-xl font-bold text-icc">1.38</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Main Feed Item: School Announcement -->
-                        <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-                            <div class="p-6">
-                                <div class="flex items-center gap-3 mb-6">
-                                    <div
-                                        class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-icc">
-                                        <i class="fa-solid fa-bullhorn text-lg"></i></div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-gray-800">Admin Announcement</h4>
-                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                                            Important • 2h ago</p>
-                                    </div>
-                                </div>
-                                <h3 class="text-xl font-bold text-gray-800 mb-3 leading-tight">Quarterly Examination
-                                    Schedule Released</h3>
-                                <p class="text-sm text-gray-600 leading-relaxed mb-6">
-                                    The 2nd Quarter examinations will be held from March 25th to March 27th. Please
-                                    ensure all your clearance requirements are settled by the end of this week.
-                                </p>
-                                <div class="bg-icc-light h-48 rounded-xl flex items-center justify-center">
-                                    <i class="fa-solid fa-file-invoice text-icc/20 text-7xl"></i>
-                                </div>
-                            </div>
-                            <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-between">
-                                <button
-                                    class="text-xs font-bold text-gray-500 hover:text-icc flex items-center gap-2"><i
-                                        class="fa-solid fa-download"></i> Get Exam Schedule</button>
-                                <button
-                                    class="text-xs font-bold text-gray-500 hover:text-icc flex items-center gap-2">Read
-                                    More <i class="fa-solid fa-arrow-right"></i></button>
-                            </div>
-                        </div>
-
-                        <!-- Recognition Rites -->
-                        <div
-                            class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all">
-                            <div class="h-44 bg-icc-light flex items-center justify-center text-icc/40 text-7xl">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                            </div>
-                            <div class="p-6">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <span
-                                        class="px-2 py-0.5 bg-icc/10 text-icc text-[9px] font-bold uppercase rounded">Official</span>
-                                    <span class="text-[10px] text-gray-400 font-bold">Today</span>
-                                </div>
-                                <h3 class="text-lg font-bold text-gray-800 mb-2">2nd Quarter Distinction Awards</h3>
-                                <p class="text-sm text-gray-600 leading-relaxed mb-4">Congratulations to all students
-                                    who made it to the Honor Roll! The formal recognition ceremony will take place this
-                                    Friday at the Grand Ballroom.</p>
-                                <div class="flex items-center gap-4">
-                                    <div class="flex -space-x-2">
-                                        <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-200"></div>
-                                        <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-300"></div>
-                                        <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-400"></div>
-                                    </div>
-                                    <span class="text-[10px] text-gray-500 font-bold">+124 others recognized</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Campus Library -->
-                        <div
-                            class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all">
-                            <div class="flex items-start justify-between mb-4">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600">
-                                        <i class="fa-solid fa-book-open"></i></div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-gray-800">Library Notice</h4>
-                                        <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">New
-                                            Resources</p>
-                                    </div>
-                                </div>
-                                <span
-                                    class="bg-orange-100 text-orange-700 text-[9px] font-extrabold px-2 py-1 rounded">Update</span>
-                            </div>
-                            <h3 class="text-base font-bold text-gray-800 mb-2">Extended Study Hours</h3>
-                            <p class="text-sm text-gray-600 leading-relaxed mb-4">Starting next week, the campus library
-                                will remain open until 10 PM to support students preparing for finals. Coffee and snacks
-                                are permitted in designated areas.</p>
-                            <button class="text-xs font-bold text-icc hover:underline">Reserve a private study room
-                                →</button>
-                        </div>
-
-                        <!-- System Update Card -->
-                        <div class="bg-gray-900 rounded-2xl p-6 shadow-lg text-white relative overflow-hidden group">
-                            <div
-                                class="absolute -right-8 -top-8 w-32 h-32 bg-icc rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity">
-                            </div>
-                            <div class="flex items-center gap-3 mb-4">
-                                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-icc"><i
-                                        class="fa-solid fa-bolt"></i></div>
-                                <h4 class="text-xs font-bold uppercase tracking-widest opacity-70">ELMS Update v2.4</h4>
-                            </div>
-                            <h3 class="text-lg font-bold mb-2">New: Sigma AI Voice</h3>
-                            <p class="text-sm opacity-80 leading-relaxed mb-4">You can now interact with Sigma AI using
-                                voice commands in the mobile app. Try it today for hands-free learning!</p>
-                            <div class="flex items-center gap-3">
-                                <div class="px-3 py-1 rounded-full bg-icc text-[10px] font-bold">New Feature</div>
-                                <div class="text-[10px] opacity-50">Released Mar 16</div>
-                            </div>
-                        </div>
-
-                        <!-- Sports News -->
-                        <div
-                            class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all">
-                            <div class="flex items-center gap-3 mb-4">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                                    <i class="fa-solid fa-trophy"></i></div>
-                                <div>
-                                    <h4 class="text-sm font-bold text-gray-800">ICC Titans</h4>
-                                    <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Sports •
-                                        Yesterday</p>
-                                </div>
-                            </div>
-                            <h3 class="text-base font-bold text-gray-800 mb-2">Titans Sweep Regional Finals</h3>
-                            <p class="text-sm text-gray-600 leading-relaxed mb-4">Our Varsity Basketball team has
-                                secured the regional championship trophy! Join us for a celebratory pep rally this
-                                Monday at the campus court.</p>
-                            <div class="grid grid-cols-2 gap-4 h-24">
-                                <div
-                                    class="bg-gray-50 rounded-xl flex items-center justify-center text-gray-300 text-2xl">
-                                    <i class="fa-solid fa-image"></i></div>
-                                <div
-                                    class="bg-gray-50 rounded-xl flex items-center justify-center text-gray-300 text-2xl">
-                                    <i class="fa-solid fa-image"></i></div>
-                            </div>
-                        </div>
-
-                        <!-- Engineering Workshop -->
-                        <div
-                            class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-all">
-                            <div class="flex items-center gap-3 mb-4">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                                    <i class="fa-solid fa-microchip"></i></div>
-                                <div>
-                                    <h4 class="text-sm font-bold text-gray-800">STEM Lab</h4>
-                                    <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Workshop •
-                                        Mar 20</p>
-                                </div>
-                            </div>
-                            <h3 class="text-base font-bold text-gray-800 mb-2">Robotics & Arduino Workshop</h3>
-                            <p class="text-sm text-gray-600 leading-relaxed mb-4">Join our weekend intensive session on
-                                building autonomous robots. Open to all STEM students with basic C++ knowledge.</p>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT COLUMN: PROGRESS & ACTIVITY (Independent Sticky Scroll) -->
-                    <div
-                        class="w-80 flex-shrink-0 sticky top-[114px] h-[calc(100vh-146px)] overflow-y-auto pl-2 flex flex-col gap-6 custom-scrollbar">
-
-                        <!-- MINI CALENDAR WIDGET -->
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="font-bold text-gray-800 text-sm">March 2026</h3>
-                                <div class="flex gap-2">
-                                    <button class="p-1 hover:bg-gray-50 rounded text-gray-400"><i
-                                            class="fa-solid fa-chevron-left text-[10px]"></i></button>
-                                    <button class="p-1 hover:bg-gray-50 rounded text-gray-400"><i
-                                            class="fa-solid fa-chevron-right text-[10px]"></i></button>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-7 gap-1 text-center mb-2">
-                                <span class="text-[9px] font-bold text-gray-400 uppercase">Su</span>
-                                <span class="text-[9px] font-bold text-gray-400 uppercase">Mo</span>
-                                <span class="text-[9px] font-bold text-gray-400 uppercase">Tu</span>
-                                <span class="text-[9px] font-bold text-gray-400 uppercase">We</span>
-                                <span class="text-[9px] font-bold text-gray-400 uppercase">Th</span>
-                                <span class="text-[9px] font-bold text-gray-400 uppercase">Fr</span>
-                                <span class="text-[9px] font-bold text-gray-400 uppercase">Sa</span>
-                            </div>
-                            <div class="grid grid-cols-7 gap-1 text-center">
-                                <!-- Calendar Days -->
-                                <span class="text-[11px] text-gray-300 py-1">1</span>
-                                <span class="text-[11px] text-gray-300 py-1">2</span>
-                                <span class="text-[11px] text-gray-300 py-1">3</span>
-                                <span class="text-[11px] text-gray-300 py-1">4</span>
-                                <span class="text-[11px] text-gray-300 py-1">5</span>
-                                <span class="text-[11px] text-gray-300 py-1">6</span>
-                                <span class="text-[11px] text-gray-300 py-1">7</span>
-                                <span class="text-[11px] text-gray-800 py-1">8</span>
-                                <span class="text-[11px] text-gray-800 py-1">9</span>
-                                <span class="text-[11px] text-gray-800 py-1">10</span>
-                                <span class="text-[11px] text-gray-800 py-1">11</span>
-                                <span class="text-[11px] text-gray-800 py-1">12</span>
-                                <span class="text-[11px] text-gray-800 py-1">13</span>
-                                <span class="text-[11px] text-gray-800 py-1">14</span>
-                                <span class="text-[11px] text-gray-800 py-1">15</span>
-                                <span class="text-[11px] text-gray-800 py-1">16</span>
-                                <span class="text-[11px] bg-icc text-white rounded-lg font-bold py-1">17</span>
-                                <!-- Today -->
-                                <span class="text-[11px] text-gray-800 py-1 relative">18<span
-                                        class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-orange-400 rounded-full"></span></span>
-                                <span class="text-[11px] text-gray-800 py-1">19</span>
-                                <span class="text-[11px] text-gray-800 py-1 relative">20<span
-                                        class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-400 rounded-full"></span></span>
-                                <span class="text-[11px] text-gray-800 py-1">21</span>
-                                <span class="text-[11px] text-gray-800 py-1">22</span>
-                                <span class="text-[11px] text-gray-800 py-1">23</span>
-                                <span class="text-[11px] text-gray-800 py-1">24</span>
-                                <span class="text-[11px] text-gray-800 py-1 relative">25<span
-                                        class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-red-400 rounded-full"></span></span>
-                                <span class="text-[11px] text-gray-800 py-1">26</span>
-                                <span class="text-[11px] text-gray-800 py-1">27</span>
-                                <span class="text-[11px] text-gray-800 py-1">28</span>
-                                <span class="text-[11px] text-gray-800 py-1">29</span>
-                                <span class="text-[11px] text-gray-800 py-1">30</span>
-                                <span class="text-[11px] text-gray-800 py-1">31</span>
-                            </div>
-                        </div>
-
-                        <!-- Next Class -->
-                        <div
-                            class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                            <div class="flex items-center gap-3 mb-4">
-                                <div
-                                    class="w-10 h-10 bg-yellow-50 rounded-lg flex items-center justify-center text-icc-yellow">
-                                    <i class="fa-solid fa-calendar-check text-lg"></i>
-                                </div>
-                                <h3 class="font-bold text-gray-800 text-base">Next Class</h3>
-                            </div>
-                            <p class="text-sm font-bold text-gray-700">Pre-Calculus</p>
-                            <p class="text-xs text-gray-500 mt-1">Room 402 • 1:30 PM</p>
-                            <button
-                                class="w-full mt-4 py-2 border border-gray-100 rounded-xl text-xs font-bold text-gray-500 hover:bg-gray-50 transition-colors">Join
-                                Session</button>
-                        </div>
-
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                            <h3 class="text-base font-bold text-gray-800 mb-6">Subject Progress</h3>
-                            <div class="space-y-6">
-                                <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-[10px] font-bold text-gray-700 uppercase">General Biology
-                                            1</span>
-                                        <span class="text-[10px] font-bold text-icc">85%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                        <div class="bg-icc h-full" style="width: 85%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-[10px] font-bold text-gray-700 uppercase">Pre-Calculus</span>
-                                        <span class="text-[10px] font-bold text-icc">72%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                        <div class="bg-icc h-full" style="width: 72%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-[10px] font-bold text-gray-700 uppercase">General Physics
-                                            1</span>
-                                        <span class="text-[10px] font-bold text-icc">94%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                        <div class="bg-icc h-full" style="width: 94%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-[10px] font-bold text-gray-700 uppercase">Programming 1</span>
-                                        <span class="text-[10px] font-bold text-icc">40%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                        <div class="bg-icc h-full" style="width: 40%"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Recent Activity -->
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                            <div class="flex items-center gap-3 mb-4">
-                                <div
-                                    class="w-10 h-10 bg-icc-light rounded-lg flex items-center justify-center text-icc">
-                                    <i class="fa-solid fa-clock-rotate-left text-lg"></i>
-                                </div>
-                                <h3 class="font-bold text-gray-800 text-base">Recent Activity</h3>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="flex gap-3">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-icc mt-1.5"></div>
-                                    <div>
-                                        <p class="text-xs font-bold text-gray-700">Quiz Submitted</p>
-                                        <p class="text-[10px] text-gray-400">STEM 101 • 2h ago</p>
-                                    </div>
-                                </div>
-                                <div class="flex gap-3">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-gray-300 mt-1.5"></div>
-                                    <div>
-                                        <p class="text-xs font-bold text-gray-700">New Resource</p>
-                                        <p class="text-[10px] text-gray-400">Calculus PDF • 5h ago</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div> <!-- /max-w-[1400px] 3-column flex row -->
                 </section>
 
-                <!-- MY COURSES SECTION -->
+                <!-- COURSES / SUBJECTS SECTION (Phase 6 Overhaul) -->
                 <section id="section-courses" class="dynamic-section hidden">
-                    <div class="mb-8">
-                        <h2 class="text-2xl font-bold text-gray-800">My Enrolled Courses</h2>
-                        <p class="text-gray-500">Manage and view your academic subjects.</p>
+                    <div class="mb-10">
+                        <h2 class="text-3xl font-black text-gray-800 tracking-tight">Subjects</h2>
+                        <p class="text-sm text-icc font-extrabold mt-1">School Year 2025-2026 • 2nd Semester</p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Biology -->
-                        <div
-                            class="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all cursor-pointer">
-                            <div class="h-32 bg-green-600 relative">
-                                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors">
+                    <!-- ENROLLED SECTION -->
+                    <div id="subjects-enrolled" class="section-anchor mb-12">
+                        <div class="flex items-center gap-3 mb-6">
+                            <i class="fa-solid fa-graduation-cap text-icc-green"></i>
+                            <h3 class="text-lg font-black text-gray-700 uppercase tracking-wider">Enrolled Subjects</h3>
+                            <div class="h-[2px] flex-1 bg-gray-100 ml-2 rounded-full"></div>
+                        </div>
+
+                        <div class="flex flex-col gap-4">
+                            <div id="card-prog1" class="subject-card-wide group cursor-pointer"
+                                data-subject="Programming 1">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box">
+                                        <i class="fa-solid fa-code text-xl"></i>
+                                    </div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Computer Programming 1</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            ICT Strand • Java Foundations</p>
+                                    </div>
                                 </div>
-                                <div class="absolute bottom-4 left-4 text-white">
-                                    <h3 class="font-bold text-lg leading-tight">General Biology 1</h3>
-                                    <p class="text-xs opacity-90">Cell Biology & Genetics</p>
+
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Mr. Alex Reyes</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">40% Complete</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
+                                                style="width: 40%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
                                 </div>
                             </div>
-                            <div class="p-5">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
-                                        <i class="fa-solid fa-user-tie text-sm"></i>
+                            <div
+                                class="subject-details hidden p-6 bg-gray-50/50 rounded-b-xl border-x border-b border-gray-100 -mt-2 mb-2 animate-slide-down">
+                                <div class="flex gap-8">
+                                    <div class="flex-1">
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Module Importance</p>
+                                        <p class="text-xs text-gray-600 leading-relaxed font-medium">Mastering Java
+                                            syntax and object-oriented principles is the critical foundation for all
+                                            future software engineering. This module focuses on pure logic and data
+                                            structures.</p>
                                     </div>
-                                    <span class="text-sm font-semibold text-gray-700">Mrs. Delos Reyes</span>
+                                    <div class="w-32">
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Current Grade</p>
+                                        <p class="text-lg font-black text-icc">1.50</p>
+                                    </div>
                                 </div>
-                                <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
-                                    <span>Course Progress</span>
-                                    <span>85%</span>
+                            </div>
+
+                            <!-- Web Dev -->
+                            <div id="card-webdev" class="subject-card-wide group cursor-pointer"
+                                data-subject="Web Development 1">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box">
+                                        <i class="fa-solid fa-globe text-xl"></i>
+                                    </div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Web Development 1</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            ICT Strand • HTML/CSS/JS</p>
+                                    </div>
                                 </div>
-                                <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-green-500 h-full" style="width: 85%"></div>
+
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Ms. Sarah Lim</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">65% Complete</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
+                                                style="width: 65%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
+                                </div>
+                            </div>
+                            <div
+                                class="subject-details hidden p-6 bg-gray-50/50 rounded-b-xl border-x border-b border-gray-100 -mt-2 mb-2 animate-slide-down">
+                                <div class="flex gap-8">
+                                    <div class="flex-1">
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Module Importance</p>
+                                        <p class="text-xs text-gray-600 leading-relaxed font-medium">Responsive design
+                                            and accessible UI/UX are critical for modern digital products. This module
+                                            covers industrial-standard styling and interactive behavior.</p>
+                                    </div>
+                                    <div class="w-32">
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Current Grade</p>
+                                        <p class="text-lg font-black text-icc">1.25</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Systems Arch -->
+                            <div id="card-sysarch" class="subject-card-wide group cursor-pointer"
+                                data-subject="Computer Systems Arch">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box">
+                                        <i class="fa-solid fa-microchip text-xl"></i>
+                                    </div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Computer Systems Arch</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            ICT Strand • Hardware</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Engr. Marco Diaz</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">25% Complete</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
+                                                style="width: 25%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
+                                </div>
+                            </div>
+                            <div
+                                class="subject-details hidden p-6 bg-gray-50/50 rounded-b-xl border-x border-b border-gray-100 -mt-2 mb-2 animate-slide-down">
+                                <div class="flex gap-8">
+                                    <div class="flex-1">
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Module Importance</p>
+                                        <p class="text-xs text-gray-600 leading-relaxed font-medium">Understanding
+                                            hardware foundations like CPU cycles and binary logic is essential for
+                                            optimizing system-level software and firmware development.</p>
+                                    </div>
+                                    <div class="w-32">
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Current Grade</p>
+                                        <p class="text-lg font-black text-icc">1.75</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Empowerment Tech (NEW) -->
+                            <div id="card-empowerment" class="subject-card-wide group cursor-pointer"
+                                data-subject="Empowerment Technologies">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box">
+                                        <i class="fa-solid fa-lightbulb text-xl"></i>
+                                    </div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Empowerment Technologies</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            ICT Strand • Digital Literacy</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Mr. Juan Dela Cruz</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">10% Complete</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
+                                                style="width: 10%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
+                                </div>
+                            </div>
+                            <div
+                                class="subject-details hidden p-6 bg-gray-50/50 rounded-b-xl border-x border-b border-gray-100 -mt-2 mb-2 animate-slide-down">
+                                <div class="flex gap-8">
+                                    <div class="flex-1">
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Module Importance</p>
+                                        <p class="text-xs text-gray-600 leading-relaxed font-medium">This module focuses
+                                            on the ethical and effective use of digital tools for social change and
+                                            individual empowerment. Essential for the modern ICT professional.</p>
+                                    </div>
+                                    <div class="w-32">
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Current Grade</p>
+                                        <p class="text-lg font-black text-icc">2.00</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Network Basics (NEW) -->
+                            <div id="card-networks" class="subject-card-wide group cursor-pointer"
+                                data-subject="Network Basics">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box">
+                                        <i class="fa-solid fa-network-wired text-xl"></i>
+                                    </div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Network Basics</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            ICT Strand • Networking</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Mr. Alex Chen</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">20% Complete</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
+                                                style="width: 20%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
+                                </div>
+                            </div>
+
+                            <!-- Database Management 1 (NEW) -->
+                            <div id="card-database" class="subject-card-wide group cursor-pointer"
+                                data-subject="Database Management 1">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box">
+                                        <i class="fa-solid fa-database text-xl"></i>
+                                    </div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Database Management 1</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            ICT Strand • SQL/Data</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Ms. Elena Reyes</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">50% Complete</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
+                                                style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
+                                </div>
+                            </div>
+
+                            <!-- Graphic Design & Layout (NEW) -->
+                            <div id="card-graphics" class="subject-card-wide group cursor-pointer"
+                                data-subject="Graphic Design & Layout">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box">
+                                        <i class="fa-solid fa-palette text-xl"></i>
+                                    </div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Graphic Design & Layout</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            ICT Strand • Visual Arts</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Mr. Paulo Cruz</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">35% Complete</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
+                                                style="width: 35%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
+                                </div>
+                            </div>
+
+                            <!-- Mobile App Development (NEW) -->
+                            <div id="card-mobile" class="subject-card-wide group cursor-pointer"
+                                data-subject="Mobile App Development">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box">
+                                        <i class="fa-solid fa-mobile-screen text-xl"></i>
+                                    </div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Mobile App Development</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            ICT Strand • Flutter/React</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Ms. Lara Santos</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">15% Complete</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
+                                                style="width: 15%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Pre-Calculus -->
-                        <div
-                            class="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all cursor-pointer">
-                            <div class="h-32 bg-icc-yellow relative">
-                                <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors">
-                                </div>
-                                <div class="absolute bottom-4 left-4 text-gray-900">
-                                    <h3 class="font-bold text-lg leading-tight">Pre-Calculus</h3>
-                                    <p class="text-xs opacity-70">Functions & Trigonometry</p>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
-                                        <i class="fa-solid fa-user-tie text-sm"></i>
-                                    </div>
-                                    <span class="text-sm font-semibold text-gray-700">Mr. Santiago</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
-                                    <span>Course Progress</span>
-                                    <span>72%</span>
-                                </div>
-                                <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-icc-yellow h-full" style="width: 72%"></div>
-                                </div>
-                            </div>
+                    <!-- COMPLETED SECTION -->
+                    <div id="subjects-completed" class="section-anchor">
+                        <div class="flex items-center gap-3 mb-6">
+                            <i class="fa-solid fa-circle-check text-gray-400"></i>
+                            <h3 class="text-lg font-black text-gray-500 uppercase tracking-wider">Completed Subjects
+                            </h3>
+                            <div class="h-[2px] flex-1 bg-gray-100 ml-2 rounded-full"></div>
                         </div>
 
-                        <!-- Physics -->
-                        <div
-                            class="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all cursor-pointer">
-                            <div class="h-32 bg-blue-700 relative">
-                                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors">
-                                </div>
-                                <div class="absolute bottom-4 left-4 text-white">
-                                    <h3 class="font-bold text-lg leading-tight">General Physics 1</h3>
-                                    <p class="text-xs opacity-90">Classical Mechanics</p>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
-                                        <i class="fa-solid fa-user-tie text-sm"></i>
+                        <div class="flex flex-col gap-4">
+                            <!-- Intro to Computing -->
+                            <div id="card-introcomp"
+                                class="subject-card-wide group cursor-pointer bg-gray-50/50 grayscale-[0.5] opacity-80 hover:grayscale-0 hover:opacity-100"
+                                data-subject="Intro to Computing">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box">
+                                        <i class="fa-solid fa-desktop text-xl"></i>
                                     </div>
-                                    <span class="text-sm font-semibold text-gray-700">Dr. Mendoza</span>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Introduction to Computing</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            ICT Strand • Foundation</p>
+                                    </div>
                                 </div>
-                                <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
-                                    <span>Course Progress</span>
-                                    <span>94%</span>
-                                </div>
-                                <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-blue-600 h-full" style="width: 94%"></div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Chemistry -->
-                        <div
-                            class="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all cursor-pointer">
-                            <div class="h-32 bg-orange-600 relative">
-                                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors">
-                                </div>
-                                <div class="absolute bottom-4 left-4 text-white">
-                                    <h3 class="font-bold text-lg leading-tight">General Chemistry 1</h3>
-                                    <p class="text-xs opacity-90">Inorganic Chemistry</p>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
-                                        <i class="fa-solid fa-user-tie text-sm"></i>
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Final
+                                            Grade</p>
+                                        <p class="text-xs font-black text-icc-green">1.25 Excellent</p>
                                     </div>
-                                    <span class="text-sm font-semibold text-gray-700">Ms. Santos</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
-                                    <span>Course Progress</span>
-                                    <span>15%</span>
-                                </div>
-                                <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-orange-500 h-full" style="width: 15%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Programming -->
-                        <div
-                            class="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all cursor-pointer">
-                            <div class="h-32 bg-gray-800 relative">
-                                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors">
-                                </div>
-                                <div class="absolute bottom-4 left-4 text-white">
-                                    <h3 class="font-bold text-lg leading-tight">Programming 1</h3>
-                                    <p class="text-xs opacity-90">C++ Fundamentals</p>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
-                                        <i class="fa-solid fa-user-tie text-sm"></i>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-gray-400">100% Completed</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-200/50 rounded-full overflow-hidden">
+                                            <div class="h-full bg-gray-400" style="width: 100%"></div>
+                                        </div>
                                     </div>
-                                    <span class="text-sm font-semibold text-gray-700">Ms. Belmonte</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
-                                    <span>Course Progress</span>
-                                    <span>40%</span>
-                                </div>
-                                <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-gray-700 h-full" style="width: 40%"></div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Statistics -->
-                        <div
-                            class="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all cursor-pointer">
-                            <div class="h-32 bg-red-700 relative">
-                                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors">
-                                </div>
-                                <div class="absolute bottom-4 left-4 text-white">
-                                    <h3 class="font-bold text-lg leading-tight">Statistics & Probability</h3>
-                                    <p class="text-xs opacity-90">Data Analysis</p>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div
-                                        class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
-                                        <i class="fa-solid fa-user-tie text-sm"></i>
+                            <div
+                                class="subject-details hidden p-6 bg-gray-50/50 rounded-b-xl border-x border-b border-gray-100 -mt-2 mb-2 animate-slide-down">
+                                <div class="flex gap-8">
+                                    <div class="flex-1">
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Module Summary</p>
+                                        <p class="text-xs text-gray-600 leading-relaxed font-medium">This foundational
+                                            module provided the broad context of digital technology, computer history,
+                                            and its socio-economic impact on modern society. Completed with honors.</p>
                                     </div>
-                                    <span class="text-sm font-semibold text-gray-700">Prof. Cruz</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
-                                    <span>Course Progress</span>
-                                    <span>60%</span>
-                                </div>
-                                <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-red-600 h-full" style="width: 60%"></div>
+                                    <div class="w-32">
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
+                                            Status</p>
+                                        <p class="text-lg font-black text-icc-green">CREDITED</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- ASSIGNMENTS SECTION -->
+                </section>
+
+                <!-- ASSIGNMENTS / TASKS SECTION -->
                 <section id="section-assignments" class="dynamic-section hidden">
                     <div class="mb-8 flex justify-between items-end">
                         <div>
-                            <h2 class="text-2xl font-bold text-gray-800">Assignments & Tasks</h2>
-                            <p class="text-gray-500">Track your upcoming deadlines and submissions.</p>
+                            <h2 class="text-3xl font-bold text-gray-800">Assessments</h2>
+                            <p class="text-sm text-gray-500 mt-1">Track your upcoming tasks and submissions</p>
                         </div>
                         <div class="flex gap-2">
                             <button
-                                class="px-4 py-2 bg-icc text-white rounded-lg text-sm font-bold shadow-sm hover:shadow-md transition-all">All
-                                Tasks</button>
+                                class="px-4 py-2 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-600 hover:bg-gray-50 transition-all">Filter</button>
                             <button
-                                class="px-4 py-2 bg-white text-gray-600 rounded-lg text-sm font-bold border border-gray-100 shadow-sm hover:bg-gray-50 transition-all">Pending</button>
+                                class="px-4 py-2 bg-icc text-white rounded-xl text-xs font-bold hover:bg-icc-dark transition-all">Export
+                                Schedule</button>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-50 border-b border-gray-100">
-                                <tr>
-                                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                        Assignment Name</th>
-                                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50/50">
+                                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                        Task Name</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                                         Subject</th>
-                                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Due
-                                        Date</th>
-                                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                        Due Date</th>
+                                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                                         Status</th>
-                                    <th
-                                        class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">
+                                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                                         Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100">
-                                <!-- Task Row 1 -->
-                                <tr class="hover:bg-gray-50 transition-colors">
+                            <tbody class="divide-y divide-gray-50">
+                                <tr class="hover:bg-gray-50/50 transition-colors cursor-pointer assignment-row"
+                                    data-assignment="Performance Task 2">
                                     <td class="px-6 py-4">
-                                        <span class="block text-sm font-bold text-gray-800">Physics - Lab Report:
-                                            Motion</span>
-                                        <span class="text-[11px] text-gray-400">File: mechanics_lab.pdf</span>
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center text-red-500">
+                                                <i class="fa-solid fa-file-pen text-xs"></i>
+                                            </div>
+                                            <span class="text-sm font-bold text-gray-800">Performance Task 2</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 font-medium">Pre-Calculus</td>
+                                    <td class="px-6 py-4">
+                                        <span class="text-sm text-red-500 font-bold">Today, 5:00 PM</span>
                                     </td>
                                     <td class="px-6 py-4">
                                         <span
-                                            class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 uppercase tracking-tight">General
-                                            Physics 1</span>
+                                            class="px-2 py-1 bg-red-100 text-red-600 text-[9px] font-bold uppercase rounded-lg">Missing</span>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="text-sm text-gray-600 font-medium">Mar 17, 2026</span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span
-                                            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-100 text-red-700 uppercase">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                                            Pending
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="text-icc hover:text-icc-dark font-bold text-sm">Open</button>
+                                        <button class="text-icc font-bold text-xs hover:underline">Submit Now</button>
                                     </td>
                                 </tr>
-                                <!-- Task Row 2 -->
-                                <tr class="hover:bg-gray-50 transition-colors">
+                                <tr class="hover:bg-gray-50/50 transition-colors cursor-pointer">
                                     <td class="px-6 py-4">
-                                        <span class="block text-sm font-bold text-gray-800">Biology - Cell Structure
-                                            Quiz</span>
-                                        <span class="text-[11px] text-gray-400">Online Quiz • 15 Items</span>
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-500">
+                                                <i class="fa-solid fa-square-poll-vertical text-xs"></i>
+                                            </div>
+                                            <span class="text-sm font-bold text-gray-800">Weekly Quiz #4</span>
+                                        </div>
                                     </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 font-medium">Programming 1</td>
                                     <td class="px-6 py-4">
-                                        <span
-                                            class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 uppercase tracking-tight">General
-                                            Biology 1</span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="text-sm text-gray-600 font-medium">Mar 15, 2026</span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span
-                                            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-icc-light text-icc uppercase">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-icc"></span>
-                                            Submitted
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button
-                                            class="text-gray-400 font-bold text-sm cursor-not-allowed">Review</button>
-                                    </td>
-                                </tr>
-                                <!-- Task Row 3 -->
-                                <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-6 py-4">
-                                        <span class="block text-sm font-bold text-gray-800">Pre-Calculus - Trigo
-                                            Identities</span>
-                                        <span class="text-[11px] text-gray-400">Topic: Identities & Equations</span>
+                                        <span class="text-sm text-gray-500">Tomorrow, 11:59 PM</span>
                                     </td>
                                     <td class="px-6 py-4">
                                         <span
-                                            class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-yellow-100 text-yellow-700 uppercase tracking-tight">Pre-Calculus</span>
+                                            class="px-2 py-1 bg-blue-100 text-blue-600 text-[9px] font-bold uppercase rounded-lg">Open</span>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span class="text-sm text-gray-600 font-medium">Mar 12, 2026</span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span
-                                            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 uppercase">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                                            Graded: 98/100
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button class="text-icc hover:text-icc-dark font-bold text-sm">Feedback</button>
+                                        <button class="text-icc font-bold text-xs hover:underline">Start Quiz</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1159,413 +1186,346 @@
                 <!-- GRADES SECTION -->
                 <section id="section-grades" class="dynamic-section hidden">
                     <div class="mb-8">
-                        <h2 class="text-2xl font-bold text-gray-800">Academic Grades</h2>
-                        <p class="text-gray-500">View your performance across all subjects.</p>
+                        <h2 class="text-3xl font-bold text-gray-800">My Grades</h2>
+                        <p class="text-sm text-gray-500 mt-1">2nd Quarter Academic Performance</p>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                        <!-- GPA Highlights -->
-                        <div class="lg:col-span-1 space-y-6">
-                            <div class="bg-icc p-6 rounded-2xl text-white shadow-lg">
-                                <span class="text-xs font-bold uppercase tracking-wider opacity-80">General Weighted
-                                    Average</span>
-                                <div class="text-5xl font-bold mt-2">1.25</div>
-                                <div class="mt-4 p-2 bg-white/10 rounded-lg text-xs font-medium">
-                                    <i class="fa-solid fa-medal mr-1"></i> Consistent Honor Student
-                                </div>
-                            </div>
-                            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Rankings</h4>
-                                <div class="space-y-3">
-                                    <div class="flex justify-between items-center text-sm">
-                                        <span class="text-gray-600">Class Rank</span>
-                                        <span class="font-bold text-gray-900">#2 / 45</span>
-                                    </div>
-                                    <div class="flex justify-between items-center text-sm">
-                                        <span class="text-gray-600">Batch Rank</span>
-                                        <span class="font-bold text-gray-900">#8 / 320</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Grades Table -->
-                        <div
-                            class="lg:col-span-3 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                            <table class="w-full text-left">
-                                <thead class="bg-gray-50 border-b border-gray-100">
-                                    <tr>
-                                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase">Subject</th>
-                                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase text-center">
-                                            Prelim</th>
-                                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase text-center">
-                                            Midterm</th>
-                                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase text-center">
-                                            Finals</th>
-                                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase text-center">
-                                            Rating</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-100">
-                                    <tr>
-                                        <td class="px-6 py-4 font-bold text-gray-800 text-sm">General Biology 1</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">1.25</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">1.00</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">--</td>
-                                        <td class="px-6 py-4 text-center font-bold text-icc text-sm">1.15</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 font-bold text-gray-800 text-sm">Pre-Calculus</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">1.50</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">1.25</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">--</td>
-                                        <td class="px-6 py-4 text-center font-bold text-icc text-sm">1.38</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 font-bold text-gray-800 text-sm">General Physics 1</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">1.00</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">1.00</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">--</td>
-                                        <td class="px-6 py-4 text-center font-bold text-icc text-sm">1.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4 font-bold text-gray-800 text-sm">Programming 1</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">1.75</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">1.50</td>
-                                        <td class="px-6 py-4 text-center text-sm text-gray-600">--</td>
-                                        <td class="px-6 py-4 text-center font-bold text-icc text-sm">1.63</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                        <!-- Grade Stat Card: Simplified -->
+                        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-center">
+                            <span
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">Credits
+                                Earned</span>
+                            <span class="text-4xl font-bold text-icc">18.0</span>
                         </div>
                     </div>
                 </section>
 
                 <!-- SCHEDULE SECTION -->
                 <section id="section-schedule" class="dynamic-section hidden">
-                    <div class="mb-8 flex justify-between items-center">
-                        <div>
-                            <h2 class="text-2xl font-bold text-gray-800">Class Schedule</h2>
-                            <p class="text-gray-500">Your weekly academic timetable.</p>
-                        </div>
-                        <div class="flex bg-white rounded-lg p-1 shadow-sm border border-gray-100">
-                            <button class="px-4 py-1.5 bg-icc text-white rounded-md text-xs font-bold">Weekly
-                                View</button>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
-                        <div class="min-w-[800px]">
-                            <!-- Header -->
-                            <div class="grid grid-cols-6 border-b border-gray-100 bg-gray-50">
-                                <div class="p-4"></div>
-                                <div
-                                    class="p-4 text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                    Mon</div>
-                                <div
-                                    class="p-4 text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                    Tue</div>
-                                <div
-                                    class="p-4 text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                    Wed</div>
-                                <div
-                                    class="p-4 text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                    Thu</div>
-                                <div
-                                    class="p-4 text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                    Fri</div>
-                            </div>
-                            <!-- Rows -->
-                            <div class="divide-y divide-gray-50">
-                                <div class="grid grid-cols-6 h-28">
-                                    <div class="p-4 text-right text-[10px] font-bold text-gray-400">08:00 AM</div>
-                                    <div class="p-1">
-                                        <div class="h-full bg-blue-50 border-l-4 border-blue-600 rounded-lg p-2"><span
-                                                class="block text-[10px] font-bold text-blue-800 uppercase tracking-tight">Physics
-                                                1</span><span class="block text-[9px] text-blue-600/70">Lab 2</span>
-                                        </div>
-                                    </div>
-                                    <div class="p-1"></div>
-                                    <div class="p-1">
-                                        <div class="h-full bg-blue-50 border-l-4 border-blue-600 rounded-lg p-2"><span
-                                                class="block text-[10px] font-bold text-blue-800 uppercase tracking-tight">Physics
-                                                1</span><span class="block text-[9px] text-blue-600/70">Lab 2</span>
-                                        </div>
-                                    </div>
-                                    <div class="p-1"></div>
-                                    <div class="p-1">
-                                        <div class="h-full bg-blue-50 border-l-4 border-blue-600 rounded-lg p-2"><span
-                                                class="block text-[10px] font-bold text-blue-800 uppercase tracking-tight">Physics
-                                                1</span><span class="block text-[9px] text-blue-600/70">Lab 2</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-6 h-28">
-                                    <div class="p-4 text-right text-[10px] font-bold text-gray-400">10:30 AM</div>
-                                    <div class="p-1"></div>
-                                    <div class="p-1">
-                                        <div class="h-full bg-green-50 border-l-4 border-green-600 rounded-lg p-2"><span
-                                                class="block text-[10px] font-bold text-green-800 uppercase tracking-tight">Biology
-                                                1</span><span class="block text-[9px] text-green-600/70">Room 302</span>
-                                        </div>
-                                    </div>
-                                    <div class="p-1"></div>
-                                    <div class="p-1">
-                                        <div class="h-full bg-green-50 border-l-4 border-green-600 rounded-lg p-2"><span
-                                                class="block text-[10px] font-bold text-green-800 uppercase tracking-tight">Biology
-                                                1</span><span class="block text-[9px] text-green-600/70">Room 302</span>
-                                        </div>
-                                    </div>
-                                    <div class="p-1"></div>
-                                </div>
-                                <div class="grid grid-cols-6 h-28">
-                                    <div class="p-4 text-right text-[10px] font-bold text-gray-400">01:30 PM</div>
-                                    <div class="p-1">
-                                        <div class="h-full bg-yellow-50 border-l-4 border-icc-yellow rounded-lg p-2">
-                                            <span
-                                                class="block text-[10px] font-bold text-gray-800 uppercase tracking-tight">Pre-Calculus</span><span
-                                                class="block text-[9px] text-gray-500">Room 402</span></div>
-                                    </div>
-                                    <div class="p-1"></div>
-                                    <div class="p-1">
-                                        <div class="h-full bg-yellow-50 border-l-4 border-icc-yellow rounded-lg p-2">
-                                            <span
-                                                class="block text-[10px] font-bold text-gray-800 uppercase tracking-tight">Pre-Calculus</span><span
-                                                class="block text-[9px] text-gray-500">Room 402</span></div>
-                                    </div>
-                                    <div class="p-1"></div>
-                                    <div class="p-1">
-                                        <div class="h-full bg-yellow-50 border-l-4 border-icc-yellow rounded-lg p-2">
-                                            <span
-                                                class="block text-[10px] font-bold text-gray-800 uppercase tracking-tight">Pre-Calculus</span><span
-                                                class="block text-[9px] text-gray-500">Room 402</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- BULLETIN BOARD SECTION -->
-                <section id="section-bulletin" class="dynamic-section hidden">
                     <div class="mb-8">
-                        <h2 class="text-2xl font-bold text-gray-800">Bulletin Board</h2>
-                        <p class="text-gray-500">Campus news and community updates.</p>
+                        <h2 class="text-3xl font-bold text-gray-800">Class Schedule</h2>
+                        <p class="text-sm text-gray-500 mt-1">Weekly Time-Table Overview</p>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <div class="lg:col-span-2 space-y-6">
-                            <!-- Input -->
-                            <div class="bg-white rounded-2xl p-4 border border-gray-100 flex gap-4">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-icc flex items-center justify-center text-white font-bold">
-                                    S</div>
-                                <button class="flex-1 bg-gray-50 rounded-xl px-4 text-left text-sm text-gray-400">Start
-                                    a post...</button>
-                            </div>
-                            <!-- Post -->
-                            <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-                                <div class="p-6">
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <div
-                                            class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-icc">
-                                            <i class="fa-solid fa-bullhorn"></i></div>
-                                        <div>
-                                            <h4 class="text-sm font-bold text-gray-800">School Admin</h4>
-                                            <p class="text-[10px] text-gray-400 uppercase font-bold">Official • 2h ago
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <h3 class="text-lg font-bold text-gray-800 mb-2">Final Exams Week Schedule</h3>
-                                    <p class="text-sm text-gray-600 mb-4 leading-relaxed">Please be advised that the
-                                        final examinations for the 2nd Quarter will begin on March 25. Check your
-                                        individual portals for room assignments.</p>
-                                    <div
-                                        class="h-48 bg-icc-light rounded-xl flex items-center justify-center text-icc/20 text-5xl">
-                                        <i class="fa-solid fa-file-invoice"></i></div>
-                                </div>
-                                <div class="px-6 py-3 bg-gray-50 border-t border-gray-100 flex gap-6">
-                                    <button class="text-xs font-bold text-gray-500 hover:text-icc"><i
-                                            class="fa-regular fa-thumbs-up"></i> 124</button>
-                                    <button class="text-xs font-bold text-gray-500 hover:text-icc"><i
-                                            class="fa-regular fa-comment"></i> 12</button>
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                            <!-- Daily Column -->
+                            <div class="space-y-4">
+                                <h3 class="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+                                    Monday</h3>
+                                <div class="p-4 bg-icc/5 border-l-4 border-icc rounded-r-xl">
+                                    <span class="text-[10px] text-icc font-bold">08:00 - 10:00</span>
+                                    <h4 class="text-sm font-bold text-gray-800 mt-1">Programming 1</h4>
+                                    <p class="text-[10px] text-gray-500">Lab 3</p>
                                 </div>
                             </div>
+                            <!-- Repeat for other days... -->
                         </div>
-                        <div class="space-y-6">
-                            <div class="bg-white rounded-2xl p-6 border border-gray-100">
-                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Trending</h3>
-                                <div class="space-y-4">
-                                    <div><span class="block text-sm font-bold text-gray-800">#ICCWeek2026</span><span
-                                            class="text-[10px] text-gray-400">2.4k posts</span></div>
-                                    <div><span class="block text-sm font-bold text-gray-800">#StemProject</span><span
-                                            class="text-[10px] text-gray-400">850 posts</span></div>
+                    </div>
+                </section>
+
+                <!-- BULLETIN BOARD / COMMUNITY SECTION -->
+                <section id="section-board" class="dynamic-section hidden">
+                    <div class="mb-8 flex justify-between items-end">
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-800">Bulletin Board</h2>
+                            <p class="text-sm text-gray-500 mt-1">Community updates and student blogs</p>
+                        </div>
+                        <button
+                            class="px-4 py-2 bg-icc text-white rounded-xl text-xs font-bold hover:bg-icc-dark transition-all">Create
+                            Post</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Bulletin Post 1 -->
+                        <div
+                            class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all">
+                            <div class="h-48 bg-gray-100 flex items-center justify-center text-gray-300 text-5xl">
+                                <i class="fa-solid fa-image"></i>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span
+                                        class="px-2 py-0.5 bg-blue-100 text-blue-600 text-[9px] font-bold uppercase rounded">Event</span>
+                                    <span class="text-[10px] text-gray-400 font-bold">Mar 20</span>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Campus Tech Expo 2026</h3>
+                                <p class="text-sm text-gray-600 leading-relaxed mb-4">Showcase your innovative projects
+                                    and connect with industry leaders at this year's Tech Expo.</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full bg-gray-200"></div>
+                                        <span class="text-[11px] font-bold text-gray-700">Student Council</span>
+                                    </div>
+                                    <span class="text-[11px] text-gray-400">12 Comments</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- SIGMA AI SECTION -->
-                <section id="section-ai" class="dynamic-section hidden">
-                    <div
-                        class="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col h-full overflow-hidden">
-                        <!-- Chat Header -->
+                <!-- SIGMA AI SECTION: Immersive & Neural -->
+                <section id="section-ai"
+                    class="dynamic-section hidden h-[calc(100vh-64px)] flex flex-col relative overflow-hidden -m-8">
+                    <!-- Neural Backdrop Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 via-icc-dark to-black z-0">
                         <div
-                            class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-icc text-white">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><i
-                                        class="fa-solid fa-wand-magic-sparkles"></i></div>
-                                <div>
-                                    <h3 class="font-bold">Sigma AI</h3>
-                                    <p class="text-[10px] opacity-80 uppercase font-bold tracking-widest">Always Active
+                            class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_50%_50%,rgba(255,208,0,0.1),transparent_50%)]">
+                        </div>
+                        <div class="absolute top-0 right-0 w-96 h-96 bg-icc/20 rounded-full blur-[120px] -mr-48 -mt-48">
+                        </div>
+                        <div
+                            class="absolute bottom-0 left-0 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] -ml-48 -mb-48">
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex-1 flex flex-col h-full max-w-5xl mx-auto w-full">
+                        <div class="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar" id="ai-chat-messages">
+                            <!-- AI Welcome Message: Glassmorphic -->
+                            <div class="flex gap-6 max-w-3xl">
+                                <div
+                                    class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 flex-shrink-0 flex items-center justify-center text-icc-yellow shadow-2xl">
+                                    <i class="fa-solid fa-sparkles text-xl"></i>
+                                </div>
+                                <div
+                                    class="p-6 bg-white/5 backdrop-blur-2xl rounded-3xl rounded-tl-none border border-white/10 shadow-2xl">
+                                    <p class="text-base text-gray-100 leading-relaxed font-medium">
+                                        Greetings, Stanley. I am <span class="text-icc-yellow font-black">Sigma
+                                            AI</span>, your neural academic co-pilot. I've synchronized with your latest
+                                        course progress.
+                                    </p>
+                                    <p class="text-sm text-gray-400 mt-4 leading-relaxed">
+                                        How shall we optimize your learning today? I can analyze your Calculus
+                                        derivations, summarize ICT documentation, or draft a study schedule for your
+                                        upcoming finals.
                                     </p>
                                 </div>
                             </div>
-                            <button class="opacity-80 hover:opacity-100"><i
-                                    class="fa-solid fa-rotate-right"></i></button>
                         </div>
-                        <!-- Chat Area -->
-                        <div class="flex-1 overflow-y-auto p-6 space-y-6 bg-gray-50/50">
-                            <div class="flex gap-3 max-w-[80%]">
+
+                        <!-- Glassmorphic Input Area -->
+                        <div class="p-8">
+                            <div class="relative max-w-4xl mx-auto group">
                                 <div
-                                    class="w-8 h-8 rounded-full bg-icc flex-shrink-0 flex items-center justify-center text-white text-xs">
-                                    <i class="fa-solid fa-sparkles"></i></div>
-                                <div
-                                    class="bg-white p-4 rounded-2xl rounded-tl-none border border-gray-100 shadow-sm text-sm text-gray-700 leading-relaxed">
-                                    Hello Stanley! I'm Sigma AI. I can help you with your lessons, assignments, and
-                                    school-related questions. How can I assist you today?
+                                    class="absolute -inset-1 bg-gradient-to-r from-icc-yellow/20 to-icc/20 rounded-[2rem] blur opacity-25 group-focus-within:opacity-100 transition duration-1000">
                                 </div>
-                            </div>
-                        </div>
-                        <!-- Chat Input -->
-                        <div class="p-4 bg-white border-t border-gray-100">
-                            <div class="relative flex items-center">
-                                <input type="text" placeholder="Ask Sigma AI about your courses..."
-                                    class="w-full bg-gray-50 border-0 rounded-xl px-4 py-3 pr-12 text-sm focus:ring-2 focus:ring-icc/20 outline-none">
+                                <input type="text" placeholder="Ask Sigma AI anything..."
+                                    class="relative w-full pl-8 pr-24 py-5 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[2rem] text-sm text-white placeholder-gray-500 focus:outline-none focus:border-icc-yellow/50 focus:ring-4 focus:ring-icc-yellow/5 transition-all">
                                 <button
-                                    class="absolute right-2 text-icc hover:bg-icc/10 w-8 h-8 rounded-lg flex items-center justify-center transition-colors"><i
-                                        class="fa-solid fa-paper-plane"></i></button>
+                                    class="absolute right-3 top-3 bottom-3 px-8 bg-icc-yellow text-gray-900 rounded-[1.5rem] text-xs font-black uppercase tracking-widest hover:bg-white hover:scale-105 active:scale-95 transition-all shadow-lg">
+                                    Send
+                                </button>
                             </div>
-                            <p class="text-[10px] text-gray-400 text-center mt-2 font-medium italic">Sigma AI is focused
-                                exclusively on academic and school-related topics.</p>
+                            <p
+                                class="text-[10px] text-center text-gray-500 mt-4 font-bold uppercase tracking-[0.2em] opacity-50">
+                                Powered by Sigma Neural Engine 2.0</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- JOURNAL SECTION -->
+                <section id="section-journal" class="dynamic-section hidden">
+                    <div class="mb-8 flex justify-between items-end">
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-800">Secret Journal</h2>
+                            <p class="text-sm text-gray-500 mt-1">Your private academic reflections</p>
+                        </div>
+                        <button
+                            class="px-4 py-2 bg-icc text-white rounded-xl text-xs font-bold hover:bg-icc-dark transition-all">New
+                            Entry</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div
+                            class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:rotate-1 transition-transform cursor-pointer">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase">March 17, 2026</span>
+                                <i class="fa-solid fa-lock text-gray-300 text-[10px]"></i>
+                            </div>
+                            <h3 class="text-base font-bold text-gray-800 mb-2">Feeling Overwhelmed</h3>
+                            <p class="text-xs text-gray-500 line-clamp-3">Calculus PT is due today and I still haven't
+                                finished the derivation part. Need to focus...</p>
                         </div>
                     </div>
                 </section>
 
                 <!-- MESSAGES / INBOX SECTION -->
                 <section id="section-messages" class="dynamic-section hidden">
-                    <div class="mb-8 flex justify-between items-center">
-                        <div>
-                            <h2 class="text-2xl font-bold text-gray-800">Mailbox</h2>
-                            <p class="text-gray-500">Official academic communications and student inquiries.</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <button
-                                class="px-4 py-2 border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 bg-white">
-                                <i class="fa-solid fa-folder-open mr-2 opacity-50"></i> Archives
-                            </button>
-                            <button
-                                class="px-6 py-2 bg-icc text-white rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2">
-                                <i class="fa-solid fa-pen-to-square"></i> Compose
-                            </button>
-                        </div>
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-gray-800">Messages</h2>
+                        <p class="text-sm text-gray-500 mt-1">Official communications and professor chats</p>
                     </div>
 
                     <div
-                        class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex h-[calc(100vh-280px)] min-h-[500px]">
-                        <!-- Mail Sidebar (Folders) -->
-                        <div class="w-64 border-r border-gray-50 bg-gray-50/30 p-4 hidden lg:flex flex-col gap-1">
-                            <button
-                                class="w-full text-left px-4 py-3 bg-icc text-white rounded-xl text-sm font-bold flex justify-between items-center">
-                                <span class="flex items-center gap-3"><i class="fa-solid fa-inbox"></i> Inbox</span>
-                                <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full">3</span>
-                            </button>
-                            <button
-                                class="w-full text-left px-4 py-3 text-gray-500 hover:bg-white rounded-xl text-sm font-medium transition-all flex items-center gap-3">
-                                <i class="fa-solid fa-paper-plane w-5"></i> Sent Mail
-                            </button>
-                            <button
-                                class="w-full text-left px-4 py-3 text-gray-500 hover:bg-white rounded-xl text-sm font-medium transition-all flex items-center gap-3">
-                                <i class="fa-solid fa-file-lines w-5"></i> Drafts
-                            </button>
-                            <button
-                                class="w-full text-left px-4 py-3 text-gray-500 hover:bg-white rounded-xl text-sm font-medium transition-all flex items-center gap-3">
-                                <i class="fa-solid fa-triangle-exclamation w-5"></i> Spam
-                            </button>
-                            <div class="mt-auto p-4 bg-icc-light/30 rounded-2xl border border-icc/10">
-                                <p class="text-[10px] text-icc font-bold uppercase tracking-widest mb-1">Storage</p>
-                                <div class="w-full h-1.5 bg-gray-200 rounded-full mb-2">
-                                    <div class="h-full bg-icc rounded-full" style="width: 12%;"></div>
-                                </div>
-                                <p class="text-[9px] text-gray-500 font-medium text-center">1.2 GB of 15 GB used</p>
+                        class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col md:flex-row h-[600px]">
+                        <!-- Chat List -->
+                        <div class="w-full md:w-80 border-r border-gray-50 overflow-y-auto">
+                            <div class="p-4 border-b border-gray-50 bg-gray-50/50">
+                                <input type="text" placeholder="Search messages..."
+                                    class="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs">
                             </div>
-                        </div>
-
-                        <!-- Mail List -->
-                        <div class="w-full lg:w-[400px] border-r border-gray-50 flex flex-col h-full bg-white">
-                            <div class="p-4 border-b border-gray-50">
-                                <div class="relative items-center flex">
-                                    <i class="fa-solid fa-magnifying-glass absolute left-3 text-gray-400 text-xs"></i>
-                                    <input type="text" placeholder="Search mail..."
-                                        class="w-full bg-gray-50 border-0 rounded-lg py-2 pl-9 pr-4 text-xs focus:ring-1 focus:ring-icc/20 outline-none">
-                                </div>
-                            </div>
-                            <div class="flex-1 overflow-y-auto custom-scrollbar">
-                                <!-- Message Item -->
-                                <div
-                                    class="p-4 border-b border-gray-50 bg-icc/5 cursor-pointer relative group border-l-4 border-l-icc">
+                            <div class="divide-y divide-gray-50">
+                                <div class="p-4 hover:bg-gray-50 cursor-pointer bg-icc/5 border-l-4 border-icc">
                                     <div class="flex justify-between items-start mb-1">
-                                        <span class="text-xs font-bold text-gray-900">Dr. Aris (Coordinator)</span>
-                                        <span class="text-[10px] text-icc font-bold">10:45 AM</span>
+                                        <span class="text-xs font-bold text-gray-800">Prof. Maria Clara</span>
+                                        <span class="text-[9px] text-gray-400">10:45 AM</span>
                                     </div>
-                                    <h4 class="text-xs font-bold text-gray-800 truncate mb-1">Subject: Capstone Project
-                                        Proposal Feedback</h4>
-                                    <p class="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">Following up on
-                                        our meeting yesterday, I've reviewed your initial draft and have some
-                                        suggestions regarding the technology stack...</p>
+                                    <p class="text-[11px] text-gray-600 line-clamp-1"> Stanley, regarding your last
+                                        assessment...</p>
                                 </div>
-                                <!-- Message Item -->
-                                <div
-                                    class="p-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-colors relative group">
+                                <div class="p-4 hover:bg-gray-50 cursor-pointer">
                                     <div class="flex justify-between items-start mb-1">
-                                        <span class="text-xs font-medium text-gray-700">Registrar's Office</span>
-                                        <span class="text-[10px] text-gray-400">Yesterday</span>
+                                        <span class="text-xs font-bold text-gray-800">Academic Affairs</span>
+                                        <span class="text-[9px] text-gray-400">Yesterday</span>
                                     </div>
-                                    <h4 class="text-xs font-medium text-gray-800 truncate mb-1">Enrollment Verification
-                                        Received</h4>
-                                    <p class="text-[11px] text-gray-400 line-clamp-2 leading-relaxed">Your request for
-                                        enrollment verification for the second semester has been processed and is ready
-                                        for pickup...</p>
-                                </div>
-                                <!-- Message Item -->
-                                <div
-                                    class="p-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-colors relative group border-l-4 border-l-icc">
-                                    <div class="flex justify-between items-start mb-1">
-                                        <span class="text-xs font-bold text-gray-900">Prof. Maria Clara</span>
-                                        <span class="text-[10px] text-icc font-bold">Mar 15</span>
-                                    </div>
-                                    <h4 class="text-xs font-bold text-gray-800 truncate mb-1">RESCHED: Advanced Calculus
-                                        Consultation</h4>
-                                    <p class="text-[11px] text-gray-600 line-clamp-2 leading-relaxed">Please note that
-                                        our consultation session scheduled for Monday will be moved to Wednesday at 4 PM
-                                        in the Science Lab...</p>
+                                    <p class="text-[11px] text-gray-500 line-clamp-1">The midterm schedule has been
+                                        updated.</p>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Mail View (Desktop Only) -->
-                        <div class="hidden lg:flex flex-1 flex flex-col h-full bg-white">
-                            <!-- Empty View placeholder -->
-                            <div
-                                class="flex-1 flex flex-col items-center justify-center p-12 text-center text-gray-400">
-                                <div
-                                    class="w-20 h-20 rounded-full bg-gray-50 flex items-center justify-center mb-4 text-3xl">
-                                    <i class="fa-solid fa-envelope-open opacity-20"></i>
+                        <!-- Chat Window -->
+                        <div class="flex-1 flex flex-col bg-gray-50/20">
+                            <div class="p-4 border-b border-gray-50 bg-white flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gray-100"></div>
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-800">Prof. Maria Clara</p>
+                                        <p class="text-[10px] text-green-500 font-medium">Online</p>
+                                    </div>
                                 </div>
-                                <h3 class="text-sm font-bold text-gray-800 mb-1">Select an email to read</h3>
-                                <p class="text-xs max-w-[240px]">Interact with your inbox to view full correspondence
-                                    and attachments.</p>
+                                <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                            </div>
+                            <div class="flex-1 p-6 flex flex-col items-center justify-center text-center opacity-40">
+                                <i class="fa-regular fa-envelope-open text-5xl mb-4"></i>
+                                <p class="text-sm font-medium">Select a conversation to start messaging</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- COURSE DETAIL VIEW (Focus Mode Contextual) -->
+                <section id="section-course-detail" class="dynamic-section hidden">
+                    <!-- Banner -->
+                    <div class="h-64 bg-gray-900 rounded-3xl mb-8 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="absolute bottom-8 left-8 right-8">
+                            <button id="backToCourses"
+                                class="flex items-center gap-2 text-white/60 hover:text-white text-xs font-bold uppercase tracking-widest mb-4 transition-colors">
+                                <i class="fa-solid fa-arrow-left"></i> Back to ICT Strand
+                            </button>
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <span id="detail-category"
+                                        class="text-xs font-bold text-icc-yellow uppercase tracking-widest mb-1 block">Programming</span>
+                                    <h2 id="detail-title" class="text-4xl font-bold text-white tracking-tight">
+                                        Programming 1</h2>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-white/60 text-xs font-bold uppercase tracking-widest mb-1">Current
+                                        Grade</p>
+                                    <p class="text-3xl font-bold text-icc-yellow">1.25</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 space-y-8">
+                            <!-- Course Modules -->
+                            <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+                                <div class="p-6 border-b border-gray-50 flex justify-between items-center">
+                                    <h3 class="font-bold text-gray-800 text-lg">Curriculum</h3>
+                                    <span class="text-xs font-bold text-gray-400 uppercase">Quarter 2</span>
+                                </div>
+                                <div class="divide-y divide-gray-50">
+                                    <div class="p-6">
+                                        <div class="flex items-center justify-between mb-4">
+                                            <h4 class="font-bold text-gray-800">Unit 1: Advanced C++ Concepts</h4>
+                                            <span
+                                                class="px-2 py-0.5 bg-icc/10 text-icc text-[9px] font-bold uppercase rounded">Active</span>
+                                        </div>
+                                        <div class="space-y-4">
+                                            <div class="flex items-center justify-between group cursor-pointer">
+                                                <div class="flex items-center gap-3">
+                                                    <div
+                                                        class="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-icc/10 group-hover:text-icc transition-colors">
+                                                        <i class="fa-solid fa-play text-[10px]"></i>
+                                                    </div>
+                                                    <span
+                                                        class="text-sm text-gray-600 group-hover:text-gray-900 font-medium">1.1
+                                                        Introduction to Pointers</span>
+                                                </div>
+                                                <i
+                                                    class="fa-solid fa-check-circle text-icc opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-8">
+                            <!-- Instructor Info -->
+                            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                                <h3 class="font-bold text-gray-800 text-base mb-6">Instructor</h3>
+                                <div class="flex items-center gap-4 mb-6">
+                                    <div class="w-14 h-14 rounded-2xl bg-gray-100"></div>
+                                    <div>
+                                        <p id="detail-instructor" class="font-bold text-gray-800">Engr. Rico Blanco</p>
+                                        <p class="text-xs text-gray-500">Computer Science Dept.</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="w-full py-3 bg-gray-50 border border-gray-100 rounded-xl text-xs font-bold text-gray-600 hover:bg-icc/5 hover:text-icc hover:border-icc/20 transition-all">Message
+                                    Professor</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ASSIGNMENT DETAIL VIEW -->
+                <section id="section-assignment-detail" class="dynamic-section hidden">
+                    <div class="max-w-4xl mx-auto">
+                        <button id="backToAssignments"
+                            class="flex items-center gap-2 text-gray-400 hover:text-gray-600 text-[10px] font-bold uppercase tracking-widest mb-6 transition-colors">
+                            <i class="fa-solid fa-arrow-left"></i> Back to Assessments
+                        </button>
+
+                        <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
+                            <div class="flex justify-between items-start mb-8">
+                                <div>
+                                    <h2 id="assign-title" class="text-3xl font-bold text-gray-800 mb-2">Performance Task
+                                        2</h2>
+                                    <div class="flex items-center gap-3">
+                                        <span id="assign-subject"
+                                            class="text-xs font-bold text-icc uppercase tracking-widest">Pre-Calculus</span>
+                                        <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                                        <span class="text-xs text-gray-500 font-medium">Posted Mar 10, 2026</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span
+                                        class="px-3 py-1 bg-red-100 text-red-600 text-[10px] font-bold uppercase rounded-full">Missing</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 border-y border-gray-50 py-6">
+                                <div class="text-center md:border-r border-gray-50">
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Due
+                                        Date</p>
+                                    <p class="text-sm font-bold text-gray-800">Mar 17, 5:00 PM</p>
+                                </div>
+                                <div class="text-center md:border-r border-gray-50">
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Points
+                                    </p>
+                                    <p class="text-sm font-bold text-gray-800">100 Max</p>
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Type
+                                    </p>
+                                    <p class="text-sm font-bold text-gray-800">Submission</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1574,6 +1534,8 @@
             </div>
         </main>
     </div>
+
+    <!-- CONSOLIDATED EVENT DISPLAY: handled dynamically in #calendar-event-panel -->
 
     <!-- SCRIPTS: Student Page JavaScript -->
     <script src="js/student.js"></script>
