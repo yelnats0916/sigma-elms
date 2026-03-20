@@ -35,7 +35,8 @@
 <body class="bg-gray-50 min-h-screen font-['Outfit'] flex flex-col overflow-x-hidden">
     <!-- BRAND LOGO BLOCK -->
     <div id="logo-block"
-        class="fixed top-0 left-0 w-[200px] h-32 bg-white z-[80] flex items-center justify-center p-2 border-r border-b border-gray-100 transition-all duration-300">
+        class="fixed top-0 left-0 w-[200px] h-32 bg-white z-[80] flex items-center justify-center p-2 border-r border-b border-gray-100 transition-all duration-300 cursor-pointer"
+        onclick="document.getElementById('nav-home').click()">
         <!-- Dashboard Logo (Large) -->
         <div class="logo-large w-28 h-28 bg-white flex items-center justify-center transition-all">
             <img src="image/ICC logo.jpg" alt="ICC Logo" class="w-full h-full object-contain">
@@ -69,7 +70,7 @@
         <div class="ml-auto flex items-center pr-6 gap-2">
             <!-- Create Button -->
             <div class="relative">
-                <button id="notesDropdownBtn"
+                <button id="notesDropdownBtn" title="Notepad"
                     class="w-10 h-10 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200/50 focus:outline-none group">
                     <i class="fa-regular fa-note-sticky text-xl group-[.active]:text-icc-yellow"></i>
                 </button>
@@ -78,7 +79,7 @@
                 <div id="notesPanel"
                     class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 hidden z-[100] flex flex-col overflow-hidden">
                     <div class="px-4 py-3 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
-                        <h3 class="font-bold text-gray-800 text-sm">Scratchpad</h3>
+                        <h3 class="font-bold text-gray-800 text-sm">Notepad</h3>
                         <button id="clearNotesBtn"
                             class="text-icc text-[10px] font-bold uppercase tracking-widest hover:underline">Clear</button>
                     </div>
@@ -98,7 +99,7 @@
 
             <!-- Notifications (Academic Cap) -->
             <div class="relative">
-                <button id="notifDropdownBtn"
+                <button id="notifDropdownBtn" title="Notifications"
                     class="relative w-10 h-10 rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center">
                     <i class="fa-regular fa-bell text-xl text-gray-600 group-[.active]:text-icc-yellow"></i>
                     <!-- Notification Badge -->
@@ -189,7 +190,7 @@
     <aside id="sidebar"
         class="fixed left-0 top-32 h-[calc(100vh-128px)] w-[220px] bg-icc z-[70] overflow-y-auto transition-all duration-300 border-r border-icc-dark/10">
         <nav class="p-0 py-4 flex flex-col h-full">
-            <a href="#" id="nav-home" title="Dashboard Home"
+            <a href="#" id="nav-home" title="Home"
                 class="flex items-center gap-0 h-14 text-white transition-all no-underline bg-white/20 group">
                 <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
                     <i class="fa-solid fa-house text-lg opacity-90"></i>
@@ -197,7 +198,7 @@
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Home</span>
             </a>
-            <a href="#" id="nav-courses" title="My Enrolled Courses"
+            <a href="#" id="nav-courses" title="Subjects"
                 class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
                 <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
                     <i class="fa-regular fa-bookmark text-lg"></i>
@@ -205,27 +206,27 @@
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">ICT Strand</span>
             </a>
-            <a href="#" id="nav-assignments" title="Assessments & Tasks"
+            <a href="#" id="nav-assignments" title="Assessments"
                 class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
                 <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
                     <i class="fa-regular fa-clipboard text-lg"></i>
-                    <span class="rail-label">Tasks</span>
+                    <span class="rail-label">Assessments</span>
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Assessments</span>
             </a>
-            <a href="#" id="nav-grades" title="Academic Progress"
+            <a href="#" id="nav-grades" title="Grades"
                 class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
                 <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
                     <i class="fa-regular fa-chart-bar text-lg"></i>
                     <span class="rail-label">Grades</span>
                 </div>
-                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Progress</span>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Grades</span>
             </a>
-            <a href="#" id="nav-attendance" title="Schedule & Attendance"
+            <a href="#" id="nav-attendance" title="Attendance"
                 class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
                 <div class="w-[68px] flex flex-col items-center justify-center flex-shrink-0">
                     <i class="fa-regular fa-calendar-check text-lg"></i>
-                    <span class="rail-label">Attend</span>
+                    <span class="rail-label">Attendance</span>
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Attendance</span>
             </a>
@@ -672,12 +673,13 @@
                     <!-- ENROLLED SECTION -->
                     <div id="subjects-enrolled" class="section-anchor mb-12">
                         <div class="flex items-center gap-3 mb-6">
-                            <i class="fa-solid fa-graduation-cap text-icc-green"></i>
-                            <h3 class="text-lg font-black text-gray-700 uppercase tracking-wider">Enrolled Subjects</h3>
-                            <div class="h-[2px] flex-1 bg-gray-100 ml-2 rounded-full"></div>
+                            <i class="fa-solid fa-graduation-cap enrolled-header-icon"></i>
+                            <h3 class="text-lg font-black uppercase tracking-wider enrolled-header-text">Enrolled
+                                Subjects</h3>
+                            <div class="h-[2px] flex-1 ml-2 rounded-full enrolled-header-line"></div>
                         </div>
 
-                        <div class="flex flex-col gap-4">
+                        <div class="flex flex-col gap-0">
                             <div id="card-prog1" class="subject-card-wide group cursor-pointer"
                                 data-subject="Programming 1">
                                 <div class="flex-1 flex items-center gap-6">
@@ -701,35 +703,18 @@
                                     </div>
                                     <div class="w-64">
                                         <div class="flex justify-between items-center mb-1.5">
-                                            <span class="text-[10px] font-black text-icc">40% Complete</span>
+                                            <span class="text-[10px] font-black text-icc">25% In Progress</span>
                                         </div>
                                         <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                                             <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
-                                                style="width: 40%"></div>
+                                                style="width: 25%"></div>
                                         </div>
                                     </div>
                                     <i
                                         class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
                                 </div>
                             </div>
-                            <div
-                                class="subject-details hidden p-6 bg-gray-50/50 rounded-b-xl border-x border-b border-gray-100 -mt-2 mb-2 animate-slide-down">
-                                <div class="flex gap-8">
-                                    <div class="flex-1">
-                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
-                                            Module Importance</p>
-                                        <p class="text-xs text-gray-600 leading-relaxed font-medium">Mastering Java
-                                            syntax and object-oriented principles is the critical foundation for all
-                                            future software engineering. This module focuses on pure logic and data
-                                            structures.</p>
-                                    </div>
-                                    <div class="w-32">
-                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
-                                            Current Grade</p>
-                                        <p class="text-lg font-black text-icc">1.50</p>
-                                    </div>
-                                </div>
-                            </div>
+
 
                             <!-- Web Dev -->
                             <div id="card-webdev" class="subject-card-wide group cursor-pointer"
@@ -755,34 +740,18 @@
                                     </div>
                                     <div class="w-64">
                                         <div class="flex justify-between items-center mb-1.5">
-                                            <span class="text-[10px] font-black text-icc">65% Complete</span>
+                                            <span class="text-[10px] font-black text-icc">34% In Progress</span>
                                         </div>
                                         <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                                             <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
-                                                style="width: 65%"></div>
+                                                style="width: 34%"></div>
                                         </div>
                                     </div>
                                     <i
                                         class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
                                 </div>
                             </div>
-                            <div
-                                class="subject-details hidden p-6 bg-gray-50/50 rounded-b-xl border-x border-b border-gray-100 -mt-2 mb-2 animate-slide-down">
-                                <div class="flex gap-8">
-                                    <div class="flex-1">
-                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
-                                            Module Importance</p>
-                                        <p class="text-xs text-gray-600 leading-relaxed font-medium">Responsive design
-                                            and accessible UI/UX are critical for modern digital products. This module
-                                            covers industrial-standard styling and interactive behavior.</p>
-                                    </div>
-                                    <div class="w-32">
-                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
-                                            Current Grade</p>
-                                        <p class="text-lg font-black text-icc">1.25</p>
-                                    </div>
-                                </div>
-                            </div>
+
 
                             <!-- Systems Arch -->
                             <div id="card-sysarch" class="subject-card-wide group cursor-pointer"
@@ -808,32 +777,15 @@
                                     </div>
                                     <div class="w-64">
                                         <div class="flex justify-between items-center mb-1.5">
-                                            <span class="text-[10px] font-black text-icc">25% Complete</span>
+                                            <span class="text-[10px] font-black text-icc">20% In Progress</span>
                                         </div>
                                         <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                                             <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
-                                                style="width: 25%"></div>
+                                                style="width: 20%"></div>
                                         </div>
                                     </div>
                                     <i
                                         class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
-                                </div>
-                            </div>
-                            <div
-                                class="subject-details hidden p-6 bg-gray-50/50 rounded-b-xl border-x border-b border-gray-100 -mt-2 mb-2 animate-slide-down">
-                                <div class="flex gap-8">
-                                    <div class="flex-1">
-                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
-                                            Module Importance</p>
-                                        <p class="text-xs text-gray-600 leading-relaxed font-medium">Understanding
-                                            hardware foundations like CPU cycles and binary logic is essential for
-                                            optimizing system-level software and firmware development.</p>
-                                    </div>
-                                    <div class="w-32">
-                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
-                                            Current Grade</p>
-                                        <p class="text-lg font-black text-icc">1.75</p>
-                                    </div>
                                 </div>
                             </div>
 
@@ -861,32 +813,15 @@
                                     </div>
                                     <div class="w-64">
                                         <div class="flex justify-between items-center mb-1.5">
-                                            <span class="text-[10px] font-black text-icc">10% Complete</span>
+                                            <span class="text-[10px] font-black text-icc">13% In Progress</span>
                                         </div>
                                         <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                                             <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
-                                                style="width: 10%"></div>
+                                                style="width: 13%"></div>
                                         </div>
                                     </div>
                                     <i
                                         class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
-                                </div>
-                            </div>
-                            <div
-                                class="subject-details hidden p-6 bg-gray-50/50 rounded-b-xl border-x border-b border-gray-100 -mt-2 mb-2 animate-slide-down">
-                                <div class="flex gap-8">
-                                    <div class="flex-1">
-                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
-                                            Module Importance</p>
-                                        <p class="text-xs text-gray-600 leading-relaxed font-medium">This module focuses
-                                            on the ethical and effective use of digital tools for social change and
-                                            individual empowerment. Essential for the modern ICT professional.</p>
-                                    </div>
-                                    <div class="w-32">
-                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
-                                            Current Grade</p>
-                                        <p class="text-lg font-black text-icc">2.00</p>
-                                    </div>
                                 </div>
                             </div>
 
@@ -913,11 +848,11 @@
                                     </div>
                                     <div class="w-64">
                                         <div class="flex justify-between items-center mb-1.5">
-                                            <span class="text-[10px] font-black text-icc">20% Complete</span>
+                                            <span class="text-[10px] font-black text-icc">13% In Progress</span>
                                         </div>
                                         <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                                             <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
-                                                style="width: 20%"></div>
+                                                style="width: 13%"></div>
                                         </div>
                                     </div>
                                     <i
@@ -948,11 +883,11 @@
                                     </div>
                                     <div class="w-64">
                                         <div class="flex justify-between items-center mb-1.5">
-                                            <span class="text-[10px] font-black text-icc">50% Complete</span>
+                                            <span class="text-[10px] font-black text-icc">30% In Progress</span>
                                         </div>
                                         <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                                             <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
-                                                style="width: 50%"></div>
+                                                style="width: 30%"></div>
                                         </div>
                                     </div>
                                     <i
@@ -983,11 +918,11 @@
                                     </div>
                                     <div class="w-64">
                                         <div class="flex justify-between items-center mb-1.5">
-                                            <span class="text-[10px] font-black text-icc">35% Complete</span>
+                                            <span class="text-[10px] font-black text-icc">30% In Progress</span>
                                         </div>
                                         <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                                             <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
-                                                style="width: 35%"></div>
+                                                style="width: 30%"></div>
                                         </div>
                                     </div>
                                     <i
@@ -1018,11 +953,11 @@
                                     </div>
                                     <div class="w-64">
                                         <div class="flex justify-between items-center mb-1.5">
-                                            <span class="text-[10px] font-black text-icc">15% Complete</span>
+                                            <span class="text-[10px] font-black text-icc">13% In Progress</span>
                                         </div>
                                         <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                                             <div class="h-full bg-icc-yellow shadow-[0_0_8px_rgba(255,208,0,0.5)]"
-                                                style="width: 15%"></div>
+                                                style="width: 13%"></div>
                                         </div>
                                     </div>
                                     <i
@@ -1035,21 +970,18 @@
                     <!-- COMPLETED SECTION -->
                     <div id="subjects-completed" class="section-anchor">
                         <div class="flex items-center gap-3 mb-6">
-                            <i class="fa-solid fa-circle-check text-gray-400"></i>
-                            <h3 class="text-lg font-black text-gray-500 uppercase tracking-wider">Completed Subjects
-                            </h3>
-                            <div class="h-[2px] flex-1 bg-gray-100 ml-2 rounded-full"></div>
+                            <i class="fa-solid fa-circle-check completed-header-icon"></i>
+                            <h3 class="text-lg font-black uppercase tracking-wider completed-header-text">Completed
+                                Subjects</h3>
+                            <div class="h-[2px] flex-1 ml-2 rounded-full completed-header-line"></div>
                         </div>
 
-                        <div class="flex flex-col gap-4">
+                        <div class="flex flex-col gap-0">
                             <!-- Intro to Computing -->
-                            <div id="card-introcomp"
-                                class="subject-card-wide group cursor-pointer bg-gray-50/50 grayscale-[0.5] opacity-80 hover:grayscale-0 hover:opacity-100"
+                            <div id="card-introcomp" class="subject-card-wide group cursor-pointer bg-gray-50/50"
                                 data-subject="Intro to Computing">
                                 <div class="flex-1 flex items-center gap-6">
-                                    <div class="subject-icon-box">
-                                        <i class="fa-solid fa-desktop text-xl"></i>
-                                    </div>
+                                    <div class="subject-icon-box"><i class="fa-solid fa-desktop text-xl"></i></div>
                                     <div class="min-w-[200px]">
                                         <h4
                                             class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
@@ -1058,8 +990,12 @@
                                             ICT Strand • Foundation</p>
                                     </div>
                                 </div>
-
                                 <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Mr. Carlo Bautista</p>
+                                    </div>
                                     <div class="text-right min-w-[140px]">
                                         <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Final
                                             Grade</p>
@@ -1067,37 +1003,129 @@
                                     </div>
                                     <div class="w-64">
                                         <div class="flex justify-between items-center mb-1.5">
-                                            <span class="text-[10px] font-black text-gray-400">100% Completed</span>
+                                            <span class="text-[10px] font-black text-icc">50% Completed</span>
                                         </div>
-                                        <div class="w-full h-2 bg-gray-200/50 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gray-400" style="width: 100%"></div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc" style="width: 50%"></div>
                                         </div>
                                     </div>
                                     <i
                                         class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
                                 </div>
                             </div>
-                            <div
-                                class="subject-details hidden p-6 bg-gray-50/50 rounded-b-xl border-x border-b border-gray-100 -mt-2 mb-2 animate-slide-down">
-                                <div class="flex gap-8">
-                                    <div class="flex-1">
-                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
-                                            Module Summary</p>
-                                        <p class="text-xs text-gray-600 leading-relaxed font-medium">This foundational
-                                            module provided the broad context of digital technology, computer history,
-                                            and its socio-economic impact on modern society. Completed with honors.</p>
+
+                            <!-- Oral Communication -->
+                            <div id="card-oralcomm" class="subject-card-wide group cursor-pointer bg-gray-50/50"
+                                data-subject="Oral Communication">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box"><i class="fa-solid fa-comments text-xl"></i></div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Oral Communication</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            Core Subject • 1st Semester</p>
                                     </div>
-                                    <div class="w-32">
-                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
-                                            Status</p>
-                                        <p class="text-lg font-black text-icc-green">CREDITED</p>
+                                </div>
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Ms. Ana Reyes</p>
                                     </div>
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Final
+                                            Grade</p>
+                                        <p class="text-xs font-black text-icc-green">1.50 Very Good</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">50% Completed</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
+                                </div>
+                            </div>
+
+                            <!-- General Mathematics -->
+                            <div id="card-genmath" class="subject-card-wide group cursor-pointer bg-gray-50/50"
+                                data-subject="General Mathematics">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box"><i class="fa-solid fa-infinity text-xl"></i></div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            General Mathematics</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            Core Subject • 1st Semester</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Mr. Jose Santos</p>
+                                    </div>
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Final
+                                            Grade</p>
+                                        <p class="text-xs font-black text-icc-green">1.75 Good</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">50% Completed</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
+                                </div>
+                            </div>
+
+                            <!-- Animation (Basic) -->
+                            <div id="card-animation" class="subject-card-wide group cursor-pointer bg-gray-50/50"
+                                data-subject="Animation Basic">
+                                <div class="flex-1 flex items-center gap-6">
+                                    <div class="subject-icon-box"><i class="fa-solid fa-palette text-xl"></i></div>
+                                    <div class="min-w-[200px]">
+                                        <h4
+                                            class="font-bold text-gray-800 group-hover:text-icc-green transition-colors">
+                                            Animation (Basic)</h4>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">
+                                            ICT Strand • 1st Semester</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-12 pr-4">
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">
+                                            Instructor</p>
+                                        <p class="text-xs font-bold text-gray-600">Ms. Tricia Villanueva</p>
+                                    </div>
+                                    <div class="text-right min-w-[140px]">
+                                        <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Final
+                                            Grade</p>
+                                        <p class="text-xs font-black text-icc-green">1.25 Excellent</p>
+                                    </div>
+                                    <div class="w-64">
+                                        <div class="flex justify-between items-center mb-1.5">
+                                            <span class="text-[10px] font-black text-icc">50% Completed</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-icc" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                    <i
+                                        class="fa-solid fa-chevron-right text-gray-300 text-xs group-hover:text-icc-yellow transition-all group-hover:translate-x-1"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-
                 </section>
 
                 <!-- ASSIGNMENTS / TASKS SECTION -->
