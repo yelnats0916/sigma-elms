@@ -1,255 +1,201 @@
-<!DOCTYPE html>
-<html lang="en">
+/* =============================================================
+   SIGMA ELMS — Login Page JavaScript
+   Interface Computer College | Senior High School ELMS
+   ============================================================= */
 
-<!-- =============================================================
-     HEAD: Meta, Fonts, CSS, Tailwind Config
-     ============================================================= -->
+document.addEventListener('DOMContentLoaded', function () {
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sigma ELMS - Interface Computer College</title>
+    /* ===== DOM SELECTORS: Cached references to all interactive elements ===== */
+    const ui = {
+        modals: {
+            login: { el: document.getElementById('loginModal'), box: document.getElementById('loginBox') },
+            help: { el: document.getElementById('helpModal'), box: document.getElementById('helpBox') }
+        },
+        btns: {
+            openLogin: document.getElementById('openLoginBtn'),
+            closeLogin: document.getElementById('closeLoginBtn'),
+            openHelp: document.querySelectorAll('#openHelpBtn'),
+            closeHelp: document.getElementById('closeHelpBtn')
+        },
+        form: document.getElementById('landingLoginForm')
+    };
 
-    <!-- FONTS: Google Inter + Font Awesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS: Custom Stylesheet -->
-    <link rel="stylesheet" href="css/index.css">
+    /* ===== MODAL SYSTEM: Show/hide animated modal overlays ===== */
 
-    <!-- TAILWIND: CDN + ICC Custom Color Config -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        icc: '#15803d',
-                        'icc-li 2ght': '#dcfce7',
-                        'icc-dark': '#14532d',
-                        'icc-yellow': '#FFD000',
-                    }
+    function toggleModal(modal, show, isHelp = false) {
+        if (!modal.el || !modal.box) return;
+
+        if (show) {
+            modal.el.classList.remove('opacity-0', 'pointer-events-none');
+            modal.el.classList.add('opacity-100', 'pointer-events-auto');
+            const translateClass = isHelp ? 'translate-y-[-100px]' : 'translate-y-5';
+            modal.box.classList.remove(translateClass, 'opacity-0');
+            modal.box.classList.add('translate-y-0', 'opacity-100');
+            document.body.classList.add('modal-open');
+        } else {
+            modal.el.classList.add('opacity-0', 'pointer-events-none');
+            modal.el.classList.remove('opacity-100', 'pointer-events-auto');
+            const translateClass = isHelp ? 'translate-y-[-100px]' : 'translate-y-5';
+            modal.box.classList.add(translateClass, 'opacity-0');
+            modal.box.classList.remove('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                if (!document.querySelector('.opacity-100')) {
+                    document.body.classList.remove('modal-open');
                 }
-            }
+            }, 300);
         }
-    </script>
-</head>
+    }
 
-<body class="flex flex-col bg-gray-50 overflow-x-hidden min-h-screen">
+    /* MODAL LISTENERS */
+    if (ui.btns.openLogin) ui.btns.openLogin.onclick = () => toggleModal(ui.modals.login, true);
+    if (ui.btns.closeLogin) ui.btns.closeLogin.onclick = () => toggleModal(ui.modals.login, false);
 
-    <!-- =============================================================
-         NAVIGATION: Fixed top navbar with ICC branding
-         ============================================================= -->
-    <header id="mainNav"
-        class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-[5%] bg-white border-b-2 border-icc lg:shadow-sm h-[82px] pl-[5%] pr-6">
-        <div class="flex items-center gap-3 no-underline -ml-4 h-full">
-            <a href="index.html" class="flex items-center gap-2 md:gap-3 no-underline">
-                <img src="image/ICC logo.jpg" alt="ICC Logo"
-                    class="w-[48px] h-[48px] md:w-[56px] md:h-[56px] object-contain">
-                <div>
-                    <h1 class="text-base md:text-xl font-bold text-icc-dark leading-tight">Interface Computer College
-                    </h1>
-                    <span class="text-[10px] md:text-xs text-gray-500 font-medium">Senior High School ELMS</span>
-                </div>
-            </a>
-        </div>
+    // Help Modal Toggle
+    const openHelp = (e) => {
+        if (e) e.preventDefault();
+        toggleModal(ui.modals.login, false);
+        toggleModal(ui.modals.help, true, true);
+    };
+    if (ui.btns.openHelp) {
+        ui.btns.openHelp.forEach(btn => btn.onclick = openHelp);
+    }
+    if (ui.btns.closeHelp) ui.btns.closeHelp.onclick = () => toggleModal(ui.modals.help, false, true);
 
-        <!-- FAQ BUTTON (Desktop Only) - Moved to far right for better balance -->
-        <a href="faq.html" id="openFaqBtn"
-            class="hidden lg:flex group self-stretch px-6 md:px-8 bg-white text-icc-dark font-bold hover:bg-white border-b-2 border-transparent hover:border-white items-center gap-3 transition-colors cursor-pointer outline-none shadow-none no-underline">
-            <i
-                class="fa-solid fa-circle-question text-3xl text-gray-400 group-hover:text-icc-yellow transition-colors"></i>
-            <span class="hidden md:block text-xl">FAQ</span>
-        </a>
-    </header>
 
-    <!-- =============================================================
-         MAIN: Page Content Area
-         ============================================================= -->
-    <main class="flex-1 mt-20 flex flex-col bg-white">
+    /* ===== LOGIN LOGIC: Unified Role-based Redirect ===== */
 
-        <!-- MOBILE/TABLET FAQ (Visible when slider is hidden) -->
-        <div class="lg:hidden w-full px-8 py-3 bg-white border-none">
-            <a href="faq.html" id="openFaqMobileBtn"
-                class="flex items-center gap-2 text-gray-500 hover:text-icc-yellow transition-colors underline text-sm font-semibold no-underline">
-                <i class="fa-solid fa-circle-question text-base"></i>
-                <span>FAQ / Help Guide</span>
-            </a>
-        </div>
+    if (ui.form) {
+        ui.form.onsubmit = (e) => {
+            e.preventDefault();
+            const idField = document.getElementById('schoolId');
+            const idValue = idField ? idField.value.trim().toUpperCase() : '';
 
-        <!-- MAIN CONTENT AREA: Slider + Login Panel -->
-        <div class="flex-1 w-full m-0 p-0 flex flex-col md:flex-row">
+            if (!idValue) return alert("Please enter your Login ID.");
 
-            <!-- IMAGE SLIDER: Auto-rotating campus photos (desktop only) -->
-            <div class="w-[65%] relative overflow-hidden lg:block hidden">
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex gap-3" id="dotsContainer"></div>
-                <div class="w-full h-full relative left-0 overflow-hidden" id="slider">
-                    <!-- Slides injected by JS -->
-                </div>
+            // ROLE-BASED REDIRECTS (HiFi Logic)
+            if (idValue === 'ADMIN') {
+                window.location.replace('admin.html');
+                return;
+            }
+            if (idValue === 'SUPERADMIN') {
+                window.location.replace('superadmin.html');
+                return;
+            }
+
+            const target = idValue.startsWith('T') ? 'teacher.html?id=' + idValue : 'student.html';
+            window.location.replace(target);
+        };
+    }
+
+    /* MODAL LOGIN FORM (if exists in HTML) */
+    const modalForm = document.getElementById('modalLoginForm');
+    if (modalForm) {
+        modalForm.onsubmit = (e) => {
+            e.preventDefault();
+            const idValue = document.getElementById('modalSchoolId')?.value.trim().toUpperCase() || '';
+            if (idValue) {
+                const target = idValue.startsWith('T') ? 'teacher.html?id=' + idValue : 'student.html';
+                window.location.replace(target);
+            }
+        };
+    }
+
+
+
+    /* ===== IMAGE SLIDER: Auto-rotating campus photo slideshow ===== */
+
+    /* SLIDER CONFIG — image paths and alt text for all slides */
+    const SLIDER_CONFIG = [
+        { src: 'image/ICC image 4.jpg', alt: 'Welcome to ICC ELMS' },
+        { src: 'image/ICC image3.jpg', alt: 'Classroom' },
+        { src: 'image/ICC image2.jpg', alt: 'Study' },
+        { src: 'image/ICC image.jpg', alt: 'Computer Lab' }
+    ];
+
+    /**
+     * INIT SLIDER CONTENT — injects slide HTML (image + blurred background) into a container.
+     * @param {string} containerId - The slider container element ID
+     */
+    function initSliderContent(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = SLIDER_CONFIG.map((img, i) => `
+            <div class="slide ${i === 0 ? 'active' : ''}">
+                <div class="slide-blur-bg" style="background-image: url('${img.src}')"></div>
+                <img class="slide-img" src="${img.src}" alt="${img.alt}">
             </div>
+        `).join('');
+    }
 
-            <!-- LOGIN PANEL: Responsive login form -->
-            <div
-                class="login-panel w-full lg:w-[35%] flex flex-col justify-center items-center lg:px-12 px-8 py-12 bg-white border-none lg:border-l lg:border-t lg:border-b lg:border-gray-200 min-h-full">
+    /* INJECT SLIDES — populate desktop slider container */
+    initSliderContent('slider');
 
-                <!-- LOGIN LOGO -->
-                <div class="flex flex-col items-center mb-6 lg:mb-8">
-                    <img src="image/ICC logo.jpg" alt="ICC Logo" class="w-32 h-32 lg:w-48 lg:h-48 object-contain">
-                </div>
+    /**
+     * CREATE SLIDER — initializes auto-play slider with dot navigation.
+     * @param {string} containerId - The slider container element ID
+     * @param {string} dotsId      - The dots container element ID
+     * @returns {Object|null} Slider controls { next, prev, jumpTo } or null if not found
+     */
+    function createSlider(containerId, dotsId) {
+        const container = document.getElementById(containerId);
+        const dotsBox = document.getElementById(dotsId);
+        if (!container || !dotsBox) return null;
 
-                <!-- LOGIN FORM -->
-                <form id="landingLoginForm" class="w-full max-w-sm mx-auto">
-                    <div class="mb-4 lg:mb-5">
-                        <label for="schoolId" class="block text-sm font-semibold mb-2 text-gray-700">Login ID</label>
-                        <input type="text" id="schoolId" name="schoolId" required placeholder="Enter your ID number"
-                            class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-400 lg:border lg:border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-icc-green focus:border-transparent transition-all placeholder-gray-400 text-base lg:text-sm text-gray-900">
-                    </div>
-                    <div class="mb-5 lg:mb-6">
-                        <label for="password" class="block text-sm font-semibold mb-2 text-gray-700">Password</label>
-                        <input type="password" id="password" name="password" required placeholder="Enter your password"
-                            class="w-full px-4 py-3 bg-gray-50 border-2 border-gray-400 lg:border lg:border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-icc-green focus:border-transparent transition-all placeholder-gray-400 text-base lg:text-sm text-gray-900">
-                    </div>
-                    <button type="submit"
-                        class="sign-in-btn w-full py-3 bg-icc-yellow text-white font-bold rounded-lg transition-all duration-300 text-base lg:text-sm">
-                        Log In
-                    </button>
-                </form>
+        const slides = Array.from(container.querySelectorAll('.slide'));
+        if (slides.length === 0) return null;
 
-                <!-- FORGOT LINK -->
-                <div class="mt-6 text-center">
-                    <a href="#" class="forgot-link text-black font-semibold text-sm hover:underline"
-                        id="openHelpBtn">Forgot ID or Password?</a>
-                </div>
-            </div>
-        </div>
+        let current = 0;
+        let timer;
 
-        <!-- FOOTER: Social links and copyright -->
-        <footer class="bg-icc-dark text-white flex flex-col lg:flex-row w-full mt-auto">
-            <!-- Left Side (Full width on mobile, 65% on desktop) -->
-            <div
-                class="w-full lg:w-[65%] flex flex-col items-start justify-end py-3 px-8 border-b lg:border-b-0 border-white/10">
-                <div class="flex flex-wrap justify-start gap-3 mb-1 text-gray-400 text-sm font-light">
-                    <a href="https://home1.interface.edu.ph/index.php/home/about-interface" id="footerAboutLink"
-                        class="hover:text-icc-yellow transition-colors">About</a>
-                    <span class="text-white/30 px-1 opacity-50">|</span>
-                    <a href="https://home1.interface.edu.ph/index.php/contact-us"
-                        class="hover:text-icc-yellow transition-colors">Contact Us</a>
-                    <span class="text-white/30 px-1 opacity-50">|</span>
-                    <a href="https://home1.interface.edu.ph/index.php/home/college-privacy-policy"
-                        class="hover:text-icc-yellow transition-colors">Privacy Policy</a>
-                    <span class="text-white/30 px-1 opacity-50 lg:hidden text-[10px] self-center">|</span>
-                    <div class="flex gap-2 lg:hidden">
-                        <a href="https://www.facebook.com/InterfaceComputerCollege/" target="_blank"
-                            class="hover:text-icc-yellow transition-colors">Facebook</a>
-                        <span class="text-white/30 opacity-50">|</span>
-                        <a href="https://www.instagram.com/interfacemanila/" target="_blank"
-                            class="hover:text-icc-yellow transition-colors">Instagram</a>
-                    </div>
-                </div>
-                <div class="text-center text-[10px] text-gray-400 uppercase tracking-widest mt-1">
-                    &copy; 2024 Interface Computer College ELMS. All Rights Reserved.
-                </div>
-            </div>
+        /* INIT DOTS — create one dot per slide */
+        dotsBox.innerHTML = '';
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = `dot ${i === 0 ? 'active' : ''}`;
+            dot.onclick = () => jumpTo(i);
+            dotsBox.appendChild(dot);
+        });
 
-            <!-- Right Side (Social Icons with Expanding Hover Reveal - Desktop) -->
-            <div class="hidden lg:flex w-full lg:w-[35%] flex-col items-end justify-end lg:pr-12 py-3 px-8">
-                <div class="flex items-center gap-4">
-                    <a href="https://www.facebook.com/InterfaceComputerCollege/" target="_blank"
-                        class="group flex items-center justify-start w-9 hover:w-32 h-9 rounded-full bg-white/10 text-white hover:bg-icc-yellow hover:text-icc-dark transition-all duration-500 overflow-hidden px-[10px] whitespace-nowrap">
-                        <i class="fa-brands fa-facebook-f min-w-[16px] text-center"></i>
-                        <span
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-3 text-sm font-bold">Facebook</span>
-                    </a>
-                    <a href="https://www.instagram.com/interfacemanila/" target="_blank"
-                        class="group flex items-center justify-start w-9 hover:w-32 h-9 rounded-full bg-white/10 text-white hover:bg-icc-yellow hover:text-icc-dark transition-all duration-500 overflow-hidden px-[10px] whitespace-nowrap">
-                        <i class="fa-brands fa-instagram min-w-[16px] text-center"></i>
-                        <span
-                            class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-3 text-sm font-bold">Instagram</span>
-                    </a>
-                </div>
-            </div>
-        </footer>
-    </main>
+        /* UPDATE — sync active state between slides and dots */
+        function update() {
+            slides.forEach((s, i) => s.classList.toggle('active', i === current));
+            Array.from(dotsBox.children).forEach((d, i) => d.classList.toggle('active', i === current));
+        }
 
-    <!-- =============================================================
-         MODALS: Popup dialogs (overlays)
-         ============================================================= -->
+        /* JUMP TO — go to a specific slide index */
+        function jumpTo(index) {
+            current = index;
+            update();
+            reset();
+        }
 
-    <!-- LOGIN MODAL: Popup login form (tablet/mobile, triggered by nav button) -->
-    <div id="loginModal"
-        class="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white p-8 w-[92%] max-w-[420px] rounded-2xl shadow-2xl relative translate-y-5 transition-transform duration-300"
-            id="loginBox">
-            <button class="absolute top-4 right-5 text-2xl text-gray-400 hover:text-gray-900 focus:outline-none"
-                id="closeLoginBtn">&times;</button>
-            <div class="text-center mb-6">
-                <img src="image/ICC logo.jpg" alt="ICC Logo" class="w-16 h-16 object-contain mx-auto mb-3">
-                <h2 class="text-xl font-bold text-icc-dark mb-1">Student Login</h2>
-                <p class="text-xs text-gray-500">Enter your credentials to continue.</p>
-            </div>
-            <form id="modalLoginForm">
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Login ID</label>
-                    <input type="text" id="modalSchoolId" required placeholder="e.g. 2024-0001"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-icc-light focus:border-icc transition-all text-sm">
-                </div>
-                <div class="mb-5">
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-                    <input type="password" required placeholder="••••••••"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-icc-light focus:border-icc transition-all text-sm">
-                </div>
-                <button type="submit"
-                    class="w-full py-3 bg-icc hover:bg-icc-dark text-white font-bold rounded-lg transition-colors text-sm shadow-md">Sign
-                    In</button>
-            </form>
-            <div class="mt-4 text-center">
-                <a href="#" class="text-sm font-semibold text-icc hover:underline" id="openHelpBtn">Forgot ID or
-                    Password?</a>
-            </div>
-        </div>
-    </div>
+        /* NEXT — advance to next slide (wraps around) */
+        function next() {
+            current = (current + 1) % slides.length;
+            update();
+        }
+
+        /* PREV — go to previous slide (wraps around) */
+        function prev() {
+            current = (current - 1 + slides.length) % slides.length;
+            update();
+        }
+
+        /* RESET TIMER — restart 4-second auto-advance interval */
+        function reset() {
+            clearInterval(timer);
+            timer = setInterval(next, 5000);
+        }
+
+        /* START AUTO-PLAY */
+        reset();
+        return { next, prev, jumpTo };
+    }
+
+    /* INIT SLIDER — create desktop slider instance */
+    const mainSlider = createSlider('slider', 'dotsContainer');
 
 
-    <!-- HELP MODAL: Forgot ID/Password guide with step-by-step instructions -->
-    <div id="helpModal"
-        class="fixed inset-0 z-[1000] bg-black/60 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white p-8 w-[92%] max-w-[450px] rounded-2xl shadow-2xl relative border-t-8 border-icc translate-y-[-100px] opacity-0 transition-all duration-500"
-            id="helpBox">
-            <button class="absolute top-4 right-5 text-2xl text-gray-400 hover:text-gray-900 focus:outline-none"
-                id="closeHelpBtn">&times;</button>
-            <div class="text-center mb-8">
-                <div
-                    class="w-16 h-16 bg-icc-light text-icc rounded-full flex items-center justify-center text-3xl mx-auto mb-4 font-bold">
-                    !</div>
-                <h2 class="text-2xl font-bold text-icc-dark">Student Access Guide</h2>
-            </div>
-            <div class="space-y-6">
-                <div>
-                    <h4 class="text-icc-dark font-bold text-base mb-1">1. Forgot Login ID?</h4>
-                    <p class="text-sm text-gray-600 leading-relaxed">Check your School ID card or Registration Form.
-                        Visit the Registrar's Office for verification.</p>
-                </div>
-                <div>
-                    <h4 class="text-icc-dark font-bold text-base mb-1">2. Forgot Password?</h4>
-                    <p class="text-sm text-gray-600 leading-relaxed">Default password is your Birthday (YYYYMMDD). For
-                        manual resets, visit the ICT Department.</p>
-                </div>
-                <div>
-                    <h4 class="text-icc-dark font-bold text-base mb-1">3. Need more help?</h4>
-                    <p class="text-sm text-gray-600 leading-relaxed">Visit ICT Building, Room 204 during school hours
-                        (7AM - 5PM) for technical assistance.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <!-- =============================================================
-         SCRIPTS: Main JavaScript
-         ============================================================= -->
-    <script src="js/index.js?v=4.0"></script>
-
-</body>
-
-</html>
+});
