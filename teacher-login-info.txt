@@ -1,0 +1,41 @@
+TEACHER LOGIN CREDENTIALS
+========================
+
+Use the following Login IDs on the main login page (index.html):
+
+TEACHER ACCOUNTS:
+----------------
+1. Login ID: T001
+   Name: Maria Reyes
+   Email: maria.reyes@icc.edu
+   Department: ICT
+
+2. Login ID: T002
+   Name: Alex Chen
+   Email: alex.chen@icc.edu
+   Department: ICT
+
+3. Login ID: T003
+   Name: Sarah Lim
+   Email: sarah.lim@icc.edu
+   Department: ICT
+
+4. Login ID: T004
+   Name: Juan Dela Cruz
+   Email: juan.dela.cruz@icc.edu
+   Department: ICT
+
+HOW TO ACCESS:
+--------------
+1. Go to index.html
+2. Enter any Teacher Login ID (T001, T002, T003, or T004)
+3. Enter any password (password validation not implemented yet)
+4. Click "Log In"
+5. You will be redirected to the teacher dashboard
+
+NOTE:
+-----
+- The system uses ID-based authentication (T001, T002, etc.)
+- No password validation is currently implemented
+- Each teacher ID loads different teacher data
+- Logout returns to the main login page

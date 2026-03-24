@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin Portal - SIGMA ELMS</title>
+
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- TAILWIND & CONFIG -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'admin-primary': '#1e293b',
+                        'admin-accent': '#3b82f6',
+                        'admin-bg': '#f8fafc',
+                        'admin-border': '#e2e8f0'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-admin-bg min-h-screen flex overflow-hidden font-['Outfit'] text-slate-700 min-w-[1280px]">
+
+    <!-- DESKTOP RESTRICTION OVERLAY (HiFi Detail) -->
+    <div class="xl:hidden fixed inset-0 z-[9999] bg-slate-900 flex flex-col items-center justify-center p-12 text-center text-white">
+        <div class="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center mb-8 border border-white/20">
+            <i class="fa-solid fa-desktop text-4xl"></i>
+        </div>
+        <h2 class="text-2xl font-black uppercase tracking-tighter mb-4">Desktop Access Restricted</h2>
+        <p class="text-slate-400 max-w-md text-sm leading-relaxed">The SIGMA Administrative Portal contains sensitive school data and complex management tools. For security and data integrity, this portal is only accessible via a desktop workstation (minimum width 1280px).</p>
+        <div class="mt-8 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-admin-accent">
+            <span class="w-2 h-2 bg-admin-accent rounded-full animate-pulse"></span>
+            Security Protocol: Active
+        </div>
+    </div>
+
+    <!-- SIDEBAR (Truly Fixed Position) -->
+    <aside id="sidebar" class="fixed top-0 left-0 w-[280px] h-screen bg-admin-primary text-white flex flex-col z-50">
+        <!-- Centered Logo Block (Text Removed, Logo Maximized) -->
+        <div class="py-6 flex flex-col items-center border-b border-white/5 bg-black/20">
+            <div class="w-48 h-48 bg-white p-4 rounded-[2rem] shadow-2xl mb-4 flex items-center justify-center border-4 border-admin-accent/20">
+                <img src="image/ICC logo.jpg" alt="Logo" class="w-full h-full object-contain">
+            </div>
+            <div class="px-6 py-2 bg-admin-accent rounded-full text-[12px] font-black tracking-[0.3em] uppercase shadow-lg shadow-blue-500/40">Administrator</div>
+        </div>
+
+        <nav class="flex-1 py-6 overflow-y-auto">
+            <div class="px-8 py-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Main Menu</div>
+            <a href="#" class="nav-link active flex items-center px-8 py-3.5 text-sm font-medium hover:bg-white/5" data-section="dashboard">
+                <i class="fa-solid fa-gauge-high w-6 text-center mr-4 opacity-70"></i> Dashboard
+            </a>
+            <a href="#" class="nav-link flex items-center px-8 py-3.5 text-sm font-medium hover:bg-white/5 text-slate-400" data-section="mail">
+                <i class="fa-solid fa-envelope w-6 text-center mr-4 opacity-70"></i> Mail
+            </a>
+
+            <div class="px-8 py-2 mt-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Management</div>
+            <a href="#" class="nav-link flex items-center px-8 py-3.5 text-sm font-medium hover:bg-white/5 text-slate-400" data-section="users">
+                <i class="fa-solid fa-users w-6 text-center mr-4 opacity-70"></i> User Accounts
+            </a>
+            <a href="#" class="nav-link flex items-center px-8 py-3.5 text-sm font-medium hover:bg-white/5 text-slate-400" data-section="subjects">
+                <i class="fa-solid fa-book w-6 text-center mr-4 opacity-70"></i> Subject Catalog
+            </a>
+            <a href="#" class="nav-link flex items-center px-8 py-3.5 text-sm font-medium hover:bg-white/5 text-slate-400" data-section="strands">
+                <i class="fa-solid fa-layer-group w-6 text-center mr-4 opacity-70"></i> SHS Strands
+            </a>
+
+            <div class="px-8 py-2 mt-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Analytics & AI</div>
+            <a href="#" class="nav-link flex items-center px-8 py-3.5 text-sm font-medium hover:bg-white/5 text-slate-400" data-section="ai-insights">
+                <i class="fa-solid fa-bolt w-6 text-center mr-4 opacity-70"></i> AI Monitoring
+            </a>
+            <a href="#" class="nav-link flex items-center px-8 py-3.5 text-sm font-medium hover:bg-white/5 text-slate-400" data-section="grade-analytics">
+                <i class="fa-solid fa-chart-pie w-6 text-center mr-4 opacity-70"></i> Grade Analytics
+            </a>
+
+            <div class="px-8 py-2 mt-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest">System Control</div>
+            <a href="#" class="nav-link flex items-center px-8 py-3.5 text-sm font-medium hover:bg-white/5 text-slate-400" data-section="announcements">
+                <i class="fa-solid fa-bullhorn w-6 text-center mr-4 opacity-70"></i> Broadcast
+            </a>
+            <a href="#" class="nav-link flex items-center px-8 py-3.5 text-sm font-medium hover:bg-white/5 text-slate-400" data-section="logs">
+                <i class="fa-solid fa-clock-rotate-left w-6 text-center mr-4 opacity-70"></i> Audit Logs
+            </a>
+            <a href="#" class="nav-link flex items-center px-8 py-3.5 text-sm font-medium hover:bg-white/5 text-slate-400" data-section="settings">
+                <i class="fa-solid fa-gear w-6 text-center mr-4 opacity-70"></i> Configuration
+            </a>
+        </nav>
+
+        <!-- Profile (Generic Admin) -->
+        <div class="p-6 border-t border-white/5 bg-black/20">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-xl bg-slate-700 flex items-center justify-center text-sm font-bold border border-white/10">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-xs font-bold text-white uppercase tracking-wider">System Root</p>
+                    <p class="text-[9px] text-slate-400 uppercase font-black">Logged In</p>
+                </div>
+                <button id="adminLogout" class="ml-auto w-8 h-8 rounded-lg flex items-center justify-center text-slate-500 hover:text-white hover:bg-red-500/20 transition-all" title="Logout">
+                    <i class="fa-solid fa-power-off text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN WRAPPER (Shifted for Fixed Sidebar) -->
+    <div id="layout-wrapper" class="flex-1 ml-[280px] flex flex-col h-screen overflow-hidden transition-all duration-300">
+        
+        <!-- HEADER -->
+        <header class="h-16 bg-white border-b border-admin-border flex items-center justify-between px-8 shrink-0">
+            <h2 id="section-title" class="text-lg font-bold text-slate-800 uppercase tracking-wide">System Dashboard</h2>
+            <div class="flex items-center gap-6">
+                <div class="text-right hidden sm:block">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Current Session</p>
+                    <p class="text-xs font-bold text-slate-700">S.Y. 2025-2026 | 2nd Sem</p>
+                </div>
+                <div class="h-8 w-[1px] bg-slate-200"></div>
+                <div class="flex items-center gap-3">
+                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Server: Optimal</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENT AREA -->
+        <main class="flex-1 overflow-y-auto p-8 bg-admin-bg">
+
+            <!-- 1. DASHBOARD SECTION -->
+            <section id="section-dashboard" class="admin-section active-section">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="admin-card">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active Students</span>
+                            <i class="fa-solid fa-user-graduate text-blue-500 text-sm"></i>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-800">1,240</p>
+                        <div class="mt-2 flex items-center text-[10px] font-bold text-green-600">
+                            <i class="fa-solid fa-arrow-up mr-1"></i> 3.2% from last month
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Faculty</span>
+                            <i class="fa-solid fa-chalkboard-user text-purple-500 text-sm"></i>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-800">45</p>
+                        <div class="mt-2 text-[10px] font-bold text-slate-400">All departments active</div>
+                    </div>
+                    <div class="admin-card">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Average Grade</span>
+                            <i class="fa-solid fa-chart-line text-green-500 text-sm"></i>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-800">88.5%</p>
+                        <div class="mt-2 text-[10px] font-bold text-slate-400">Based on Midterm 2025</div>
+                    </div>
+                    <div class="admin-card">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">System Load</span>
+                            <i class="fa-solid fa-server text-orange-500 text-sm"></i>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-800">12%</p>
+                        <div class="mt-2 text-[10px] font-bold text-blue-600">Normal traffic detected</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-white border border-admin-border rounded-xl overflow-hidden">
+                        <div class="px-6 py-4 border-b border-admin-border bg-slate-50/50">
+                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Recent System Activity</h3>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Administrator</th>
+                                    <th>Action Performed</th>
+                                    <th>Timestamp</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-bold">Admin_Main</td>
+                                    <td>Modified User Role (Teacher: ID 2024-001)</td>
+                                    <td class="text-xs text-slate-500">Mar 22, 10:45 AM</td>
+                                    <td><span class="badge badge-success">Success</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Admin_Assistant</td>
+                                    <td>Bulk Enrollment (ABM Grade 11)</td>
+                                    <td class="text-xs text-slate-500">Mar 22, 09:12 AM</td>
+                                    <td><span class="badge badge-success">Success</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">System_Auto</td>
+                                    <td>Automated Backup (Cloud DB)</td>
+                                    <td class="text-xs text-slate-500">Mar 22, 01:00 AM</td>
+                                    <td><span class="badge badge-success">Success</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="bg-white border border-admin-border rounded-xl p-6">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-6">SHS Enrollment Split</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-[10px] font-bold mb-2">
+                                    <span class="text-slate-500">STEM (Science & Tech)</span>
+                                    <span>480 Students</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500" style="width: 38.7%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[10px] font-bold mb-2">
+                                    <span class="text-slate-500">ABM (Business & Mgmt)</span>
+                                    <span>320 Students</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-purple-500" style="width: 25.8%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[10px] font-bold mb-2">
+                                    <span class="text-slate-500">HUMSS (Humanities)</span>
+                                    <span>290 Students</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-orange-500" style="width: 23.3%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[10px] font-bold mb-2">
+                                    <span class="text-slate-500">ICT (TVL Track)</span>
+                                    <span>150 Students</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500" style="width: 12.1%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1.1 MAIL SECTION (Official School Communication) -->
+            <section id="section-mail" class="admin-section hidden">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-800 uppercase tracking-wide">Official School Mail</h3>
+                    <p class="text-xs text-slate-500">Official inquiries, faculty requests, and system alerts.</p>
+                </div>
+
+                <div class="bg-white border border-admin-border rounded-3xl overflow-hidden flex h-[calc(100vh-280px)] shadow-sm">
+                    <!-- Mail Sidebar (Conversations) -->
+                    <div class="w-80 border-r border-slate-100 flex flex-col shrink-0 bg-white">
+                        <div class="p-4 bg-slate-50/50 border-b border-slate-100">
+                            <input type="text" placeholder="Search mail..." class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[11px] focus:ring-1 focus:ring-admin-accent outline-none">
+                        </div>
+                        <div class="flex-1 overflow-y-auto custom-scrollbar">
+                            <!-- Active Conversation -->
+                            <div class="p-5 border-b border-slate-50 bg-blue-50/30 border-l-4 border-admin-accent cursor-pointer transition-all">
+                                <div class="flex justify-between items-start mb-1">
+                                    <span class="text-xs font-black text-slate-800 uppercase tracking-tight">Prof. Maria Clara</span>
+                                    <span class="text-[9px] font-bold text-slate-400">10:45 AM</span>
+                                </div>
+                                <p class="text-[11px] font-bold text-admin-accent truncate mb-1">Subject: Lab Resource Request</p>
+                                <p class="text-[10px] text-slate-500 line-clamp-1">Good morning, I would like to request additional resources...</p>
+                            </div>
+                            <!-- Unread Conversation -->
+                            <div class="p-5 border-b border-slate-50 hover:bg-slate-50 cursor-pointer transition-all">
+                                <div class="flex justify-between items-start mb-1">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-2 h-2 bg-admin-accent rounded-full"></div>
+                                        <span class="text-xs font-black text-slate-800 uppercase tracking-tight">T-2024-0012</span>
+                                    </div>
+                                    <span class="text-[9px] font-bold text-slate-400">09:12 AM</span>
+                                </div>
+                                <p class="text-[11px] font-bold text-slate-700 truncate mb-1">Subject: Grade Correction (ABM-11)</p>
+                                <p class="text-[10px] text-slate-500 line-clamp-1">The midterm grades for section ABM-11 need a correction...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conversation Detail -->
+                    <div class="flex-1 flex flex-col bg-slate-50/20 relative">
+                        <div class="p-5 bg-white border-b border-slate-100 flex items-center justify-between shrink-0">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-black text-xs uppercase">MC</div>
+                                <div>
+                                    <h4 class="text-sm font-black text-slate-800 uppercase tracking-tight">Prof. Maria Clara</h4>
+                                    <p class="text-[9px] text-green-500 font-black uppercase tracking-[0.2em]">Active • Faculty Dept</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="w-9 h-9 rounded-xl flex items-center justify-center text-slate-400 hover:text-admin-accent hover:bg-admin-accent/5 transition-all"><i class="fa-solid fa-print"></i></button>
+                                <button class="w-9 h-9 rounded-xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                        <div class="flex-1 p-8 overflow-y-auto space-y-8 custom-scrollbar">
+                            <!-- Left Message -->
+                            <div class="flex gap-4 max-w-[85%]">
+                                <div class="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-400 shrink-0 shadow-sm"><i class="fa-solid fa-user text-[10px]"></i></div>
+                                <div class="space-y-2">
+                                    <div class="p-4 bg-white border border-slate-100 rounded-2xl rounded-tl-none shadow-sm">
+                                        <p class="text-xs text-slate-700 leading-relaxed font-medium">Good morning, Administrator. I am requesting additional computer lab hours for my STEM Grade 12 sections during the finals week. The current schedule is too tight for their performance tasks.</p>
+                                    </div>
+                                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest px-1">10:45 AM</p>
+                                </div>
+                            </div>
+                            <!-- Right Message (Admin) -->
+                            <div class="flex flex-row-reverse gap-4 max-w-[85%] ml-auto text-right">
+                                <div class="w-8 h-8 rounded-lg bg-admin-primary text-white flex items-center justify-center shrink-0 shadow-lg"><i class="fa-solid fa-user-shield text-[10px]"></i></div>
+                                <div class="space-y-2">
+                                    <div class="p-4 bg-admin-accent text-white rounded-2xl rounded-tr-none shadow-lg shadow-blue-500/10">
+                                        <p class="text-xs leading-relaxed font-medium">Understood, Professor. We are currently reviewing the lab allocations for all strands. I will check the available slots for Lab 2 and Lab 3 and update you by this afternoon.</p>
+                                    </div>
+                                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest px-1">11:02 AM • Admin_Root</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Message Input -->
+                        <div class="p-6 bg-white border-t border-slate-100 shrink-0">
+                            <div class="relative group">
+                                <textarea placeholder="Reply to Maria Clara..." rows="1" class="w-full pl-6 pr-24 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs focus:ring-2 focus:ring-admin-accent focus:bg-white outline-none transition-all resize-none custom-scrollbar"></textarea>
+                                <button class="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 bg-admin-accent text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-blue-500/20 hover:scale-105 active:scale-95 transition-all">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. BROADCAST SECTION -->
+            <section id="section-announcements" class="admin-section hidden">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-800">System Broadcast & Notifications</h3>
+                    <p class="text-xs text-slate-500">Post school-wide announcements to students, teachers, or all roles.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- BROADCAST COMPOSER -->
+                    <div class="lg:col-span-2">
+                        <div class="admin-card">
+                            <form class="space-y-6" onsubmit="event.preventDefault()">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Announcement Title</label>
+                                    <input type="text" placeholder="e.g. 2nd Semester Final Exam Schedule" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:ring-2 focus:ring-admin-accent focus:bg-white outline-none transition-all">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Target Audience</label>
+                                        <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-admin-accent transition-all">
+                                            <option value="all">Everyone (All Roles)</option>
+                                            <option value="students">Students Only</option>
+                                            <option value="teachers">Teachers Only</option>
+                                            <option value="specific">Specific Strand / Dept</option>
+                                        </select>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Announcement Type</label>
+                                        <div class="flex gap-2">
+                                            <button type="button" class="flex-1 py-3 px-2 rounded-xl border-2 border-icc-green bg-icc-green/5 text-icc-green text-[10px] font-black uppercase tracking-widest">Regular</button>
+                                            <button type="button" class="flex-1 py-3 px-2 rounded-xl border-2 border-slate-100 text-slate-400 text-[10px] font-black uppercase tracking-widest hover:border-red-200 hover:text-red-500 transition-all">Urgent</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Message Content</label>
+                                    <textarea placeholder="Write your announcement details here..." rows="6" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-3xl text-sm focus:ring-2 focus:ring-admin-accent focus:bg-white outline-none transition-all resize-none"></textarea>
+                                </div>
+
+                                <div class="flex gap-4 pt-4 border-t border-slate-100">
+                                    <button class="btn-pro btn-primary-pro flex-1 py-5 text-sm tracking-widest uppercase font-black shadow-xl shadow-blue-500/20">
+                                        <i class="fa-solid fa-paper-plane mr-2"></i> Post Announcement
+                                    </button>
+                                    <button type="button" class="btn-pro btn-secondary-pro px-8 text-sm font-bold">Save Draft</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- PREVIOUS BROADCASTS -->
+                    <div class="space-y-6">
+                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Active Posts</h4>
+                        <div class="space-y-4">
+                            <!-- Broadcast Item 1 -->
+                            <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 px-3 py-1 bg-icc-green/10 text-icc-green text-[8px] font-black uppercase rounded-bl-xl">Everyone</div>
+                                <h5 class="text-sm font-bold text-slate-800 pr-12">Final Exam Week Schedule</h5>
+                                <p class="text-[11px] text-slate-500 mt-2 line-clamp-2">Please be informed that the 2nd semester finals will start on April 15...</p>
+                                <div class="mt-4 flex items-center justify-between text-[10px] font-bold text-slate-400">
+                                    <span>Mar 22, 2026</span>
+                                    <button class="text-red-400 hover:text-red-600">Delete</button>
+                                </div>
+                            </div>
+
+                            <!-- Broadcast Item 2 -->
+                            <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 px-3 py-1 bg-purple-100 text-purple-600 text-[8px] font-black uppercase rounded-bl-xl">Teachers</div>
+                                <h5 class="text-sm font-bold text-slate-800 pr-12">Faculty Meeting: S.Y. Planning</h5>
+                                <p class="text-[11px] text-slate-500 mt-2 line-clamp-2">All SHS teachers are required to attend the planning session this Friday...</p>
+                                <div class="mt-4 flex items-center justify-between text-[10px] font-bold text-slate-400">
+                                    <span>Mar 20, 2026</span>
+                                    <button class="text-red-400 hover:text-red-600">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. SUBJECTS SECTION -->
+            <section id="section-subjects" class="admin-section hidden">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">Subject Catalog & Mapping</h3>
+                        <p class="text-xs text-slate-500">Manage curriculum and assign faculty to specific courses.</p>
+                    </div>
+                    <button class="sub-nav-btn btn-pro btn-primary-pro" data-target="subject-editor">
+                        <i class="fa-solid fa-plus mr-2"></i> Create New Subject
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="admin-card border-l-4 border-blue-500 group cursor-pointer hover:border-admin-accent transition-all sub-nav-btn" data-target="subject-editor">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="font-bold text-sm">STEM Subjects</h4>
+                            <span class="text-[10px] font-bold text-slate-400">24 Courses</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-4">Science, Technology, Engineering, & Mathematics</p>
+                        <div class="flex -space-x-2">
+                            <div class="w-6 h-6 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center text-[8px] font-bold">MT</div>
+                            <div class="w-6 h-6 rounded-full bg-slate-300 border-2 border-white flex items-center justify-center text-[8px] font-bold">JS</div>
+                        </div>
+                    </div>
+                    <!-- Other cards kept for layout -->
+                    <div class="admin-card border-l-4 border-purple-500">
+                        <h4 class="font-bold text-sm">ABM Subjects</h4>
+                        <p class="text-xs text-slate-500 mt-1">18 Active Subjects</p>
+                    </div>
+                    <div class="admin-card border-l-4 border-orange-500">
+                        <h4 class="font-bold text-sm">HUMSS Subjects</h4>
+                        <p class="text-xs text-slate-500 mt-1">20 Active Subjects</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4a. SUBJECT EDITOR / MAPPING (SPA STYLE) -->
+            <section id="section-subject-editor" class="admin-section hidden">
+                <div class="mb-8 flex items-center gap-4">
+                    <button class="sub-nav-btn w-10 h-10 rounded-xl bg-white border border-admin-border flex items-center justify-center text-slate-500 hover:text-admin-accent transition-all" data-target="subjects">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">Curriculum Allocation & Standards</h3>
+                        <p class="text-xs text-slate-500">Define visual identity, map instructors, and enforce school-wide lesson standards.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- PREVIEW PANEL (What the student will see) -->
+                    <div class="lg:col-span-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 block">Student-View Preview</mccoremem id="03fsy242w0emkghc2jzppxo0h" /></label>
+                        <div class="bg-white rounded-3xl border border-admin-border overflow-hidden shadow-xl">
+                            <div class="h-40 bg-slate-100 relative flex items-center justify-center">
+                                <i class="fa-solid fa-book-open text-4xl text-slate-300"></i>
+                                <div class="absolute top-4 left-0 w-1.5 h-12 bg-admin-accent rounded-r-full"></div>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[9px] font-black rounded uppercase">STEM-101</span>
+                                </div>
+                                <h5 class="font-bold text-slate-800 text-lg mb-1">Subject Title Here</h5>
+                                <p class="text-xs text-slate-400 mb-4">Instructor: <span class="font-bold text-slate-600">Unassigned</span></p>
+                                <div class="h-2 w-full bg-slate-100 rounded-full"></div>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-4 italic text-center">Note: Subject Summary is managed by the Teacher.</p>
+                    </div>
+
+                    <!-- EDITOR FORM -->
+                    <div class="lg:col-span-2">
+                        <div class="admin-card">
+                            <form class="space-y-6" onsubmit="event.preventDefault()">
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="space-y-1">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Subject Name</label>
+                                        <input type="text" placeholder="e.g. General Mathematics" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-admin-accent outline-none">
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Course Code</label>
+                                        <input type="text" placeholder="e.g. GEN-MATH-12" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-admin-accent outline-none">
+                                    </div>
+                                </div>
+
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Map Instructor (Faculty)</label>
+                                    <div class="relative group">
+                                        <select class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-admin-accent transition-all">
+                                            <option value="">Search Teacher List...</option>
+                                            <option>Prof. Maria Clara (STEM Dept)</option>
+                                            <option>Dr. Jose Rizal (HUMSS Dept)</option>
+                                            <option>Engr. Stanley Doe (ICT Dept)</option>
+                                        </select>
+                                        <!-- UNASSIGNED WARNING (HiFi Edge Case) -->
+                                        <div class="mt-2 flex items-center gap-2 px-3 py-2 bg-red-50 text-red-600 rounded-lg border border-red-100">
+                                            <i class="fa-solid fa-triangle-exclamation text-[10px]"></i>
+                                            <p class="text-[9px] font-black uppercase tracking-wider">Unassigned Subject: Students cannot view this subject until a Teacher is mapped.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="space-y-1">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Accent Color (Strand)</label>
+                                        <div class="flex gap-2 mt-2">
+                                            <button type="button" class="w-8 h-8 rounded-full bg-blue-500 border-2 border-white ring-2 ring-blue-500/20"></button>
+                                            <button type="button" class="w-8 h-8 rounded-full bg-purple-500 hover:ring-2 ring-purple-500/20"></button>
+                                            <button type="button" class="w-8 h-8 rounded-full bg-orange-500 hover:ring-2 ring-orange-500/20"></button>
+                                            <button type="button" class="w-8 h-8 rounded-full bg-green-500 hover:ring-2 ring-green-500/20"></button>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Official Cover Image</label>
+                                        <button class="w-full py-3 bg-slate-100 border border-dashed border-slate-300 rounded-xl text-[10px] font-bold text-slate-500 uppercase hover:bg-slate-200 transition-colors">
+                                            <i class="fa-solid fa-image mr-2"></i> Upload Book Cover
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- INSTITUTIONAL MASTER CONTENT (Government Policy & School Standard) -->
+                                <div class="space-y-6 pt-6 border-t border-slate-100">
+                                    <div class="flex items-center justify-between">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Institutional Master Content</label>
+                                        <span class="px-2 py-0.5 bg-icc-green/10 text-icc-green text-[8px] font-black rounded border border-icc-green/20">Standardized for All Sections</span>
+                                    </div>
+
+                                    <!-- MASTER LESSONS & SUMMARIES -->
+                                    <div class="p-5 bg-slate-50 border border-slate-200 rounded-3xl">
+                                        <div class="flex items-center gap-3 mb-4">
+                                            <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-blue-500 shadow-sm">
+                                                <i class="fa-solid fa-file-signature text-xs"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-xs font-bold text-slate-800">Lessons & Summaries</h5>
+                                                <p class="text-[9px] text-slate-500 font-medium">Pre-written topics for all strands</p>
+                                            </div>
+                                            <button class="ml-auto text-[10px] font-bold text-admin-accent hover:underline">+ Add Topic</button>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <div class="p-3 bg-white rounded-xl border border-slate-100 flex items-center justify-between group">
+                                                <div class="flex items-center gap-3">
+                                                    <i class="fa-solid fa-unlock text-green-500 text-[10px]"></i>
+                                                    <span class="text-[11px] font-bold text-slate-700">Topic 1: Introduction & Core Concepts</span>
+                                                </div>
+                                                <div class="flex items-center gap-3">
+                                                    <span class="text-[8px] font-black text-green-600 uppercase tracking-widest px-2 py-0.5 bg-green-50 rounded">Q1 Active</span>
+                                                    <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                        <button class="p-1.5 text-slate-400 hover:text-admin-accent"><i class="fa-solid fa-pen-to-square text-[10px]"></i></button>
+                                                        <button class="p-1.5 text-slate-400 hover:text-red-500"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-3 bg-slate-50 rounded-xl border border-dashed border-slate-200 flex items-center justify-between group">
+                                                <div class="flex items-center gap-3">
+                                                    <i class="fa-solid fa-lock text-slate-400 text-[10px]"></i>
+                                                    <span class="text-[11px] font-bold text-slate-500">Topic 2: Analytical Methods & Applications</span>
+                                                </div>
+                                                <div class="flex items-center gap-3">
+                                                    <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest px-2 py-0.5 bg-slate-100 rounded">Q2 Queued</span>
+                                                    <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                        <button class="p-1.5 text-slate-400 hover:text-admin-accent"><i class="fa-solid fa-pen-to-square text-[10px]"></i></button>
+                                                        <button class="p-1.5 text-slate-400 hover:text-red-500"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- MASTER QUIZZES & ASSESSMENTS -->
+                                    <div class="p-5 bg-slate-50 border border-slate-200 rounded-3xl">
+                                        <div class="flex items-center gap-3 mb-4">
+                                            <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-orange-500 shadow-sm">
+                                                <i class="fa-solid fa-list-check text-xs"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-xs font-bold text-slate-800">Standardized Assessments</h5>
+                                                <p class="text-[9px] text-slate-500 font-medium">Official school-wide quizzes</p>
+                                            </div>
+                                            <button class="ml-auto text-[10px] font-bold text-admin-accent hover:underline">Manage Bank</button>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div class="p-3 bg-white rounded-xl border border-slate-100 flex items-center gap-3">
+                                                <i class="fa-solid fa-circle-question text-orange-400 text-xs"></i>
+                                                <span class="text-[10px] font-bold text-slate-700">Prelim Exam Bank</span>
+                                            </div>
+                                            <div class="p-3 bg-white rounded-xl border border-slate-100 flex items-center gap-3">
+                                                <i class="fa-solid fa-circle-question text-orange-400 text-xs"></i>
+                                                <span class="text-[10px] font-bold text-slate-700">Midterm Exam Bank</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- INSTITUTIONAL GALLERY -->
+                                    <div class="p-5 bg-slate-50 border border-slate-200 rounded-3xl">
+                                        <div class="flex items-center gap-3 mb-4">
+                                            <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-purple-500 shadow-sm">
+                                                <i class="fa-solid fa-photo-film text-xs"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-xs font-bold text-slate-800">Topic Image Gallery</h5>
+                                                <p class="text-[9px] text-slate-500 font-medium">Approved visual materials</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <div class="w-12 h-12 rounded-lg bg-slate-200 flex items-center justify-center border border-slate-300">
+                                                <i class="fa-solid fa-image text-slate-400 text-xs"></i>
+                                            </div>
+                                            <div class="w-12 h-12 rounded-lg bg-slate-200 flex items-center justify-center border border-slate-300">
+                                                <i class="fa-solid fa-image text-slate-400 text-xs"></i>
+                                            </div>
+                                            <button class="w-12 h-12 rounded-lg border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400 hover:text-admin-accent hover:border-admin-accent transition-all">
+                                                <i class="fa-solid fa-plus text-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pt-6 border-t border-slate-100 flex gap-3">
+                                    <button class="btn-pro btn-primary-pro flex-1 py-4 uppercase font-black tracking-widest text-xs shadow-lg shadow-blue-500/20">Save & Publish to Students</button>
+                                    <button type="button" class="sub-nav-btn btn-pro btn-secondary-pro px-8 text-xs font-bold" data-target="subjects">Discard</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. AUDIT LOGS SECTION -->
+            <section id="section-logs" class="admin-section hidden">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-800">System Audit Logs</h3>
+                    <p class="text-xs text-slate-500">Chronological record of system activities for security and monitoring.</p>
+                </div>
+                <div class="bg-white border border-admin-border rounded-xl overflow-hidden">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>User ID</th>
+                                <th>Event Type</th>
+                                <th>IP Address</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-xs">2026-03-22 14:30:05</td>
+                                <td class="font-bold">ADMIN_MAIN</td>
+                                <td>Configuration Change: Semester Updated</td>
+                                <td class="font-mono text-[10px]">192.168.1.105</td>
+                                <td><span class="badge badge-success">Success</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-xs">2026-03-22 14:15:20</td>
+                                <td class="font-bold">2024-0012</td>
+                                <td>Failed Login Attempt</td>
+                                <td class="font-mono text-[10px]">110.54.12.89</td>
+                                <td><span class="badge badge-danger">Denied</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-xs">2026-03-22 13:45:12</td>
+                                <td class="font-bold">T-2024-05</td>
+                                <td>Grade Entry: ICT-101 (Finals)</td>
+                                <td class="font-mono text-[10px]">192.168.1.112</td>
+                                <td><span class="badge badge-success">Success</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 2. USERS SECTION -->
+            <section id="section-users" class="admin-section hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">User Management</h3>
+                        <p class="text-xs text-slate-500">Manage all system credentials and school roles.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="btn-pro btn-secondary-pro sub-nav-btn" data-target="bulk-enrollment">
+                            <i class="fa-solid fa-file-import mr-2"></i> Bulk Enrollment
+                        </button>
+                        <button class="btn-pro btn-primary-pro sub-nav-btn" data-target="register-user">
+                            <i class="fa-solid fa-user-plus mr-2"></i> Individual Registration
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-card mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <input type="text" placeholder="Search by Name or ID..." class="px-4 py-2 bg-slate-50 border border-slate-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-admin-accent">
+                        <select class="px-4 py-2 bg-slate-50 border border-slate-200 rounded text-sm focus:outline-none">
+                            <option value="">All Roles</option>
+                            <option value="student">Students</option>
+                            <option value="teacher">Teachers</option>
+                        </select>
+                        <select class="px-4 py-2 bg-slate-50 border border-slate-200 rounded text-sm focus:outline-none">
+                            <option value="">All Strands</option>
+                            <option value="stem">STEM</option>
+                            <option value="abm">ABM</option>
+                            <option value="humss">HUMSS</option>
+                            <option value="ict">ICT</option>
+                        </select>
+                        <button class="btn-pro bg-slate-800 text-white text-xs uppercase tracking-widest font-bold">Apply Filters</button>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-admin-border rounded-xl overflow-hidden">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>School ID</th>
+                                <th>Full Name</th>
+                                <th>Role</th>
+                                <th>Strand / Dept</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <tr>
+                                <td class="font-mono text-xs">2024-0001</td>
+                                <td class="font-bold">Stanley Doe</td>
+                                <td>Student</td>
+                                <td>STEM</td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>
+                                    <button class="text-blue-500 hover:underline mr-3 text-xs font-bold">Edit</button>
+                                    <button class="text-slate-400 hover:underline text-xs font-bold">Reset Pass</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-mono text-xs">T-2024-05</td>
+                                <td class="font-bold">Prof. Maria Clara</td>
+                                <td>Teacher</td>
+                                <td>HUMSS Dept</td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>
+                                    <button class="text-blue-500 hover:underline mr-3 text-xs font-bold">Edit</button>
+                                    <button class="text-slate-400 hover:underline text-xs font-bold">Reset Pass</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="px-6 py-4 bg-slate-50/50 border-t border-admin-border flex justify-between items-center">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Showing 2 of 1,285 users</span>
+                        <div class="flex gap-1">
+                            <button class="w-8 h-8 flex items-center justify-center border border-slate-200 rounded text-slate-400"><i class="fa-solid fa-chevron-left text-[10px]"></i></button>
+                            <button class="w-8 h-8 flex items-center justify-center border border-slate-200 rounded bg-white font-bold text-xs">1</button>
+                            <button class="w-8 h-8 flex items-center justify-center border border-slate-200 rounded text-slate-400"><i class="fa-solid fa-chevron-right text-[10px]"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2a. INDIVIDUAL REGISTRATION SECTION (SPA STYLE) -->
+            <section id="section-register-user" class="admin-section hidden">
+                <div class="mb-8 flex items-center gap-4">
+                    <button class="sub-nav-btn w-10 h-10 rounded-xl bg-white border border-admin-border flex items-center justify-center text-slate-500 hover:text-admin-accent hover:border-admin-accent transition-all" data-target="users">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">New Account Registration</h3>
+                        <p class="text-xs text-slate-500">Fill in the details to create a new system account.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white rounded-[2rem] border border-admin-border overflow-hidden">
+                        <div class="p-10">
+                            <form class="space-y-8" onsubmit="event.preventDefault()">
+                                <!-- ROLE SELECTION -->
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 block">Select User Role</label>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <label class="relative flex items-center p-6 border-2 border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 has-[:checked]:border-admin-accent has-[:checked]:bg-blue-50/30 group transition-all">
+                                            <input type="radio" name="role" class="sr-only" checked>
+                                            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mr-4 group-has-[:checked]:bg-admin-accent group-has-[:checked]:text-white transition-colors">
+                                                <i class="fa-solid fa-user-graduate text-xl"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-slate-800">Student Account</p>
+                                                <p class="text-xs text-slate-500">For Senior High School learners</p>
+                                            </div>
+                                        </label>
+                                        <label class="relative flex items-center p-6 border-2 border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 has-[:checked]:border-admin-accent has-[:checked]:bg-blue-50/30 group transition-all">
+                                            <input type="radio" name="role" class="sr-only">
+                                            <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mr-4 group-has-[:checked]:bg-admin-accent group-has-[:checked]:text-white transition-colors">
+                                                <i class="fa-solid fa-chalkboard-user text-xl"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-slate-800">Teacher Account</p>
+                                                <p class="text-xs text-slate-500">For academic faculty & staff</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- PERSONAL INFO -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Full Name (Last Name, First Name M.I.)</label>
+                                        <input type="text" placeholder="e.g. DELA CRUZ, JUAN A." class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:ring-2 focus:ring-admin-accent focus:bg-white outline-none transition-all">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">School ID Number</label>
+                                        <input type="text" placeholder="e.g. 2026-0001" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-mono focus:ring-2 focus:ring-admin-accent focus:bg-white outline-none transition-all">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Strand / Department Assignment</label>
+                                        <select class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-admin-accent transition-all">
+                                            <option>STEM (Science & Technology)</option>
+                                            <option>ABM (Business & Mgmt)</option>
+                                            <option>HUMSS (Humanities)</option>
+                                            <option>ICT (Tech-Voc)</option>
+                                            <option>GAS (General Academic)</option>
+                                        </select>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">System Email (Optional)</label>
+                                        <input type="email" placeholder="student@interface.edu.ph" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:ring-2 focus:ring-admin-accent focus:bg-white outline-none transition-all">
+                                    </div>
+                                </div>
+
+                                <div class="pt-6 flex flex-col sm:flex-row gap-4">
+                                    <button class="btn-pro btn-primary-pro flex-1 py-5 text-sm tracking-widest uppercase font-black shadow-xl shadow-blue-500/20">Create Account</button>
+                                    <button type="button" class="sub-nav-btn btn-pro btn-secondary-pro px-10 py-5 text-sm font-bold" data-target="users">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2b. BULK ENROLLMENT SECTION (SPA STYLE) -->
+            <section id="section-bulk-enrollment" class="admin-section hidden">
+                <div class="mb-8 flex items-center gap-4">
+                    <button class="sub-nav-btn w-10 h-10 rounded-xl bg-white border border-admin-border flex items-center justify-center text-slate-500 hover:text-admin-accent hover:border-admin-accent transition-all" data-target="users">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">Bulk User Enrollment</h3>
+                        <p class="text-xs text-slate-500">Upload CSV or Excel files for automated account creation.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-white rounded-[2rem] border border-admin-border p-12 text-center">
+                        <div class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-8 text-admin-accent">
+                            <i class="fa-solid fa-file-csv text-4xl"></i>
+                        </div>
+                        <h4 class="font-bold text-2xl text-slate-800 mb-2">Upload Enrollment List</h4>
+                        <p class="text-sm text-slate-500 mb-10 px-6">Ensure your file follows the ICC SIGMA template for automated processing.</p>
+                        
+                        <div class="border-2 border-dashed border-slate-200 rounded-3xl p-12 mb-8 bg-slate-50 hover:bg-slate-100 hover:border-admin-accent transition-all cursor-pointer group">
+                            <i class="fa-solid fa-cloud-arrow-up text-4xl text-slate-300 group-hover:text-admin-accent transition-all mb-4"></i>
+                            <p class="text-sm font-bold text-slate-400 group-hover:text-slate-600">Drag & Drop file here or <span class="text-admin-accent">Browse Files</span></p>
+                            <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest font-bold">Max File Size: 10MB (.csv, .xlsx)</p>
+                        </div>
+
+                        <div class="flex flex-col gap-3">
+                            <button class="btn-pro btn-primary-pro w-full py-5 text-sm tracking-widest uppercase font-black shadow-xl shadow-blue-500/20">Initialize Bulk Process</button>
+                            <button class="sub-nav-btn text-xs font-bold text-slate-400 hover:text-slate-800 py-3 uppercase tracking-widest transition-all" data-target="users">Return to User List</button>
+                        </div>
+
+                        <div class="mt-8 pt-8 border-t border-slate-100">
+                            <a href="#" class="text-xs font-bold text-admin-accent hover:underline flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-download"></i> Download ICC Template (.csv)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. SECURITY & AUDIT LOGS -->
+            <section id="section-logs" class="admin-section hidden">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-800 uppercase tracking-wide">Security & Audit Logs</h3>
+                    <p class="text-xs text-slate-500">Real-time tracking of all administrative actions and system events.</p>
+                </div>
+                <div class="bg-white border border-admin-border rounded-3xl overflow-hidden shadow-sm">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-100">
+                                <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">Timestamp</th>
+                                <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">User</th>
+                                <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">Action</th>
+                                <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">Resource</th>
+                                <th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-50">
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="px-6 py-4 text-[11px] font-mono text-slate-500">2024-03-22 14:30:12</td>
+                                <td class="px-6 py-4"><span class="text-xs font-bold text-slate-700">ADMIN_ROOT</span></td>
+                                <td class="px-6 py-4 text-xs font-medium text-slate-600 uppercase">Released 2nd Quarter</td>
+                                <td class="px-6 py-4 text-xs font-mono text-admin-accent">ACAD_SESS_2024</td>
+                                <td class="px-6 py-4"><span class="px-2 py-0.5 bg-green-50 text-green-600 text-[9px] font-black rounded uppercase">Success</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="px-6 py-4 text-[11px] font-mono text-slate-500">2024-03-22 14:15:05</td>
+                                <td class="px-6 py-4"><span class="text-xs font-bold text-slate-700">ADMIN_ROOT</span></td>
+                                <td class="px-6 py-4 text-xs font-medium text-slate-600 uppercase">Mapped Instructor</td>
+                                <td class="px-6 py-4 text-xs font-mono text-admin-accent">STEM-GENMATH-12</td>
+                                <td class="px-6 py-4"><span class="px-2 py-0.5 bg-green-50 text-green-600 text-[9px] font-black rounded uppercase">Success</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 6. SHS STRANDS SECTION -->
+            <section id="section-strands" class="admin-section hidden">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-800 uppercase tracking-wide">SHS Strand Management</h3>
+                    <p class="text-xs text-slate-500">Configure academic strands and their specific core competencies.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="admin-card border-l-4 border-blue-500 hover:scale-[1.02] transition-transform cursor-pointer">
+                        <h4 class="font-bold text-sm">STEM</h4>
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-widest font-black">Science, Tech, Engineering, Math</p>
+                    </div>
+                    <div class="admin-card border-l-4 border-orange-500 hover:scale-[1.02] transition-transform cursor-pointer">
+                        <h4 class="font-bold text-sm">ABM</h4>
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-widest font-black">Accountancy, Business, Management</p>
+                    </div>
+                    <div class="admin-card border-l-4 border-purple-500 hover:scale-[1.02] transition-transform cursor-pointer">
+                        <h4 class="font-bold text-sm">HUMSS</h4>
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-widest font-black">Humanities & Social Sciences</p>
+                    </div>
+                    <div class="admin-card border-l-4 border-admin-accent hover:scale-[1.02] transition-transform cursor-pointer">
+                        <h4 class="font-bold text-sm">ICT</h4>
+                        <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-widest font-black">Information & Comm. Technology</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. AI MONITORING SECTION -->
+            <section id="section-ai-insights" class="admin-section hidden">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-800 uppercase tracking-wide">Sigma AI Analytics Assistant</h3>
+                    <p class="text-xs text-slate-500">AI-driven monitoring of student engagement and predictive performance analytics.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="admin-card bg-slate-900 text-white border-none shadow-2xl">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 bg-admin-accent rounded-2xl flex items-center justify-center animate-pulse">
+                                <i class="fa-solid fa-bolt text-xl text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-black uppercase tracking-widest">Neural Performance Monitor</h4>
+                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Real-time Analysis Active</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-white/5 rounded-2xl border border-white/10">
+                                <p class="text-[11px] leading-relaxed italic text-slate-300">"I've detected a 15% decrease in engagement for STEM-12 Section B topics. Recommended action: Admin broadcast for scheduled remedial sessions."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Risk Detection Matrix</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-medium text-slate-600">Students At Risk (Low Engagement)</span>
+                                <span class="text-xs font-black text-red-500 uppercase tracking-widest">12 Students</span>
+                            </div>
+                            <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-red-500 w-[15%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. GRADE ANALYTICS SECTION -->
+            <section id="section-grade-analytics" class="admin-section hidden">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-800 uppercase tracking-wide">Institutional Grade Monitoring</h3>
+                    <p class="text-xs text-slate-500">Comparative analytics of grades across all strands and sections.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- Strand Performance Overview -->
+                    <div class="lg:col-span-2 admin-card p-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <h4 class="text-sm font-black text-slate-800 uppercase tracking-widest">Strand Performance Comparison</h4>
+                            <select class="text-[10px] font-black uppercase tracking-widest bg-slate-50 border-none outline-none text-slate-500">
+                                <option>2nd Semester 2025-2026</option>
+                                <option>1st Semester 2025-2026</option>
+                            </select>
+                        </div>
+                        <div class="space-y-6">
+                            <!-- STEM -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs font-bold text-slate-700">STEM Strand</span>
+                                    <span class="text-xs font-black text-blue-600 uppercase tracking-widest">1.45 Avg GPA</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-500 w-[85%] rounded-full shadow-sm shadow-blue-500/20"></div>
+                                </div>
+                            </div>
+                            <!-- ABM -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs font-bold text-slate-700">ABM Strand</span>
+                                    <span class="text-xs font-black text-orange-600 uppercase tracking-widest">1.62 Avg GPA</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-orange-500 w-[78%] rounded-full shadow-sm shadow-orange-500/20"></div>
+                                </div>
+                            </div>
+                            <!-- HUMSS -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs font-bold text-slate-700">HUMSS Strand</span>
+                                    <span class="text-xs font-black text-purple-600 uppercase tracking-widest">1.58 Avg GPA</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-purple-500 w-[80%] rounded-full shadow-sm shadow-purple-500/20"></div>
+                                </div>
+                            </div>
+                            <!-- ICT -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-xs font-bold text-slate-700">ICT Strand</span>
+                                    <span class="text-xs font-black text-admin-accent uppercase tracking-widest">1.38 Avg GPA</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-admin-accent w-[88%] rounded-full shadow-sm shadow-admin-accent/20"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grade Distribution Pie Simulation -->
+                    <div class="admin-card p-8 flex flex-col items-center justify-center">
+                        <h4 class="text-sm font-black text-slate-800 uppercase tracking-widest mb-8 self-start">Grade Distribution</h4>
+                        <div class="relative w-40 h-40 rounded-full border-[12px] border-slate-50 flex items-center justify-center mb-8">
+                            <div class="absolute inset-0 rounded-full border-[12px] border-admin-accent border-t-transparent border-r-transparent rotate-45 opacity-20"></div>
+                            <div class="absolute inset-0 rounded-full border-[12px] border-blue-500 border-b-transparent border-l-transparent -rotate-12"></div>
+                            <div class="text-center">
+                                <p class="text-2xl font-black text-slate-800 tracking-tighter uppercase leading-none">82%</p>
+                                <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Passing Rate</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 w-full">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">1.00 - 1.50</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">1.75 - 2.25</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">2.50 - 3.00</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Below 3.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Performers Summary -->
+                <div class="admin-card p-8">
+                    <h4 class="text-sm font-black text-slate-800 uppercase tracking-widest mb-6">Highest Performing Sections</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4 group hover:bg-white hover:border-admin-accent transition-all cursor-pointer">
+                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-admin-accent shadow-sm font-black text-xs">01</div>
+                            <div>
+                                <p class="text-xs font-black text-slate-800 uppercase tracking-widest">Grade 11 - ICT A</p>
+                                <p class="text-[10px] text-slate-500 font-bold mt-1">94.2% Class Average</p>
+                            </div>
+                        </div>
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4 group hover:bg-white hover:border-blue-500 transition-all cursor-pointer">
+                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-blue-500 shadow-sm font-black text-xs">02</div>
+                            <div>
+                                <p class="text-xs font-black text-slate-800 uppercase tracking-widest">Grade 12 - STEM B</p>
+                                <p class="text-[10px] text-slate-500 font-bold mt-1">92.8% Class Average</p>
+                            </div>
+                        </div>
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4 group hover:bg-white hover:border-purple-500 transition-all cursor-pointer">
+                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-purple-500 shadow-sm font-black text-xs">03</div>
+                            <div>
+                                <p class="text-xs font-black text-slate-800 uppercase tracking-widest">Grade 11 - HUMSS A</p>
+                                <p class="text-[10px] text-slate-500 font-bold mt-1">91.5% Class Average</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. CONFIGURATION SECTION -->
+            <section id="section-settings" class="admin-section hidden">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-800">System Configuration</h3>
+                    <p class="text-xs text-slate-500">Core parameters for the ELMS environment.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="admin-card">
+                        <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 border-b pb-2">Academic Session</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Active School Year</label>
+                                <select class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded text-sm focus:outline-none">
+                                    <option>2024-2025</option>
+                                    <option selected>2025-2026</option>
+                                    <option>2026-2027</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Active Semester</label>
+                                <div class="flex gap-4">
+                                    <label class="flex items-center text-xs font-medium"><input type="radio" name="sem" class="mr-2"> 1st Semester</label>
+                                    <label class="flex items-center text-xs font-medium"><input type="radio" name="sem" class="mr-2" checked> 2nd Semester</label>
+                                    <label class="flex items-center text-xs font-medium"><input type="radio" name="sem" class="mr-2"> Summer</label>
+                                </div>
+                            </div>
+                            <button class="btn-pro btn-primary-pro w-full mt-2">Save Session Changes</button>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="flex items-center justify-between mb-4 border-b pb-2">
+                            <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Quarterly Release Controls</h4>
+                            <span class="px-2 py-0.5 bg-admin-primary/10 text-admin-primary text-[8px] font-black rounded uppercase">Global Scope</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-green-50 rounded-2xl border border-green-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-green-600 shadow-sm">
+                                        <i class="fa-solid fa-unlock text-xs"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-slate-700">1st Quarter Content</span>
+                                </div>
+                                <span class="badge badge-success px-3 py-1">Released</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl border border-slate-100 group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-slate-400 shadow-sm group-hover:text-admin-accent transition-all">
+                                        <i class="fa-solid fa-lock text-xs"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-slate-500 group-hover:text-slate-700 transition-all">2nd Quarter Content</span>
+                                </div>
+                                <button class="px-3 py-1.5 bg-admin-accent text-white text-[9px] font-black uppercase tracking-widest rounded-lg hover:scale-105 active:scale-95 transition-all">Release Now</button>
+                            </div>
+                            <div class="p-3 bg-blue-50/50 rounded-xl border border-blue-100/50 mt-4">
+                                <p class="text-[9px] text-blue-700 leading-relaxed font-medium italic">
+                                    <i class="fa-solid fa-circle-info mr-1.5 opacity-70"></i> 
+                                    <strong>Admin Action:</strong> This performs a <u>School-Wide Release</u> to all Students & Teachers. Once released, Teachers can then choose when to "Unhide" specific topics for their sections.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- SIGMA AI: ADMIN ASSISTANT (HiFi Floating Panel) -->
+    <div id="adminAiPanel" class="hidden fixed bottom-8 right-8 w-96 bg-white rounded-[2.5rem] shadow-2xl border border-admin-border overflow-hidden z-[200] flex flex-col max-h-[600px]">
+        <div class="p-6 bg-admin-primary text-white flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-admin-accent rounded-xl flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-bolt text-white"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-black uppercase tracking-widest">Sigma AI</h4>
+                    <p class="text-[9px] text-slate-400 font-bold">Analytics & Decision Support</p>
+                </div>
+            </div>
+            <button onclick="document.getElementById('adminAiPanel').classList.add('hidden')" class="text-slate-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+        <div class="flex-1 p-6 overflow-y-auto space-y-4 bg-slate-50/50">
+            <div class="bg-white p-4 rounded-2xl border border-slate-100 text-xs text-slate-600 leading-relaxed shadow-sm">
+                Hello Administrator. I am ready to analyze school data. What can I help you with today?
+            </div>
+            <!-- AI Suggestions -->
+            <div class="space-y-2">
+                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-2">Suggested Analytics</p>
+                <button class="w-full p-3 bg-white border border-slate-100 rounded-xl text-[10px] font-bold text-slate-700 hover:border-admin-accent text-left flex items-center gap-3">
+                    <i class="fa-solid fa-chart-line text-blue-500"></i> Summarize enrollment trends
+                </button>
+                <button class="w-full p-3 bg-white border border-slate-100 rounded-xl text-[10px] font-bold text-slate-700 hover:border-admin-accent text-left flex items-center gap-3">
+                    <i class="fa-solid fa-triangle-exclamation text-orange-500"></i> Detect at-risk student groups
+                </button>
+                <button class="w-full p-3 bg-white border border-slate-100 rounded-xl text-[10px] font-bold text-slate-700 hover:border-admin-accent text-left flex items-center gap-3">
+                    <i class="fa-solid fa-file-invoice text-green-500"></i> Draft monthly academic report
+                </button>
+            </div>
+        </div>
+        <div class="p-4 bg-white border-t border-slate-100">
+            <div class="relative">
+                <input type="text" placeholder="Ask Sigma AI for insights..." class="w-full pl-4 pr-12 py-3 bg-slate-100 border-none rounded-2xl text-xs focus:ring-2 focus:ring-admin-accent outline-none">
+                <button class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-admin-accent text-white rounded-xl shadow-lg shadow-blue-500/30 flex items-center justify-center">
+                    <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Floating Toggle -->
+    <button onclick="document.getElementById('adminAiPanel').classList.remove('hidden')" class="fixed bottom-8 right-8 w-16 h-16 bg-admin-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-all z-[190] border-4 border-white group">
+        <i class="fa-solid fa-bolt text-2xl group-hover:rotate-12 transition-transform"></i>
+        <span class="absolute -top-1 -right-1 w-5 h-5 bg-admin-accent rounded-full border-2 border-white animate-pulse"></span>
+    </button>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

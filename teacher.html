@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Teacher Dashboard - ICC ELMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/teacher.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        icc: '#15803d',
+                        'icc-light': '#dcfce7',
+                        'icc-dark': '#14532d',
+                        'icc-yellow': '#FFD000',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen font-['Outfit'] flex flex-col overflow-x-hidden">
+
+    <!-- ═══ HEADER ═══════════════════════════════════════════════ -->
+    <header id="top-nav"
+        class="fixed top-0 right-0 left-0 h-20 bg-white z-[60] flex items-center justify-between border-b border-gray-100">
+
+        <!-- LEFT: logo inside navbar — never moves with sidebar -->
+        <div class="flex items-center flex-shrink-0">
+            <div id="logo-container">
+                <button id="nav-logo-btn" onclick="switchTab('nav-dashboard')" title="Go to Dashboard">
+                    <img src="image/ICC logo.jpg" alt="ICC Logo">
+                </button>
+            </div>
+            <div id="nav-context" class="ml-2">
+                <span class="text-gray-300 font-light text-lg">|</span>
+                <span id="nav-context-text" class="text-sm font-black text-gray-800 uppercase tracking-widest"></span>
+            </div>
+        </div>
+
+        <!-- CENTER: search -->
+        <div class="absolute left-1/2 -translate-x-1/2 w-full max-w-sm hidden md:block">
+            <div class="relative flex items-center">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
+                    <i class="fa-solid fa-magnifying-glass text-gray-400 text-xs"></i>
+                </span>
+                <input id="searchBar" type="text" placeholder="Search students, assignments..."
+                    class="block w-full pl-10 pr-4 h-[42px] bg-gray-100 border border-gray-300 rounded-l-full text-xs placeholder-gray-400 focus:outline-none"
+                    style="transition:none !important; box-shadow:none !important; border-right:none !important;"
+                    onfocus="this.style.borderColor='#FFD000';document.getElementById('searchEnterBtn').style.borderColor='#FFD000'"
+                    onblur="this.style.borderColor='';document.getElementById('searchEnterBtn').style.borderColor=''">
+                <!-- Attached enter button -->
+                <button id="searchEnterBtn"
+                    class="flex items-center justify-center h-[42px] px-4 bg-gray-100 border border-gray-300 rounded-r-full flex-shrink-0 hover:bg-gray-200 transition-colors"
+                    style="border-left:none !important; margin-left:-1px; transition:none !important;">
+                    <i class="fa-solid fa-arrow-turn-down text-gray-400 text-[11px]"
+                        style="transform: rotate(-90deg) scaleY(-1)"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- RIGHT: actions -->
+        <div class="ml-auto flex items-center gap-2 pr-4">
+
+            <!-- Notepad -->
+            <div class="relative">
+                <button id="notesDropdownBtn" title="Notepad"
+                    class="w-10 h-10 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200/50 focus:outline-none group">
+                    <i class="fa-regular fa-note-sticky text-xl group-[.active]:text-icc-yellow"></i>
+                </button>
+                <div id="notesPanel"
+                    class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 hidden z-[100] flex flex-col overflow-hidden">
+                    <div class="px-4 py-3 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="font-bold text-gray-800 text-sm">Quickpad</h3>
+                        <button id="clearNotesBtn" class="text-icc text-[10px] font-bold uppercase tracking-widest hover:underline">Clear</button>
+                    </div>
+                    <div class="p-4 h-64">
+                        <textarea id="scratchpadInput" placeholder="Type a quick reminder..."
+                            class="w-full h-full text-xs text-gray-600 bg-transparent border-none focus:ring-0 resize-none placeholder-gray-400 font-medium"></textarea>
+                    </div>
+                    <div class="px-4 py-2 border-t border-gray-50 bg-gray-50/30 flex justify-between items-center">
+                        <a href="#" id="viewAllNotesBtn" class="text-gray-400 hover:text-icc-yellow text-[10px] font-bold uppercase tracking-widest transition-colors">View All</a>
+                        <button id="saveNotesBtn" class="flex items-center gap-2 px-3 py-1.5 bg-icc text-white text-[10px] font-bold rounded-lg hover:bg-icc-dark transition-all">
+                            <i class="fa-regular fa-floppy-disk"></i><span>Save Note</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="relative">
+                <button id="notifDropdownBtn" title="Notifications"
+                    class="relative w-10 h-10 rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center">
+                    <i class="fa-regular fa-bell text-xl text-gray-600 group-[.active]:text-icc-yellow"></i>
+                    <div id="notifBadge" class="absolute top-2 right-2 w-2 h-2 bg-icc-yellow rounded-full border-2 border-white hidden"></div>
+                </button>
+                <div id="notifDropdownMenu"
+                    class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 hidden z-[100] flex flex-col overflow-hidden"
+                    style="max-height:calc(100vh - 120px)">
+                    <div class="px-4 py-3 border-b border-gray-50 bg-gray-50/50 flex-shrink-0">
+                        <span class="text-sm font-bold text-gray-900 uppercase tracking-widest">Notifications</span>
+                    </div>
+                    <div id="notif-list" class="flex-1 overflow-y-auto">
+                        <!-- Notifications will be injected here via teacher.js -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mail -->
+            <div class="relative">
+                <button id="mailDropdownBtn" title="Mail"
+                    class="relative w-10 h-10 rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center">
+                    <i class="fa-regular fa-envelope text-xl text-gray-600 group-[.active]:text-icc-yellow"></i>
+                    <div id="mailBadge" class="absolute top-2 right-2 w-2 h-2 bg-icc-yellow rounded-full border-2 border-white"></div>
+                </button>
+                <div id="mailDropdownMenu"
+                    class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 hidden z-[100] flex flex-col overflow-hidden"
+                    style="max-height:calc(100vh - 120px)">
+                    <div class="px-4 py-3 border-b border-gray-50 bg-gray-50/50 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm font-bold text-gray-900 uppercase tracking-widest">Mail</span>
+                            <span class="text-[10px] font-bold text-icc bg-icc-light px-2 py-0.5 rounded-full">2 unread</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 overflow-y-auto divide-y divide-gray-50">
+                        <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer">
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 bg-icc-light rounded-full flex items-center justify-center flex-shrink-0 text-icc text-[10px] font-black">AD</div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex justify-between items-center mb-0.5">
+                                        <p class="text-xs font-bold text-gray-800">Admin Office</p>
+                                        <span class="text-[9px] text-gray-400 flex-shrink-0">10:45 AM</span>
+                                    </div>
+                                    <p class="text-[11px] text-gray-500 truncate">Quarterly clearance update...</p>
+                                </div>
+                                <div class="w-2 h-2 bg-icc rounded-full flex-shrink-0 mt-1.5"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-4 py-3 border-t border-gray-50 bg-gray-50/30">
+                        <button id="viewAllMailBtn" onclick="switchTab('nav-mail'); document.getElementById('mailDropdownMenu').classList.add('hidden')"
+                            class="w-full py-2 text-xs font-bold text-icc hover:text-icc-dark transition-colors uppercase tracking-widest">View All Messages →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile -->
+            <div class="relative">
+                <button id="profileDropdownBtn"
+                    class="relative w-10 h-10 rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center text-icc text-lg font-bold bg-icc-light">
+                    M
+                    <div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 bg-white rounded-full border border-gray-100 shadow-sm flex items-center justify-center">
+                        <i class="fa-solid fa-chevron-down text-[8px] text-gray-400 group-hover:text-icc-yellow" id="dropdownChevron"></i>
+                    </div>
+                </button>
+                <div id="profileDropdownMenu"
+                    class="absolute right-0 mt-2 w-60 bg-white rounded-xl shadow-lg border border-gray-100 py-2 hidden z-[100]">
+                    <div class="px-4 py-3 border-b border-gray-100 mb-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-icc-light flex items-center justify-center text-icc text-sm font-bold border border-icc/10 flex-shrink-0 uppercase"><span>M</span></div>
+                            <div class="flex flex-col justify-center">
+                                <span class="text-sm font-bold text-gray-800 leading-tight">Maria Reyes</span>
+                                <span class="text-[11px] text-gray-500 mt-0.5">maria.reyes@icc.edu</span>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-icc/5 hover:text-icc transition-colors no-underline">
+                        <div class="w-10 flex justify-center flex-shrink-0"><i class="fa-solid fa-user"></i></div>
+                        <span class="text-sm font-medium">Profile</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-icc/5 hover:text-icc transition-colors no-underline">
+                        <div class="w-10 flex justify-center flex-shrink-0"><i class="fa-solid fa-gear"></i></div>
+                        <span class="text-sm font-medium">Settings</span>
+                    </a>
+                    <hr class="my-1 border-gray-100">
+                    <a href="index.html" class="flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors no-underline font-medium">
+                        <div class="w-10 flex justify-center flex-shrink-0"><i class="fa-solid fa-right-from-bracket"></i></div>
+                        <span class="text-sm">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ SIDEBAR ═══════════════════════════════════════════════ -->
+    <aside id="sidebar"
+        class="fixed left-0 top-20 h-[calc(100vh-80px)] w-[82px] bg-icc z-[70] overflow-y-auto transition-all duration-300 border-none sidebar-collapsed">
+        <nav class="py-4 flex flex-col h-full">
+            <a href="#" id="nav-dashboard" title="Dashboard" class="flex items-center gap-0 h-14 text-white transition-all no-underline bg-white/20 group">
+                <div class="sidebar-icon-container">
+                    <i class="fa-solid fa-house text-lg opacity-90"></i>
+                    <span class="rail-label">Home</span>
+                </div>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Dashboard</span>
+            </a>
+            <a href="#" id="nav-classes" title="Classes" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                <div class="sidebar-icon-container">
+                    <i class="fa-regular fa-bookmark text-lg"></i>
+                    <span class="rail-label">Classes</span>
+                </div>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Classes</span>
+            </a>
+            <a href="#" id="nav-subjects" title="Subjects" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                <div class="sidebar-icon-container">
+                    <i class="fa-regular fa-clipboard text-lg"></i>
+                    <span class="rail-label">Subjects</span>
+                </div>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Subjects</span>
+            </a>
+            <a href="#" id="nav-gradebook" title="Gradebook" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                <div class="sidebar-icon-container">
+                    <i class="fa-regular fa-chart-bar text-lg"></i>
+                    <span class="rail-label">Grades</span>
+                </div>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Gradebook</span>
+            </a>
+            <a href="#" id="nav-analytics" title="Analytics" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                <div class="sidebar-icon-container">
+                    <i class="fa-solid fa-chart-line text-lg"></i>
+                    <span class="rail-label">Analytics</span>
+                </div>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Analytics</span>
+            </a>
+            <a href="#" id="nav-advisory" title="Advisory" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                <div class="sidebar-icon-container">
+                    <i class="fa-solid fa-users-rectangle text-lg"></i>
+                    <span class="rail-label">Advisory</span>
+                </div>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Advisory</span>
+            </a>
+            <a href="#" id="nav-attendance" title="Attendance" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
+                <div class="sidebar-icon-container">
+                    <i class="fa-regular fa-calendar-check text-lg"></i>
+                    <span class="rail-label">Attend.</span>
+                </div>
+                <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Attendance</span>
+            </a>
+            <div class="mt-auto pb-4"></div>
+        </nav>
+    </aside>
+
+    <!-- ═══ SUB-SIDEBAR (shared — subjects list AND topic nav) ═══ -->
+    <aside id="sub-sidebar"
+        class="fixed left-[82px] top-20 h-[calc(100vh-80px)] w-[240px] bg-white border-r border-gray-100 z-40 flex flex-col shadow-sm hidden">
+        <div id="sub-sidebar-header"
+            class="px-4 py-4 border-b border-gray-100 bg-white flex items-center min-h-[60px] hidden">
+            <h3 id="sub-sidebar-title" class="font-black text-gray-900 text-[15px] leading-tight truncate w-full">
+                Subjects</h3>
+        </div>
+        <div id="sub-sidebar-content" class="flex-1 overflow-y-auto p-2 space-y-1"></div>
+    </aside>
+
+    <!-- ═══ LAYOUT WRAPPER ═══════════════════════════════════════ -->
+    <div id="layout-wrapper"
+        class="flex-1 mt-20 ml-[82px] flex flex-col min-h-[calc(100vh-80px)] transition-all duration-300">
+        <main class="flex-1 p-8">
+            <div id="content-sections" class="w-full h-full">
+
+                <!-- DASHBOARD SECTION -->
+                <section id="section-dashboard" class="dynamic-section">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        
+                        <!-- LEFT COLUMN: TEACHER OVERVIEW -->
+                        <div id="dashboard-main-content" class="lg:col-span-2 space-y-8">
+                            <!-- Welcome Header -->
+                            <div class="flex items-center justify-between bg-white p-8 rounded-3xl border border-gray-100 shadow-sm relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none group-hover:scale-110 transition-transform duration-700">
+                                    <i class="fa-solid fa-chalkboard-user text-9xl text-icc"></i>
+                                </div>
+                                <div class="relative z-10">
+                                    <h1 class="text-3xl font-black text-gray-900 tracking-tight leading-none mb-3">Good Morning, Teacher Maria!</h1>
+                                    <p class="text-sm text-gray-500 font-medium">You have <span class="text-icc font-bold">3 classes</span> scheduled for today. Your first session starts at 8:00 AM.</p>
+                                    <div class="flex items-center gap-4 mt-6">
+                                        <button onclick="switchTab('nav-attendance')" class="px-5 py-2.5 bg-icc text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-icc-dark transition-all shadow-lg shadow-icc/20 flex items-center gap-2">
+                                            <i class="fa-solid fa-calendar-check"></i> Record Attendance
+                                        </button>
+                                        <button onclick="switchTab('nav-classes')" class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl text-xs font-bold hover:bg-gray-50 transition-all flex items-center gap-2">
+                                            <i class="fa-solid fa-layer-group"></i> Manage Classes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Today's Schedule -->
+                                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <h3 class="text-sm font-black text-gray-800 uppercase tracking-widest flex items-center gap-2">
+                                            <i class="fa-solid fa-clock text-icc"></i> Today's Schedule
+                                        </h3>
+                                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">March 24, 2026</span>
+                                    </div>
+                                    <div id="dashboard-schedule-list" class="space-y-4">
+                                        <!-- Will be populated via JS -->
+                                    </div>
+                                </div>
+
+                                <!-- Quick Stats & Pending Tasks -->
+                                <div class="space-y-6">
+                                    <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                                        <h3 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-6">Quick Overview</h3>
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                                                <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">Total Students</p>
+                                                <p class="text-2xl font-black text-blue-900">123</p>
+                                            </div>
+                                            <div class="p-4 bg-orange-50 rounded-xl border border-orange-100">
+                                                <p class="text-[10px] font-black text-orange-600 uppercase tracking-widest mb-1">Submissions</p>
+                                                <p class="text-2xl font-black text-orange-900">45</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                                        <h3 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-4">Pending Tasks</h3>
+                                        <div class="space-y-3">
+                                            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl group cursor-pointer hover:bg-white hover:border-icc border border-transparent transition-all">
+                                                <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-icc shadow-sm"><i class="fa-solid fa-pen-nib text-xs"></i></div>
+                                                <div class="flex-1">
+                                                    <p class="text-xs font-bold text-gray-800 leading-none">Grade Quiz #4</p>
+                                                    <p class="text-[10px] text-gray-400 mt-1">Programming 1 • 12 pending</p>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-right text-[10px] text-gray-300 group-hover:text-icc transition-colors"></i>
+                                            </div>
+                                            <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl group cursor-pointer hover:bg-white hover:border-icc border border-transparent transition-all">
+                                                <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-yellow-500 shadow-sm"><i class="fa-solid fa-message text-xs"></i></div>
+                                                <div class="flex-1">
+                                                    <p class="text-xs font-bold text-gray-800 leading-none">Reply to Parents</p>
+                                                    <p class="text-[10px] text-gray-400 mt-1">3 unread messages</p>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-right text-[10px] text-gray-300 group-hover:text-icc transition-colors"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN: SIGMA AI INSIGHTS CAROUSEL -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 h-full flex flex-col">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-10 h-10 bg-icc-yellow rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+                                        <i class="fa-solid fa-bolt text-gray-900 text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-black text-gray-900 text-lg">SIGMA Student Insights</h3>
+                                    </div>
+                                </div>
+
+                                <div id="ai-insights-carousel" class="flex-1 flex flex-col justify-center relative overflow-hidden min-h-[350px]">
+                                    <div id="ai-insights-wrapper" class="flex transition-transform duration-300 ease-in-out">
+                                        <!-- Insights will be injected here -->
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-center gap-3 pt-4 border-t border-gray-100">
+                                    <button id="prev-insight" class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 hover:bg-gray-200 transition-colors flex items-center justify-center">
+                                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                                    </button>
+                                    <div id="insight-dots" class="flex gap-2"></div>
+                                    <button id="next-insight" class="w-8 h-8 rounded-full bg-gray-100 text-gray-400 hover:bg-gray-200 transition-colors flex items-center justify-center">
+                                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CLASSES SECTION -->
+                <section id="section-classes" class="dynamic-section hidden space-y-4">
+                    <!-- Unified Header for Grid & Detail -->
+                    <div id="classes-header" class="flex items-center justify-between pb-2 border-b border-gray-100">
+                        <div class="flex items-baseline gap-4">
+                            <h2 id="classes-section-title" class="text-3xl font-black text-gray-900 tracking-tighter leading-none">Classrooms</h2>
+                            <div id="classes-header-divider" class="hidden"><span class="text-gray-300 font-light text-xl">|</span></div>
+                            <p id="classes-header-subject" class="hidden text-[11px] text-icc font-black uppercase tracking-[0.3em] pt-1"></p>
+                        </div>
+                        
+                        <!-- Actions & Tabs -->
+                        <div class="flex items-center gap-4">
+                            <div id="classes-detail-tabs" class="hidden flex items-center gap-1">
+                                <button onclick="switchClassDetailTab('students')" id="tab-btn-students" class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest border-b-2 transition-all border-icc text-icc">Students</button>
+                                <button onclick="switchClassDetailTab('attendance')" id="tab-btn-attendance" class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest border-b-2 border-transparent text-gray-400 hover:text-gray-600">Take Attendance</button>
+                                <button onclick="switchClassDetailTab('analytics')" id="tab-btn-analytics" class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest border-b-2 border-transparent text-gray-400 hover:text-gray-600">Performance</button>
+                                <button onclick="switchClassDetailTab('materials')" id="tab-btn-materials" class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest border-b-2 border-transparent text-gray-400 hover:text-gray-600">Materials</button>
+                            </div>
+                            <button id="class-back-btn" onclick="backToClassrooms()" title="Back to Classrooms" 
+                                class="hidden flex items-center gap-2 px-3 py-1.5 bg-gray-900 text-white rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-icc transition-all shadow-md group">
+                                <i class="fa-solid fa-arrow-left-long group-hover:-translate-x-1 transition-transform"></i>
+                                <span>Back</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Classrooms Grid with Advisory Panel -->
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <!-- Classrooms (left 3 columns) -->
+                        <div id="classes-main-col" class="lg:col-span-3 space-y-6">
+                            <div id="classrooms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Class 1: Programming 1 -->
+                                <div class="flex flex-col gap-3">
+                                    <div class="class-card-new bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg transition-all cursor-pointer group"
+                                         onclick="showStudentList('Grade 11 - ICT A', 'Programming 1')">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa-solid fa-code text-xl"></i></div>
+                                            <span class="px-2.5 py-1 bg-green-50 text-green-600 text-[10px] font-black uppercase rounded-lg">Active</span>
+                                        </div>
+                                        <h3 class="text-lg font-bold text-gray-800 group-hover:text-icc transition-colors">Grade 11 - ICT A</h3>
+                                        <p class="text-xs text-gray-500 mb-4 font-medium">Programming 1 • Room 302</p>
+                                        <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                                            <div class="flex -space-x-2">
+                                                <div class="w-7 h-7 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-[10px] font-bold">JD</div>
+                                                <div class="w-7 h-7 rounded-full border-2 border-white bg-icc-light flex items-center justify-center text-[10px] font-bold text-icc">MS</div>
+                                                <div class="w-7 h-7 rounded-full border-2 border-white bg-yellow-50 flex items-center justify-center text-[10px] font-bold text-yellow-600">+42</div>
+                                            </div>
+                                            <span class="text-xs font-bold text-gray-400">45 Students</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Class 2: Gen Math -->
+                                <div class="flex flex-col gap-3">
+                                    <div class="class-card-new bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg transition-all cursor-pointer group"
+                                         onclick="showStudentList('Grade 11 - STEM A', 'General Mathematics')">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center"><i class="fa-solid fa-calculator text-xl"></i></div>
+                                            <span class="px-2.5 py-1 bg-green-50 text-green-600 text-[10px] font-black uppercase rounded-lg">Active</span>
+                                        </div>
+                                        <h3 class="text-lg font-bold text-gray-800 group-hover:text-icc transition-colors">Grade 11 - STEM A</h3>
+                                        <p class="text-xs text-gray-500 mb-4 font-medium">General Mathematics • Room 405</p>
+                                        <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                                            <div class="flex -space-x-2">
+                                                <div class="w-7 h-7 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-[10px] font-bold">AS</div>
+                                                <div class="w-7 h-7 rounded-full border-2 border-white bg-icc-light flex items-center justify-center text-[10px] font-bold text-icc">RC</div>
+                                                <div class="w-7 h-7 rounded-full border-2 border-white bg-yellow-50 flex items-center justify-center text-[10px] font-bold text-yellow-600">+38</div>
+                                            </div>
+                                            <span class="text-xs font-bold text-gray-400">40 Students</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Class 3: Oral Comm -->
+                                <div class="flex flex-col gap-3">
+                                    <div class="class-card-new bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg transition-all cursor-pointer group"
+                                         onclick="showStudentList('Grade 11 - HUMSS B', 'Oral Communication')">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center"><i class="fa-solid fa-book-open-reader text-xl"></i></div>
+                                            <span class="px-2.5 py-1 bg-green-50 text-green-600 text-[10px] font-black uppercase rounded-lg">Active</span>
+                                        </div>
+                                        <h3 class="text-lg font-bold text-gray-800 group-hover:text-icc transition-colors">Grade 11 - HUMSS B</h3>
+                                        <p class="text-xs text-gray-500 mb-4 font-medium">Oral Communication • Room 201</p>
+                                        <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                                            <div class="flex -space-x-2">
+                                                <div class="w-7 h-7 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-[10px] font-bold">ML</div>
+                                                <div class="w-7 h-7 rounded-full border-2 border-white bg-icc-light flex items-center justify-center text-[10px] font-bold text-icc">PT</div>
+                                                <div class="w-7 h-7 rounded-full border-2 border-white bg-yellow-50 flex items-center justify-center text-[10px] font-bold text-yellow-600">+35</div>
+                                            </div>
+                                            <span class="text-xs font-bold text-gray-400">38 Students</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Classroom Detail View (View 2: Hidden by default) -->
+                            <div id="classroom-detail-view" class="hidden space-y-4">
+                                <!-- Tab Contents -->
+                                <div id="class-detail-content" class="min-h-[400px]">
+                                    <!-- Students Tab (Default) -->
+                                    <div id="detail-section-students" class="space-y-4">
+                                        <!-- Mini Stats Summary for Students Tab -->
+                                        <div class="flex items-center gap-6 px-4 py-2 bg-white rounded-xl border border-gray-100 text-[10px] font-black uppercase tracking-widest text-gray-400">
+                                            <span>Total Students: <span id="stat-total-students" class="text-gray-800 ml-1"></span></span>
+                                            <span>Active: <span id="stat-active-students" class="text-green-600 ml-1"></span></span>
+                                            <span>At Risk: <span id="stat-at-risk-students" class="text-red-600 ml-1"></span></span>
+                                            <span>Avg Attendance: <span id="stat-avg-attendance" class="text-icc ml-1"></span></span>
+                                        </div>
+                                        <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm mt-2">
+                                            <table class="w-full text-left border-collapse">
+                                                <thead>
+                                                    <tr class="bg-gray-50/50 border-b border-gray-100">
+                                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Student Name</th>
+                                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Student ID</th>
+                                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Attendance</th>
+                                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Status</th>
+                                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="student-roster-body" class="divide-y divide-gray-50">
+                                                    <!-- Students will be injected here -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!-- Attendance Tab (Now Recording Interface) -->
+                                    <div id="detail-section-attendance" class="hidden space-y-4">
+                                        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mt-2">
+                                            <div class="flex items-center justify-between mb-6">
+                                                <div>
+                                                    <h3 class="text-sm font-black text-gray-800 uppercase tracking-widest">Daily Attendance Recording</h3>
+                                                    <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest mt-1">Today: March 24, 2026</p>
+                                                </div>
+                                                <div class="flex items-center gap-4 text-[9px] font-black text-gray-400 uppercase tracking-widest">
+                                                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-icc"></span> Present</span>
+                                                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500"></span> Absent</span>
+                                                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-yellow-500"></span> Late</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded-xl overflow-hidden border border-gray-100">
+                                                <table class="w-full text-left border-collapse">
+                                                    <thead>
+                                                        <tr class="bg-white border-b border-gray-100">
+                                                            <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest w-64">Student Name</th>
+                                                            <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Mark Status</th>
+                                                            <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Excuse (If Applicable)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="attendance-recording-body" class="divide-y divide-gray-100">
+                                                        <!-- Attendance recording rows will be injected here -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Submit Button -->
+                                            <div class="mt-6 flex justify-end">
+                                                <button onclick="submitAttendance()" class="px-6 py-2.5 bg-icc text-white rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-icc-dark transition-all shadow-md flex items-center gap-3">
+                                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                    Submit Attendance
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Performance Tab (Hidden) -->
+                                    <div id="detail-section-analytics" class="hidden space-y-6">
+                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm col-span-2">
+                                                <h3 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-6">Class Progress Overview</h3>
+                                                <div class="h-64 flex items-end justify-between gap-4 px-4">
+                                                    <div class="flex-1 bg-icc-light/50 rounded-t-lg relative group h-[60%]"><div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Week 1: 82%</div></div>
+                                                    <div class="flex-1 bg-icc-light/50 rounded-t-lg relative group h-[75%]"><div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Week 2: 88%</div></div>
+                                                    <div class="flex-1 bg-icc rounded-t-lg relative group h-[85%] shadow-lg shadow-icc/10"><div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Week 3: 92%</div></div>
+                                                    <div class="flex-1 bg-gray-100 rounded-t-lg h-[40%]"></div>
+                                                    <div class="flex-1 bg-gray-100 rounded-t-lg h-[30%]"></div>
+                                                </div>
+                                                <div class="flex justify-between mt-4 px-4 text-[9px] font-black text-gray-400 uppercase tracking-widest">
+                                                    <span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span><span>Week 5</span>
+                                                </div>
+                                            </div>
+                                            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                                                <h3 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-4">Top Performers</h3>
+                                                <div class="space-y-4">
+                                                    <div class="flex items-center justify-between p-2 bg-icc-light/20 rounded-xl">
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="w-8 h-8 rounded-full bg-icc text-white flex items-center justify-center text-[10px] font-black">1</div>
+                                                            <span class="text-xs font-bold text-gray-800">Bautista, Maria</span>
+                                                        </div>
+                                                        <span class="text-xs font-black text-icc">98.5%</span>
+                                                    </div>
+                                                    <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded-xl transition-colors">
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-[10px] font-black">2</div>
+                                                            <span class="text-xs font-bold text-gray-800">Dela Cruz, Juan</span>
+                                                        </div>
+                                                        <span class="text-xs font-black text-gray-400">96.2%</span>
+                                                    </div>
+                                                    <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded-xl transition-colors">
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-[10px] font-black">3</div>
+                                                            <span class="text-xs font-bold text-gray-800">Garcia, Ana</span>
+                                                        </div>
+                                                        <span class="text-xs font-black text-gray-400">95.8%</span>
+                                                    </div>
+                                                </div>
+                                                <button class="w-full mt-6 py-2 text-[10px] font-black text-icc uppercase tracking-widest hover:underline">View All Rankings</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Materials Tab (Hidden) -->
+                                    <div id="detail-section-materials" class="hidden space-y-6">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                            <!-- Module 1 -->
+                                            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:border-icc transition-all cursor-pointer group">
+                                                <div class="flex items-center justify-between mb-4">
+                                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-icc group-hover:text-white transition-all">
+                                                        <i class="fa-solid fa-file-pdf text-lg"></i>
+                                                    </div>
+                                                    <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Module 1</span>
+                                                </div>
+                                                <h4 class="text-sm font-bold text-gray-800 mb-1">Introduction to OOP</h4>
+                                                <p class="text-[10px] text-gray-400 mb-4">PDF • 2.4 MB • Updated 2 days ago</p>
+                                                <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                                                    <span class="text-[10px] font-bold text-icc bg-icc-light px-2 py-0.5 rounded">Published</span>
+                                                    <div class="flex gap-2">
+                                                        <button class="text-gray-400 hover:text-icc transition-colors"><i class="fa-solid fa-download text-xs"></i></button>
+                                                        <button class="text-gray-400 hover:text-icc transition-colors"><i class="fa-solid fa-ellipsis-vertical text-xs"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Module 2 -->
+                                            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:border-icc transition-all cursor-pointer group">
+                                                <div class="flex items-center justify-between mb-4">
+                                                    <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:bg-icc group-hover:text-white transition-all">
+                                                        <i class="fa-solid fa-video text-lg"></i>
+                                                    </div>
+                                                    <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Lecture</span>
+                                                </div>
+                                                <h4 class="text-sm font-bold text-gray-800 mb-1">Classes & Objects Explained</h4>
+                                                <p class="text-[10px] text-gray-400 mb-4">Video • 15:20 • Updated 1 week ago</p>
+                                                <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                                                    <span class="text-[10px] font-bold text-icc bg-icc-light px-2 py-0.5 rounded">Published</span>
+                                                    <div class="flex gap-2">
+                                                        <button class="text-gray-400 hover:text-icc transition-colors"><i class="fa-solid fa-play text-xs"></i></button>
+                                                        <button class="text-gray-400 hover:text-icc transition-colors"><i class="fa-solid fa-ellipsis-vertical text-xs"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Add New Material -->
+                                            <div class="bg-gray-50 p-5 rounded-2xl border border-dashed border-gray-200 flex flex-col items-center justify-center hover:bg-white hover:border-icc transition-all cursor-pointer group">
+                                                <div class="w-10 h-10 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 mb-2 group-hover:text-icc transition-all">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </div>
+                                                <span class="text-xs font-bold text-gray-400 group-hover:text-icc">Upload Material</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Advisory Panel (right column) -->
+                        <div id="classes-right-panel" class="space-y-6">
+                            <div class="bg-white rounded-2xl border border-indigo-100 p-6 shadow-sm relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-4 opacity-10">
+                                    <i class="fa-solid fa-user-graduate text-4xl text-indigo-600"></i>
+                                </div>
+                                <h3 class="text-sm font-black text-indigo-600 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                    <i class="fa-solid fa-user-shield"></i> Advisory Role
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="p-3 bg-indigo-50 rounded-xl border-l-4 border-indigo-400">
+                                        <p class="text-xs text-gray-700 leading-relaxed font-medium">
+                                            <strong>Class:</strong> Grade 11 - ICT A<br>
+                                            <strong>Students:</strong> 45 enrolled<br>
+                                            <strong>Room:</strong> 302
+                                        </p>
+                                    </div>
+                                    <div class="p-3 bg-green-50 rounded-xl border-l-4 border-green-400">
+                                        <p class="text-xs text-gray-700 leading-relaxed">
+                                            <strong>Status:</strong> All subjects active<br>
+                                            <strong>Performance:</strong> Section GPA: 87.3%<br>
+                                            <strong>Attendance:</strong> 94.2% average
+                                        </p>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <button class="w-full py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl hover:bg-indigo-700 transition-all">
+                                            <i class="fa-solid fa-users"></i> View Student Roster
+                                        </button>
+                                        <button class="w-full py-2 bg-white border border-indigo-200 text-indigo-600 text-xs font-bold rounded-xl hover:bg-indigo-50 transition-all">
+                                            <i class="fa-solid fa-chart-line"></i> Section Analytics
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                                <h3 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-4">Quick Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full flex items-center gap-3 p-3 bg-gray-50 hover:bg-icc hover:text-white text-gray-700 text-xs font-bold rounded-xl transition-all">
+                                        <i class="fa-solid fa-plus"></i>
+                                        <span>Create Announcement</span>
+                                    </button>
+                                    <button class="w-full flex items-center gap-3 p-3 bg-gray-50 hover:bg-icc hover:text-white text-gray-700 text-xs font-bold rounded-xl transition-all">
+                                        <i class="fa-solid fa-plus"></i>
+                                        <span>Schedule Meeting</span>
+                                    </button>
+                                    <button class="w-full flex items-center gap-3 p-3 bg-gray-50 hover:bg-icc hover:text-white text-gray-700 text-xs font-bold rounded-xl transition-all">
+                                        <i class="fa-solid fa-envelope"></i>
+                                        <span>Contact Parents</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SUBJECTS SECTION -->
+                <section id="section-subjects" class="dynamic-section hidden space-y-8">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-black text-gray-800 tracking-tight leading-tight">Subject Management</h2>
+                            <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Manage topics and activities per section</p>
+                        </div>
+                    </div>
+
+                    <div id="subject-management-content" class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <!-- Default empty state or specific subject content will be injected here -->
+                        <div class="lg:col-span-4 flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-dashed border-gray-200">
+                            <i class="fa-solid fa-hand-pointer text-4xl text-gray-200 mb-4"></i>
+                            <p class="text-gray-400 font-medium">Select a subject from the sidebar to manage</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ADVISORY SECTION (New) -->
+                <section id="section-advisory" class="dynamic-section hidden space-y-8">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-black text-gray-800 tracking-tight leading-tight">Advisory Class</h2>
+                            <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Grade 11 - ICT A • Monitoring & Oversight</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Student List with Status -->
+                            <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                                <div class="p-6 border-b border-gray-50 flex justify-between items-center">
+                                    <h3 class="text-sm font-bold text-gray-800 uppercase tracking-widest">Student Roster</h3>
+                                    <div class="flex gap-2">
+                                        <span class="px-2 py-1 bg-red-50 text-red-600 text-[10px] font-bold rounded-lg">5 At Risk</span>
+                                        <span class="px-2 py-1 bg-green-50 text-green-600 text-[10px] font-bold rounded-lg">40 Stable</span>
+                                    </div>
+                                </div>
+                                <div class="divide-y divide-gray-50">
+                                    <!-- Sample At-Risk Student -->
+                                    <div class="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold text-sm">JS</div>
+                                            <div>
+                                                <p class="text-sm font-bold text-gray-800 leading-tight">Juan Santos</p>
+                                                <p class="text-[10px] text-red-500 font-medium mt-1">Failing in: Gen Math, Empowerment Tech</p>
+                                            </div>
+                                        </div>
+                                        <button class="px-3 py-1.5 bg-gray-100 text-gray-600 text-[10px] font-bold rounded-lg hover:bg-icc hover:text-white transition-all">VIEW PROFILE</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sigma AI Advisory Monitoring -->
+                        <div class="space-y-6">
+                            <div class="bg-white rounded-2xl border border-indigo-100 p-6 shadow-sm relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-4 opacity-10">
+                                    <i class="fa-solid fa-bolt text-4xl text-indigo-600"></i>
+                                </div>
+                                <h3 class="text-sm font-black text-indigo-600 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                    <i class="fa-solid fa-bolt"></i> Sigma AI Advisor
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="p-3 bg-indigo-50 rounded-xl border-l-4 border-indigo-400">
+                                        <p class="text-xs text-gray-700 leading-relaxed">
+                                            <strong>Attendance Alert:</strong> 3 students have been absent for 2 consecutive days. Consider reaching out to parents.
+                                        </p>
+                                    </div>
+                                    <div class="p-3 bg-red-50 rounded-xl border-l-4 border-red-400">
+                                        <p class="text-xs text-gray-700 leading-relaxed">
+                                            <strong>Grade Warning:</strong> Section GPA dropped by 4% after the last Gen Math quiz. Most errors were in "Logarithmic Functions".
+                                        </p>
+                                    </div>
+                                    <button class="w-full py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl hover:bg-indigo-700 transition-all">GENERATE ADVISORY REPORT</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- GRADEBOOK SECTION -->
+                <section id="section-gradebook" class="dynamic-section hidden space-y-8">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-black text-gray-800 tracking-tight leading-tight">Gradebook</h2>
+                            <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Grade 11 - ICT A • Programming 1</p>
+                        </div>
+                        <button class="px-4 py-2 bg-icc text-white rounded-xl text-xs font-bold hover:bg-icc-dark transition-all">Save Changes</button>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-gray-50 border-b border-gray-100">
+                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Student Name</th>
+                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Quiz 1</th>
+                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Quiz 2</th>
+                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Lab 1</th>
+                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-50">
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4"><p class="text-sm font-bold text-gray-800">Dela Cruz, Juan</p><p class="text-[10px] text-gray-400">ID: 2024-001</p></td>
+                                        <td class="px-6 py-4 text-center"><input type="text" value="18" class="w-12 py-1 bg-gray-100 border-none rounded text-xs font-bold text-center focus:ring-1 focus:ring-icc/30 outline-none"></td>
+                                        <td class="px-6 py-4 text-center"><input type="text" value="17" class="w-12 py-1 bg-gray-100 border-none rounded text-xs font-bold text-center focus:ring-1 focus:ring-icc/30 outline-none"></td>
+                                        <td class="px-6 py-4 text-center"><input type="text" value="45" class="w-12 py-1 bg-gray-100 border-none rounded text-xs font-bold text-center focus:ring-1 focus:ring-icc/30 outline-none"></td>
+                                        <td class="px-6 py-4 text-center text-sm font-black text-icc">91.4%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ANALYTICS SECTION -->
+                <section id="section-analytics" class="dynamic-section hidden space-y-8">
+                    <h2 class="text-2xl font-black text-gray-800 tracking-tight">Performance Analytics</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                            <h3 class="text-sm font-bold text-gray-800 uppercase tracking-widest mb-6">Grade Distribution</h3>
+                            <div class="h-48 flex items-end justify-between gap-4">
+                                <div class="flex-1 bg-red-100 rounded-t-lg" style="height:10%"></div>
+                                <div class="flex-1 bg-orange-100 rounded-t-lg" style="height:25%"></div>
+                                <div class="flex-1 bg-yellow-100 rounded-t-lg" style="height:50%"></div>
+                                <div class="flex-1 bg-icc-light rounded-t-lg" style="height:80%"></div>
+                                <div class="flex-1 bg-icc rounded-t-lg" style="height:30%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                            <h3 class="text-sm font-bold text-gray-800 uppercase tracking-widest mb-6">Top Performers</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 font-bold text-xs">1</div><p class="text-sm font-bold text-gray-800">Dela Cruz, Juan</p></div><span class="text-sm font-black text-icc">96.5</span></div>
+                                <div class="flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 font-bold text-xs">2</div><p class="text-sm font-bold text-gray-800">Santos, Maria</p></div><span class="text-sm font-black text-icc">94.2</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ATTENDANCE SECTION -->
+                <section id="section-attendance" class="dynamic-section hidden space-y-8">
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        <!-- LEFT: Calendar & Schedule -->
+                        <div class="lg:w-80 flex-shrink-0 space-y-6">
+                            <!-- Mini Calendar -->
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
+                                <div class="flex items-center justify-between mb-5">
+                                    <h3 id="attendance-calendar-month-year" class="text-sm font-bold text-gray-800">March 2026</h3>
+                                    <div class="flex gap-2">
+                                        <button id="attendance-prevMonthBtn"
+                                            class="w-6 h-6 rounded-lg hover:bg-gray-50 flex items-center justify-center text-gray-400 transition-all"><i
+                                                class="fa-solid fa-chevron-left text-[10px]"></i></button>
+                                        <button id="attendance-nextMonthBtn"
+                                            class="w-6 h-6 rounded-lg hover:bg-gray-50 flex items-center justify-center text-gray-400 transition-all"><i
+                                                class="fa-solid fa-chevron-right text-[10px]"></i></button>
+                                    </div>
+                                </div>
+                                <div id="attendance-calendar-days-grid" class="grid grid-cols-7 gap-1 text-center"></div>
+                                <div id="attendance-calendar-event-panel"
+                                    class="mt-3 p-4 bg-gray-50/80 rounded-xl border border-gray-100 hidden animate-slide-down">
+                                    <div id="attendance-calendar-event-content" class="space-y-3"></div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+                                <h4 class="text-sm font-bold text-gray-800 mb-4">Quick Actions</h4>
+                                <div class="space-y-3">
+                                    <button class="w-full px-4 py-3 bg-icc text-white rounded-xl text-sm font-bold hover:bg-icc-dark transition-all flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-calendar-plus"></i>
+                                        Schedule Attendance
+                                    </button>
+                                    <button class="w-full px-4 py-3 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-file-export"></i>
+                                        Export Report
+                                    </button>
+                                    <button class="w-full px-4 py-3 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-bell"></i>
+                                        Send Reminders
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: Attendance Management -->
+                        <div class="flex-1 space-y-6">
+                            <!-- Today's Attendance Header -->
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h2 class="text-2xl font-black text-gray-800 tracking-tight leading-tight">Daily Attendance</h2>
+                                    <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Grade 11 - ICT A • March 22, 2026</p>
+                                </div>
+                                <button class="px-4 py-2 bg-icc text-white rounded-xl text-xs font-bold hover:bg-icc-dark transition-all">Submit Attendance</button>
+                            </div>
+
+                            <!-- Attendance Stats -->
+                            <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                                <div class="grid grid-cols-4 divide-x divide-gray-50 border-b border-gray-50">
+                                    <div class="p-6 text-center"><p class="text-2xl font-black text-gray-800">45</p><p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Total Enrolled</p></div>
+                                    <div class="p-6 text-center"><p class="text-2xl font-black text-green-600">42</p><p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Present</p></div>
+                                    <div class="p-6 text-center"><p class="text-2xl font-black text-red-500">2</p><p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Absent</p></div>
+                                    <div class="p-6 text-center"><p class="text-2xl font-black text-amber-500">1</p><p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Late</p></div>
+                                </div>
+
+                                <!-- Student List -->
+                                <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                                        <p class="text-xs font-bold text-gray-800">Dela Cruz, Juan</p>
+                                        <div class="flex gap-1">
+                                            <button class="w-7 h-7 bg-icc text-white rounded-lg flex items-center justify-center text-[10px] font-bold shadow-sm">P</button>
+                                            <button class="w-7 h-7 bg-white border border-gray-200 text-gray-400 rounded-lg flex items-center justify-center text-[10px] font-bold">A</button>
+                                            <button class="w-7 h-7 bg-white border border-gray-200 text-gray-400 rounded-lg flex items-center justify-center text-[10px] font-bold">L</button>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                                        <p class="text-xs font-bold text-gray-800">Santos, Maria</p>
+                                        <div class="flex gap-1">
+                                            <button class="w-7 h-7 bg-white border border-gray-200 text-gray-400 rounded-lg flex items-center justify-center text-[10px] font-bold">P</button>
+                                            <button class="w-7 h-7 bg-red-500 text-white rounded-lg flex items-center justify-center text-[10px] font-bold shadow-sm">A</button>
+                                            <button class="w-7 h-7 bg-white border border-gray-200 text-gray-400 rounded-lg flex items-center justify-center text-[10px] font-bold">L</button>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                                        <p class="text-xs font-bold text-gray-800">Garcia, Anna</p>
+                                        <div class="flex gap-1">
+                                            <button class="w-7 h-7 bg-icc text-white rounded-lg flex items-center justify-center text-[10px] font-bold shadow-sm">P</button>
+                                            <button class="w-7 h-7 bg-white border border-gray-200 text-gray-400 rounded-lg flex items-center justify-center text-[10px] font-bold">A</button>
+                                            <button class="w-7 h-7 bg-white border border-gray-200 text-gray-400 rounded-lg flex items-center justify-center text-[10px] font-bold">L</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Attendance Insights -->
+                            <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-9 h-9 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600">
+                                        <i class="fa-solid fa-brain text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-gray-800">Sigma AI Attendance Insights</h4>
+                                        <p class="text-xs text-gray-400 font-medium">Based on attendance patterns</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="p-3 bg-red-50 border border-red-200 rounded-lg">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <i class="fa-solid fa-triangle-exclamation text-red-500 text-xs"></i>
+                                            <span class="text-xs font-bold text-red-700">Attendance Alert</span>
+                                        </div>
+                                        <p class="text-xs text-red-600">3 students have been absent for 2+ consecutive days. Consider reaching out to parents.</p>
+                                    </div>
+                                    <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <i class="fa-solid fa-chart-line text-blue-500 text-xs"></i>
+                                            <span class="text-xs font-bold text-blue-700">Pattern Detected</span>
+                                        </div>
+                                        <p class="text-xs text-blue-600">Tuesday attendance is 15% lower than other days. Consider scheduling important activities on other days.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-messages" class="dynamic-section hidden">
+                    <div class="flex flex-col lg:flex-row gap-6 h-full">
+                        <!-- LEFT: Mail Sidebar -->
+                        <div class="lg:w-80 flex-shrink-0">
+                            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                                <!-- Compose Button -->
+                                <div class="p-4 border-b border-gray-50">
+                                    <button class="w-full px-4 py-3 bg-icc text-white rounded-xl text-sm font-bold hover:bg-icc-dark transition-all flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        Compose Message
+                                    </button>
+                                </div>
+
+                                <!-- Mail Folders -->
+                                <div class="divide-y divide-gray-50">
+                                    <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-icc bg-icc/5 border-r-2 border-icc">
+                                        <i class="fa-solid fa-inbox w-5 text-center"></i>
+                                        Inbox
+                                        <span class="ml-auto text-xs font-black text-white bg-icc px-2 py-1 rounded-full">3</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50">
+                                        <i class="fa-solid fa-paper-plane w-5 text-center"></i>
+                                        Sent
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50">
+                                        <i class="fa-regular fa-file w-5 text-center"></i>
+                                        Drafts
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50">
+                                        <i class="fa-solid fa-trash w-5 text-center"></i>
+                                        Trash
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: Message List & Reader -->
+                        <div class="flex-1 flex flex-col min-h-0">
+                            <!-- Message List -->
+                            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex-1 flex flex-col mb-4">
+                                <!-- Header -->
+                                <div class="p-4 border-b border-gray-50 flex items-center justify-between">
+                                    <h3 class="text-lg font-bold text-gray-800">Inbox</h3>
+                                    <div class="flex items-center gap-2">
+                                        <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-50">
+                                            <i class="fa-solid fa-refresh text-sm"></i>
+                                        </button>
+                                        <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-50">
+                                            <i class="fa-solid fa-ellipsis-vertical text-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Messages -->
+                                <div class="flex-1 overflow-y-auto">
+                                    <div class="divide-y divide-gray-50">
+                                        <!-- Message 1 -->
+                                        <div class="p-4 hover:bg-gray-50 cursor-pointer border-l-4 border-icc message-item active" data-message-id="1">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 rounded-full bg-icc-light flex items-center justify-center text-icc font-bold text-sm flex-shrink-0">
+                                                    MS
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="flex items-center justify-between mb-1">
+                                                        <span class="text-sm font-bold text-gray-800">Maria Santos (Parent)</span>
+                                                        <span class="text-xs text-gray-400">2 hours ago</span>
+                                                    </div>
+                                                    <p class="text-sm text-gray-600 mb-1 truncate">Regarding Juan's performance in General Mathematics</p>
+                                                    <p class="text-xs text-gray-500 truncate">Dear Teacher, I wanted to discuss Juan's recent grades in General Math. He's been struggling with the new topics and...</p>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <i class="fa-solid fa-star text-gray-300 hover:text-yellow-400 cursor-pointer"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Message 2 -->
+                                        <div class="p-4 hover:bg-gray-50 cursor-pointer message-item" data-message-id="2">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm flex-shrink-0">
+                                                    AG
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="flex items-center justify-between mb-1">
+                                                        <span class="text-sm font-bold text-gray-800">Anna Garcia (Student)</span>
+                                                        <span class="text-xs text-gray-400">5 hours ago</span>
+                                                    </div>
+                                                    <p class="text-sm text-gray-600 mb-1 truncate">Question about Programming assignment</p>
+                                                    <p class="text-xs text-gray-500 truncate">Hi Teacher, I'm having trouble with the database normalization exercise. Could you please clarify...</p>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <i class="fa-solid fa-star text-gray-300 hover:text-yellow-400 cursor-pointer"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Message 3 -->
+                                        <div class="p-4 hover:bg-gray-50 cursor-pointer border-l-4 border-red-500 message-item" data-message-id="3">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold text-sm flex-shrink-0">
+                                                    CD
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="flex items-center justify-between mb-1">
+                                                        <span class="text-sm font-bold text-gray-800">Carlo Dela Cruz (Parent)</span>
+                                                        <span class="text-xs text-gray-400">1 day ago</span>
+                                                    </div>
+                                                    <p class="text-sm text-gray-600 mb-1 truncate">Concern about attendance</p>
+                                                    <p class="text-xs text-gray-500 truncate">Dear Teacher, Carlo has been absent for 3 consecutive days. Is there something wrong at school?...</p>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <i class="fa-solid fa-star text-yellow-400"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Message Reader -->
+                            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                                <div id="message-reader" class="message-content">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-full bg-icc-light flex items-center justify-center text-icc font-bold text-base flex-shrink-0">
+                                            MS
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div>
+                                                    <h4 class="text-lg font-bold text-gray-800">Maria Santos</h4>
+                                                    <p class="text-sm text-gray-500">Parent of Juan Dela Cruz • Grade 11 - ICT A</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-sm font-medium text-gray-800">March 22, 2026</p>
+                                                    <p class="text-xs text-gray-400">2:15 PM</p>
+                                                </div>
+                                            </div>
+                                            <div class="prose prose-sm max-w-none">
+                                                <p class="text-gray-700 leading-relaxed mb-4">
+                                                    Dear Teacher,
+                                                </p>
+                                                <p class="text-gray-700 leading-relaxed mb-4">
+                                                    I wanted to discuss Juan's recent grades in General Mathematics. He's been struggling with the new topics and I noticed his grades have dropped significantly. He's been trying his best but seems to be having difficulty understanding the concepts.
+                                                </p>
+                                                <p class="text-gray-700 leading-relaxed mb-4">
+                                                    Could we schedule a parent-teacher conference to discuss this matter? I'd like to understand what we can do at home to support his learning. Juan mentioned that he finds the trigonometry lessons particularly challenging.
+                                                </p>
+                                                <p class="text-gray-700 leading-relaxed">
+                                                    Thank you for your attention to this matter. I look forward to your response.
+                                                </p>
+                                                <p class="text-gray-700 leading-relaxed mt-4">
+                                                    Best regards,<br>
+                                                    Maria Santos
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="flex items-center gap-3 pt-4 border-t border-gray-100">
+                                        <button class="px-4 py-2 bg-icc text-white rounded-lg text-sm font-bold hover:bg-icc-dark transition-all">
+                                            <i class="fa-solid fa-reply mr-2"></i>Reply
+                                        </button>
+                                        <button class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg text-sm font-bold hover:bg-gray-50 transition-all">
+                                            <i class="fa-solid fa-reply-all mr-2"></i>Reply All
+                                        </button>
+                                        <button class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg text-sm font-bold hover:bg-gray-50 transition-all">
+                                            <i class="fa-solid fa-forward mr-2"></i>Forward
+                                        </button>
+                                        <div class="ml-auto flex gap-2">
+                                            <button class="p-2 text-gray-400 hover:text-yellow-500 rounded-lg hover:bg-gray-50">
+                                                <i class="fa-solid fa-star text-sm"></i>
+                                            </button>
+                                            <button class="p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-gray-50">
+                                                <i class="fa-solid fa-trash text-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="js/teacher.js"></script>
+</body>
+</html>

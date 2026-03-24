@@ -1,0 +1,263 @@
+/* Teacher Dashboard Styles */
+
+/* Global Transitions Control */
+.no-transition * { transition: none !important; }
+
+:root {
+    --icc-green: #15803d;
+    --icc-yellow: #FFD000;
+    --icc-dark: #14532d;
+    --icc-light: #dcfce7;
+}
+
+/* ─── Scrollbar: hidden until hover ─────────────────────── */
+* { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+*:hover { scrollbar-color: rgba(0,0,0,.18) transparent; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: transparent; border-radius: 10px; }
+::-webkit-scrollbar-button { display: none; height: 0; width: 0; }
+*:hover > ::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-thumb { background: rgba(0,0,0,.18); }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,.32) !important; }
+
+/* Base */
+body {
+    font-family: 'Outfit', sans-serif;
+    color: #1e293b;
+    font-size: 17px;
+    line-height: 1.65;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Section isolation ──────────────────────────────────── */
+.dynamic-section { display: none !important; }
+.dynamic-section:not(.hidden) { display: block !important; }
+
+/* ─── Structural transitions ─────────────────────────────── */
+#sidebar, #top-nav, #layout-wrapper {
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+/* Header — always 80px, white, never changes */
+#top-nav {
+    height: 80px;
+    background: white;
+    left: 0;
+    padding-left: 0;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Layout Variables for Dynamic Adjustment */
+:root {
+    --sidebar-width: 220px;
+    --sub-sidebar-width: 0px;
+}
+body.sidebar-collapsed { --sidebar-width: 82px; }
+body.sub-sidebar-open { --sub-sidebar-width: 240px; }
+
+/* Sidebar — starts at 80px, NOT connected to logo */
+#sidebar {
+    width: var(--sidebar-width);
+    top: 80px;
+    height: calc(100vh - 80px);
+}
+
+#layout-wrapper {
+    margin-left: calc(var(--sidebar-width) + var(--sub-sidebar-width)) !important;
+    margin-top: 80px;
+}
+
+/* ─── Logo container — inside navbar, NEVER moves ───────── */
+#logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    /* Logo does NOT follow sidebar collapse */
+}
+
+#nav-logo-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0;
+}
+#nav-logo-btn:focus, #nav-logo-btn:active, #nav-logo-btn:hover {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+#nav-logo-btn img { width: 58px; height: 58px; object-fit: contain; }
+
+/* ─── Nav context ────────────────────────────────────────── */
+#nav-context { display: none; margin-left: 4px; }
+#nav-context.visible { display: flex !important; align-items: center; gap: 8px; }
+#nav-context-text { font-size: 18px; font-weight: 900; color: #1e293b; letter-spacing: -.02em; }
+
+/* ──═ Sidebar & Sub-sidebar ═── */
+body.sidebar-collapsed #sidebar { width: 82px !important; }
+
+#sub-sidebar {
+    transition: none !important;
+    top: 80px;
+    height: calc(100vh - 80px);
+    left: var(--sidebar-width) !important;
+}
+
+#sub-sidebar.sub-sidebar-visible {
+    transform: none !important;
+    opacity: 1;
+}
+
+#sub-sidebar.hidden {
+    display: none !important;
+}
+
+/* Sidebar Labels Visibility Logic */
+.rail-label { display: none !important; }
+.full-label { display: block !important; }
+
+body.sidebar-collapsed .rail-label {
+    display: block !important;
+    font-size: 8px;
+    margin-top: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    opacity: .8;
+}
+
+body.sidebar-collapsed .full-label { display: none !important; }
+
+/* Sub-nav accordion styles */
+.sub-nav-group .sub-nav-items {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease;
+}
+.sub-nav-group.active .sub-nav-items {
+    max-height: 500px;
+}
+.sub-nav-group-header {
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #94a3b8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.sub-nav-group.active .fa-chevron-right {
+    transform: rotate(90deg);
+}
+
+
+/* Sidebar icon container — fixed 68px, matches student page */
+.sidebar-icon-container {
+    width: 68px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Sidebar links */
+#sidebar nav a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 !important;
+    transition: background .2s ease;
+    border: none !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
+}
+#sidebar nav a:hover { background: rgba(255,255,255,.1); }
+#sidebar nav a.bg-white\/20 { background: rgba(255,255,255,.2); }
+#sidebar nav a i { transition: none !important; }
+
+/* Header action active states */
+header .relative button, header .relative button i { transition: none !important; }
+header .relative button.active i, header .relative button.active #dropdownChevron { color: #FFD000 !important; }
+.active .fa-regular, .active .fa-solid { color: #FFD000 !important; }
+
+/* Notification badge */
+#notifBadge { animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+
+@media (min-width: 1024px) { #sidebar.sidebar-collapsed { width: 68px; } }
+@media (max-width: 1023px) {
+    #sidebar { transform: translateX(-100%); z-index: 90; }
+    #sidebar.sidebar-visible { transform: translateX(0); }
+    #layout-wrapper { margin-left: 0; }
+}
+
+/* ─── Animations ─────────────────────────────────────────── */
+.animate-slide-down { animation: slideDown .3s ease-out forwards; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn .5s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.slide-up { animation: slideUp .3s ease; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Cards and components ───────────────────────────────── */
+.metric-card { transition: all .3s ease; border: 1px solid transparent; }
+.metric-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,.1); border-color: var(--icc-green); }
+
+.activity-item { transition: all .2s ease; border-left: 3px solid transparent; }
+.activity-item:hover { background: rgba(21,128,61,.05); border-left-color: var(--icc-green); }
+
+.deadline-card { transition: all .2s ease; border-left: 4px solid transparent; }
+.deadline-card:hover { transform: translateX(4px); }
+.deadline-card.urgent { border-left-color: #ef4444; }
+.deadline-card.soon { border-left-color: #f59e0b; }
+.deadline-card.normal { border-left-color: #3b82f6; }
+
+.btn-primary { background: var(--icc-green); color: white; transition: all .2s ease; }
+.btn-primary:hover { background: var(--icc-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(21,128,61,.3); }
+.btn-secondary { background: white; color: var(--icc-green); border: 2px solid var(--icc-green); transition: all .2s ease; }
+.btn-secondary:hover { background: var(--icc-green); color: white; transform: translateY(-1px); }
+
+/* Focus — yellow outline on buttons/inputs */
+button:focus, a:focus, input:focus { outline: 2px solid var(--icc-yellow); outline-offset: 2px; }
+
+/* ─── Announcement slider ────────────────────────────────── */
+#announcements-slider { scrollbar-width: none; }
+#announcements-slider::-webkit-scrollbar { display: none; }
+
+/* ─── Search bar — no focus animation ───────────────────── */
+#top-nav input[type="text"] { transition: none !important; outline: none !important; box-shadow: none !important; }
+#top-nav input[type="text"]:focus { box-shadow: none !important; outline: none !important; }
+
+/* ─── Status indicators ──────────────────────────────────── */
+.status-online  { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 1px #22c55e; }
+.status-offline { width: 8px; height: 8px; background: #ef4444; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 1px #ef4444; }
+.status-busy    { width: 8px; height: 8px; background: #f59e0b; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 1px #f59e0b; }
+
+/* Print */
+@media print {
+    #sidebar, #top-nav { display: none; }
+    #layout-wrapper { margin-left: 0; margin-top: 0; }
+    main { padding: 0; }
+    .shadow-sm { box-shadow: none; border: 1px solid #ccc; }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

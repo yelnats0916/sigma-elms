@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Superadmin | SIGMA Neural Engine</title>
+
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/superadmin.css">
+
+    <!-- TAILWIND & CONFIG -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'super-bg': '#0B101B',
+                        'super-card': '#111827',
+                        'super-border': '#1F2937',
+                        'super-accent': '#38bdf8'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-super-bg min-h-screen flex overflow-hidden font-['Outfit'] text-slate-300 min-w-[1280px]">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="w-[280px] h-screen bg-slate-950 flex flex-col z-50 border-r border-super-border">
+        <div class="py-10 flex flex-col items-center bg-slate-900/50">
+            <div class="w-32 h-32 bg-super-accent rounded-[2.5rem] flex items-center justify-center shadow-2xl shadow-super-accent/20 mb-6 border-4 border-white/5">
+                <i class="fa-solid fa-bolt-lightning text-5xl text-white"></i>
+            </div>
+            <div class="px-6 py-2 bg-super-accent rounded-full text-[10px] font-black tracking-[0.4em] uppercase text-white shadow-lg">Superadmin</div>
+            <p class="text-[9px] text-slate-500 font-bold uppercase mt-3 tracking-widest">System Architecture Core</p>
+        </div>
+
+        <nav class="flex-1 py-10 overflow-y-auto px-6 space-y-2">
+            <a href="#" id="nav-nodes" class="nav-link group flex items-center px-6 py-4 rounded-2xl bg-super-accent text-white shadow-xl transition-all">
+                <i class="fa-solid fa-microchip w-6 text-center mr-4 opacity-70 group-hover:rotate-12 transition-transform"></i>
+                <span class="text-sm font-bold tracking-wide">System Nodes</span>
+            </a>
+            <a href="#" id="nav-governance" class="nav-link group flex items-center px-6 py-4 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white transition-all">
+                <i class="fa-solid fa-user-shield w-6 text-center mr-4 opacity-70"></i>
+                <span class="text-sm font-bold tracking-wide">Admin Governance</span>
+            </a>
+            <a href="#" id="nav-purge" class="nav-link group flex items-center px-6 py-4 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white transition-all">
+                <i class="fa-solid fa-database w-6 text-center mr-4 opacity-70"></i>
+                <span class="text-sm font-bold tracking-wide">Global Purge</span>
+            </a>
+            <a href="#" id="nav-updates" class="nav-link group flex items-center px-6 py-4 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white transition-all">
+                <i class="fa-solid fa-cloud-arrow-up w-6 text-center mr-4 opacity-70"></i>
+                <span class="text-sm font-bold tracking-wide">System Updates</span>
+            </a>
+            <a href="#" id="nav-logs" class="nav-link group flex items-center px-6 py-4 rounded-2xl hover:bg-white/5 text-slate-400 hover:text-white transition-all">
+                <i class="fa-solid fa-terminal w-6 text-center mr-4 opacity-70"></i>
+                <span class="text-sm font-bold tracking-wide">System Logs</span>
+            </a>
+        </nav>
+
+        <div class="p-8 border-t border-super-border">
+            <button onclick="window.location.href='index.html'" class="w-full py-4 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
+                Terminate Session
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+        <!-- HEADER -->
+        <header class="h-20 border-b border-super-border flex items-center justify-between px-10 bg-slate-900/30">
+            <div class="flex items-center gap-4">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_15px_rgba(34,197,94,0.5)]"></div>
+                <h2 class="text-sm font-black text-white uppercase tracking-[0.3em]">SIGMA Neural Engine <span class="text-super-accent">v2.4.0</span></h2>
+            </div>
+            <div class="flex items-center gap-8">
+                <div class="text-right">
+                    <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Global Status</p>
+                    <p class="text-xs font-bold text-green-400 uppercase tracking-widest">System Optimal</p>
+                </div>
+                <div class="w-[1px] h-10 bg-super-border"></div>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-super-accent border border-super-border">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD CONTENT -->
+        <div class="flex-1 overflow-y-auto p-10 space-y-10 custom-scrollbar">
+            
+            <!-- SYSTEM NODES (Architecture View) -->
+            <section id="nodes-view" class="dynamic-section">
+                <div class="mb-8 flex justify-between items-end">
+                    <div>
+                        <h3 class="text-xl font-bold text-white uppercase tracking-widest">Neural Infrastructure</h3>
+                        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-1">Real-time status of institutional server clusters</p>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="bg-slate-900/50 px-6 py-3 rounded-2xl border border-super-border text-center">
+                            <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Global Users</p>
+                            <p class="text-xl font-black text-white tracking-tighter uppercase">12.4K <span class="text-[10px] text-green-500 ml-1">+12%</span></p>
+                        </div>
+                        <div class="bg-slate-900/50 px-6 py-3 rounded-2xl border border-super-border text-center">
+                            <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Active Schools</p>
+                            <p class="text-xl font-black text-white tracking-tighter uppercase">45 <span class="text-[10px] text-super-accent ml-1">Live</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-4 gap-6">
+                    <!-- Revenue/Growth Chart Simulation -->
+                    <div class="col-span-2 bg-super-card p-8 rounded-[2rem] border border-super-border relative overflow-hidden h-[240px] flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Global Revenue</h4>
+                                <p class="text-2xl font-black text-white tracking-tighter uppercase">$1.2M <span class="text-xs text-green-500 ml-2">↑ 24%</span></p>
+                            </div>
+                            <div class="flex gap-1">
+                                <span class="w-1 h-4 bg-super-accent/20 rounded-full"></span>
+                                <span class="w-1 h-6 bg-super-accent/40 rounded-full"></span>
+                                <span class="w-1 h-8 bg-super-accent/60 rounded-full"></span>
+                                <span class="w-1 h-10 bg-super-accent/80 rounded-full"></span>
+                                <span class="w-1 h-12 bg-super-accent rounded-full"></span>
+                            </div>
+                        </div>
+                        <div class="flex items-end justify-between gap-2 h-24 px-4">
+                            <div class="flex-1 bg-slate-800 rounded-t-lg h-[40%] hover:bg-super-accent transition-all cursor-pointer"></div>
+                            <div class="flex-1 bg-slate-800 rounded-t-lg h-[65%] hover:bg-super-accent transition-all cursor-pointer"></div>
+                            <div class="flex-1 bg-slate-800 rounded-t-lg h-[55%] hover:bg-super-accent transition-all cursor-pointer"></div>
+                            <div class="flex-1 bg-slate-800 rounded-t-lg h-[85%] hover:bg-super-accent transition-all cursor-pointer"></div>
+                            <div class="flex-1 bg-super-accent rounded-t-lg h-[95%] shadow-lg shadow-super-accent/20"></div>
+                            <div class="flex-1 bg-slate-800 rounded-t-lg h-[70%] hover:bg-super-accent transition-all cursor-pointer"></div>
+                        </div>
+                        <div class="flex justify-between text-[8px] font-black text-slate-500 uppercase tracking-widest px-2">
+                            <span>OCT</span><span>NOV</span><span>DEC</span><span>JAN</span><span>FEB</span><span>MAR</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-super-card p-8 rounded-[2rem] border border-super-border relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-green-500"></div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Primary Node</h4>
+                                <p class="text-lg font-bold text-white tracking-tighter uppercase">ICC-MAIN-01</p>
+                            </div>
+                            <span class="px-3 py-1 bg-green-500/10 text-green-500 text-[8px] font-black rounded uppercase">Online</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-[9px] font-bold text-slate-500 mb-2 uppercase">CPU Load <span>12%</span></div>
+                                <div class="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500 w-[12%]"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center pt-4">
+                                <span class="text-[9px] font-bold text-slate-500 uppercase">Uptime: 245 Days</span>
+                                <button class="text-[8px] font-black text-super-accent uppercase tracking-widest hover:underline">Diagnostics</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-super-card p-8 rounded-[2rem] border border-super-border relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-super-accent"></div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">AI Processor</h4>
+                                <p class="text-lg font-bold text-white tracking-tighter uppercase">SIGMA-CORE-X</p>
+                            </div>
+                            <span class="px-3 py-1 bg-super-accent/10 text-super-accent text-[8px] font-black rounded uppercase">Processing</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-slate-950/50 rounded-xl border border-super-border">
+                                <p class="text-[10px] text-super-accent font-mono animate-pulse tracking-tight line-clamp-2">"Predictive grade modeling for SHS Grade 11 is currently active. Engagement analysis running across 1,200 nodes."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ADMIN GOVERNANCE -->
+            <section id="governance-view" class="dynamic-section hidden space-y-8">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <h3 class="text-xl font-bold text-white uppercase tracking-widest">Admin Governance</h3>
+                        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-1">Manage institutional administrators and permission levels</p>
+                    </div>
+                    <button onclick="toggleAdminForm()" class="px-6 py-3 bg-super-accent text-white text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-super-accent/20 hover:scale-105 transition-all">
+                        Provision New Admin
+                    </button>
+                </div>
+
+                <!-- Provision New Admin Form (Hidden by default) -->
+                <div id="provision-admin-form" class="hidden bg-super-card p-8 rounded-[2.5rem] border border-super-border mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h4 class="text-sm font-black text-white uppercase tracking-widest">New Administrator Profile</h4>
+                        <button onclick="toggleAdminForm()" class="text-slate-500 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
+                    </div>
+                    <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Full Name</label>
+                            <input type="text" class="w-full bg-slate-900/50 border border-super-border rounded-xl px-4 py-3 text-sm text-white focus:border-super-accent outline-none transition-colors" placeholder="e.g. Maria Reyes">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email Address</label>
+                            <input type="email" class="w-full bg-slate-900/50 border border-super-border rounded-xl px-4 py-3 text-sm text-white focus:border-super-accent outline-none transition-colors" placeholder="admin@institution.edu">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Institution</label>
+                            <select class="w-full bg-slate-900/50 border border-super-border rounded-xl px-4 py-3 text-sm text-white focus:border-super-accent outline-none transition-colors appearance-none">
+                                <option>Imus Computer College</option>
+                                <option>St. Jude Academy</option>
+                                <option>Global Tech High</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Authorization Level</label>
+                            <select class="w-full bg-slate-900/50 border border-super-border rounded-xl px-4 py-3 text-sm text-white focus:border-super-accent outline-none transition-colors appearance-none">
+                                <option>Full Access (Tier 1)</option>
+                                <option>Limited Access (Tier 2)</option>
+                                <option>Read-Only (Tier 3)</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2 flex justify-end gap-4 mt-4">
+                            <button type="button" onclick="toggleAdminForm()" class="px-6 py-3 bg-transparent border border-super-border text-slate-400 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-white/5 transition-all">Cancel</button>
+                            <button type="button" class="px-8 py-3 bg-super-accent text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-super-accent/20 hover:bg-blue-400 transition-all">Generate Credentials</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="bg-super-card rounded-[2.5rem] border border-super-border overflow-hidden">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900/50 border-b border-super-border">
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Administrator</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Institution</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Auth Level</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Status</th>
+                                <th class="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-super-border">
+                            <tr class="hover:bg-white/5 transition-colors">
+                                <td class="px-8 py-5">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-super-accent border border-super-border font-bold text-xs">MR</div>
+                                        <div>
+                                            <p class="text-sm font-bold text-white">Maria Reyes</p>
+                                            <p class="text-[10px] text-slate-500 font-medium">m.reyes@icc.edu.ph</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-5 text-xs font-bold text-slate-400">Imus Computer College</td>
+                                <td class="px-8 py-5">
+                                    <span class="px-3 py-1 bg-blue-500/10 text-blue-500 text-[9px] font-black rounded-full uppercase tracking-tighter">Full Access</span>
+                                </td>
+                                <td class="px-8 py-5">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                                        <span class="text-[10px] font-bold text-slate-400 uppercase">Active</span>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-5 text-right">
+                                    <button class="text-super-accent hover:text-white transition-colors"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-colors">
+                                <td class="px-8 py-5">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-super-accent border border-super-border font-bold text-xs">JD</div>
+                                        <div>
+                                            <p class="text-sm font-bold text-white">Juan Dela Cruz</p>
+                                            <p class="text-[10px] text-slate-500 font-medium">j.delacruz@sj.edu</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-5 text-xs font-bold text-slate-400">St. Jude Academy</td>
+                                <td class="px-8 py-5">
+                                    <span class="px-3 py-1 bg-amber-500/10 text-amber-500 text-[9px] font-black rounded-full uppercase tracking-tighter">Limited</span>
+                                </td>
+                                <td class="px-8 py-5">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                                        <span class="text-[10px] font-bold text-slate-400 uppercase">Active</span>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-5 text-right">
+                                    <button class="text-super-accent hover:text-white transition-colors"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- GLOBAL PURGE & SECURITY -->
+            <section id="purge-view" class="dynamic-section hidden">
+                <div class="grid grid-cols-3 gap-8">
+                    <div class="bg-super-card p-10 rounded-[2.5rem] border border-red-500/20">
+                        <div class="flex items-center gap-4 mb-8 text-red-500">
+                            <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+                            <h3 class="text-xl font-black uppercase tracking-tighter text-white">Data Purge</h3>
+                        </div>
+                        <p class="text-xs text-slate-500 leading-relaxed mb-8">This tool allows for the <span class="text-red-500 font-bold">PERMANENT DELETION</span> of academic records.</p>
+                        
+                        <div class="space-y-4">
+                            <button class="w-full p-5 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white rounded-2xl border border-red-500/20 flex items-center justify-between group transition-all">
+                                <div class="text-left">
+                                    <p class="text-xs font-black uppercase tracking-widest">Purge Archives</p>
+                                    <p class="text-[9px] opacity-60 uppercase font-bold">Records > 5 years</p>
+                                </div>
+                                <i class="fa-solid fa-trash-can group-hover:rotate-12"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-super-card p-10 rounded-[2.5rem] border border-super-border flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-4 mb-8 text-super-accent">
+                                <i class="fa-solid fa-shield-halved text-2xl"></i>
+                                <h3 class="text-xl font-black uppercase tracking-tighter text-white">Governance</h3>
+                            </div>
+                            <div class="space-y-6">
+                                <div class="flex items-center justify-between p-5 bg-slate-900/50 rounded-2xl border border-super-border">
+                                    <div>
+                                        <p class="text-xs font-black uppercase tracking-widest text-white">Maintenance</p>
+                                        <p class="text-[9px] text-slate-500 uppercase font-bold mt-1">Lock whole system</p>
+                                    </div>
+                                    <div class="w-12 h-6 bg-slate-800 rounded-full relative border border-super-border cursor-pointer">
+                                        <div class="absolute left-1 top-1 w-4 h-4 bg-slate-600 rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SYSTEM LOGS / ACTIVITY (Mini view) -->
+                    <div class="bg-super-card p-8 rounded-[2.5rem] border border-super-border">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-sm font-black text-white uppercase tracking-widest">Live Activity</h3>
+                            <span class="w-2 h-2 bg-super-accent rounded-full animate-ping"></span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex gap-4 items-start">
+                                <div class="w-1.5 h-1.5 bg-green-500 rounded-full mt-2"></div>
+                                <div>
+                                    <p class="text-[10px] font-bold text-white uppercase">New School Registered</p>
+                                    <p class="text-[8px] text-slate-500 font-bold uppercase">St. Jude Academy • 2m ago</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 items-start">
+                                <div class="w-1.5 h-1.5 bg-super-accent rounded-full mt-2"></div>
+                                <div>
+                                    <p class="text-[10px] font-bold text-white uppercase">AI Weights Updated</p>
+                                    <p class="text-[8px] text-slate-500 font-bold uppercase">SIGMA-CORE-X • 15m ago</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 items-start">
+                                <div class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"></div>
+                                <div>
+                                    <p class="text-[10px] font-bold text-white uppercase">Backup Successful</p>
+                                    <p class="text-[8px] text-slate-500 font-bold uppercase">VAULT-07 • 1h ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SYSTEM UPDATES -->
+            <section id="updates-view" class="dynamic-section hidden space-y-10">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-white uppercase tracking-widest">System Updates</h3>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-1">Deploy patches and monitor version stability</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div class="bg-super-card p-10 rounded-[2.5rem] border border-super-border">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="w-12 h-12 rounded-2xl bg-super-accent/10 text-super-accent flex items-center justify-center border border-super-accent/20">
+                                <i class="fa-solid fa-code-branch text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-black text-white uppercase tracking-widest">Available Patch</h4>
+                                <p class="text-lg font-bold text-super-accent">SIGMA-v2.4.1-HOTFIX</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4 mb-8">
+                            <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Patch Notes:</p>
+                            <ul class="space-y-2">
+                                <li class="flex gap-3 text-[11px] text-slate-400"><i class="fa-solid fa-circle-check text-green-500 mt-0.5"></i> Fixed latency in Gradebook sync.</li>
+                                <li class="flex gap-3 text-[11px] text-slate-400"><i class="fa-solid fa-circle-check text-green-500 mt-0.5"></i> Optimized AI behavior analysis algorithm.</li>
+                                <li class="flex gap-3 text-[11px] text-slate-400"><i class="fa-solid fa-circle-check text-green-500 mt-0.5"></i> Updated security headers for cross-origin nodes.</li>
+                            </ul>
+                        </div>
+                        <button class="w-full py-4 bg-super-accent text-white text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-super-accent/20 hover:scale-[1.02] transition-all">
+                            Deploy Global Update
+                        </button>
+                    </div>
+
+                    <div class="bg-super-card p-10 rounded-[2.5rem] border border-super-border">
+                        <h4 class="text-sm font-black text-white uppercase tracking-widest mb-8">Deployment History</h4>
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-4">
+                                    <div class="w-1 h-10 bg-green-500 rounded-full"></div>
+                                    <div>
+                                        <p class="text-xs font-bold text-white">v2.4.0 (Stable)</p>
+                                        <p class="text-[10px] text-slate-500 uppercase font-bold">Deployed: Mar 10, 2026</p>
+                                    </div>
+                                </div>
+                                <span class="px-3 py-1 bg-green-500/10 text-green-500 text-[8px] font-black rounded uppercase">Success</span>
+                            </div>
+                            <div class="flex items-center justify-between opacity-60">
+                                <div class="flex gap-4">
+                                    <div class="w-1 h-10 bg-slate-700 rounded-full"></div>
+                                    <div>
+                                        <p class="text-xs font-bold text-white">v2.3.9 (Archive)</p>
+                                        <p class="text-[10px] text-slate-500 uppercase font-bold">Deployed: Feb 20, 2026</p>
+                                    </div>
+                                </div>
+                                <span class="px-3 py-1 bg-slate-800 text-slate-500 text-[8px] font-black rounded uppercase">Rolled Back</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SYSTEM LOGS (Full View) -->
+            <section id="logs-view" class="dynamic-section hidden h-full flex flex-col">
+                <div class="mb-8 flex justify-between items-center">
+                    <div>
+                        <h3 class="text-xl font-bold text-white uppercase tracking-widest">Real-Time System Logs</h3>
+                        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-1">Monitoring global architecture events and security transactions</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-slate-800 text-slate-400 text-[9px] font-black uppercase tracking-widest rounded-lg border border-super-border">Clear Terminal</button>
+                        <button class="px-4 py-2 bg-slate-800 text-slate-400 text-[9px] font-black uppercase tracking-widest rounded-lg border border-super-border">Export Logs</button>
+                    </div>
+                </div>
+
+                <div class="flex-1 bg-slate-950 rounded-[2rem] border border-super-border p-8 font-mono text-[11px] overflow-hidden flex flex-col">
+                    <div class="flex items-center gap-4 mb-6 pb-4 border-b border-white/5">
+                        <div class="flex gap-1.5">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-amber-500/50"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                        </div>
+                        <p class="text-[9px] text-slate-600 font-bold uppercase tracking-widest">Terminal — sigma@core-alpha</p>
+                    </div>
+                    <div id="logs-terminal" class="flex-1 overflow-y-auto custom-scrollbar pr-4 space-y-1">
+                        <div class="py-1 border-b border-white/5 font-mono text-[10px]">
+                            <span class="text-slate-500">[08:00:00]</span> <span class="text-green-500">[SUCCESS]</span> <span class="text-super-accent">System boot sequence complete.</span>
+                        </div>
+                        <div class="py-1 border-b border-white/5 font-mono text-[10px]">
+                            <span class="text-slate-500">[08:00:01]</span> <span class="text-blue-500">[INFO]</span> <span class="text-super-accent">Establishing connection to ICC-MAIN-01...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+
+    <!-- JS -->
+    <script src="js/superadmin.js"></script>
+</body>
+</html>

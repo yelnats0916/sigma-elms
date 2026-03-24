@@ -1,0 +1,27 @@
+:root {
+    --super-bg: #0B101B;
+    --super-card: #111827;
+    --super-border: #374151;
+    --super-accent: #38bdf8; /* light blue */
+}
+
+body {
+    background-color: var(--super-bg);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
