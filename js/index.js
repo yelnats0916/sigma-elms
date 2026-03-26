@@ -108,10 +108,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* SLIDER CONFIG — image paths and alt text for all slides */
     const SLIDER_CONFIG = [
-        { src: 'image/ICC image 4.jpg', alt: 'Welcome to ICC ELMS' },
-        { src: 'image/ICC image3.jpg', alt: 'Classroom' },
-        { src: 'image/ICC image2.jpg', alt: 'Study' },
-        { src: 'image/ICC image.jpg', alt: 'Computer Lab' }
+        { src: 'image/ICC Welcome.jpg', alt: 'Welcome to ICC ELMS' },
+        { src: 'image/ICC student.jpg', alt: 'ICC student using ELMS' },
+        { src: 'image/ICC Manage.jpg', alt: 'ICC learning management center' },
+        { src: 'image/ICC Study.jpg', alt: 'ICC students studying together' },
+        { src: 'image/ICC Reading.jpg', alt: 'ICC students reading together' }
     ];
 
     /**
