@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
     /* SLIDER CONFIG — image paths and alt text for all slides */
     const SLIDER_CONFIG = [
         { src: 'image/ICC Welcome.jpg', alt: 'Welcome to ICC ELMS' },
-        { src: 'image/ICC student.jpg', alt: 'ICC student using ELMS' },
+        { src: 'image/ICC Student.jpg', alt: 'ICC student using ELMS' },
         { src: 'image/ICC Manage.jpg', alt: 'ICC learning management center' },
         { src: 'image/ICC Study.jpg', alt: 'ICC students studying together' },
         { src: 'image/ICC Reading.jpg', alt: 'ICC students reading together' }
