@@ -26,6 +26,17 @@
 
 <body class="bg-gray-50 min-h-screen font-['Outfit'] flex flex-col overflow-x-hidden">
 
+    <!-- ═══ TOP NAVIGATION BAR ════════════════════════════════════ -->
+    <nav class="top-nav justify-between">
+        <div class="flex items-center">
+            <span class="text-white/90 uppercase tracking-[0.2em] text-[10px] font-black">Teacher</span>
+        </div>
+        <div class="flex items-center gap-2 pr-4">
+            <i class="fa-solid fa-globe text-[10px] text-white/50"></i>
+            <span class="text-white/80">English (en)</span>
+        </div>
+    </nav>
+
     <!-- ═══ HEADER ═══════════════════════════════════════════════ -->
     <header id="top-nav"
         class="fixed top-0 right-0 left-0 h-20 bg-white z-[60] flex items-center justify-between border-b border-gray-100">
@@ -37,9 +48,9 @@
                     <img src="image/ICC logo.jpg" alt="ICC Logo">
                 </button>
             </div>
-            <div id="nav-context" class="ml-2">
+            <div id="nav-context">
                 <span class="text-gray-300 font-light text-lg">|</span>
-                <span id="nav-context-text" class="text-sm font-black text-gray-800 uppercase tracking-widest"></span>
+                <span id="nav-context-text"></span>
             </div>
         </div>
 
@@ -47,18 +58,18 @@
         <div class="absolute left-1/2 -translate-x-1/2 w-full max-w-sm hidden md:block">
             <div class="relative flex items-center">
                 <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
-                    <i class="fa-solid fa-magnifying-glass text-gray-400 text-xs"></i>
+                    <i class="fa-solid fa-magnifying-glass text-gray-400 text-sm"></i>
                 </span>
                 <input id="searchBar" type="text" placeholder="Search students, assignments..."
-                    class="block w-full pl-10 pr-4 h-[42px] bg-gray-100 border border-gray-300 rounded-l-full text-xs placeholder-gray-400 focus:outline-none"
+                    class="block w-full pl-10 pr-4 h-[38px] bg-gray-100 border border-gray-300 rounded-l-full text-[13px] placeholder-gray-400 focus:outline-none"
                     style="transition:none !important; box-shadow:none !important; border-right:none !important;"
                     onfocus="this.style.borderColor='#FFD000';document.getElementById('searchEnterBtn').style.borderColor='#FFD000'"
                     onblur="this.style.borderColor='';document.getElementById('searchEnterBtn').style.borderColor=''">
                 <!-- Attached enter button -->
                 <button id="searchEnterBtn"
-                    class="flex items-center justify-center h-[42px] px-4 bg-gray-100 border border-gray-300 rounded-r-full flex-shrink-0 hover:bg-gray-200 transition-colors"
+                    class="flex items-center justify-center h-[38px] px-4 bg-gray-100 border border-gray-300 rounded-r-full flex-shrink-0 hover:bg-gray-200 transition-colors"
                     style="border-left:none !important; margin-left:-1px; transition:none !important;">
-                    <i class="fa-solid fa-arrow-turn-down text-gray-400 text-[11px]"
+                    <i class="fa-solid fa-arrow-turn-down text-gray-400 text-xs"
                         style="transform: rotate(-90deg) scaleY(-1)"></i>
                 </button>
             </div>
@@ -70,22 +81,21 @@
             <!-- Notepad -->
             <div class="relative">
                 <button id="notesDropdownBtn" title="Notepad"
-                    class="w-10 h-10 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200/50 focus:outline-none group">
-                    <i class="fa-regular fa-note-sticky text-xl group-[.active]:text-icc-yellow"></i>
+                    class="w-[38px] h-[38px] flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200/50 focus:outline-none group">
+                    <i class="fa-regular fa-note-sticky text-[21px] group-[.active]:text-icc-yellow"></i>
                 </button>
-                <div id="notesPanel"
-                    class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 hidden z-[100] flex flex-col overflow-hidden">
-                    <div class="px-4 py-3 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
-                        <h3 class="font-bold text-gray-800 text-sm">Quickpad</h3>
+                <div id="notesPanel" class="header-panel hidden">
+                    <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50 flex justify-between items-center flex-shrink-0">
+                        <span class="text-base font-bold text-gray-900 uppercase tracking-widest">Quickpad</span>
                         <button id="clearNotesBtn" class="text-icc text-[10px] font-bold uppercase tracking-widest hover:underline">Clear</button>
                     </div>
-                    <div class="p-4 h-64">
+                    <div class="p-6 flex-1 overflow-y-auto">
                         <textarea id="scratchpadInput" placeholder="Type a quick reminder..."
-                            class="w-full h-full text-xs text-gray-600 bg-transparent border-none focus:ring-0 resize-none placeholder-gray-400 font-medium"></textarea>
+                            class="w-full h-full text-sm text-gray-600 bg-transparent border-none focus:ring-0 resize-none placeholder-gray-400 font-medium"></textarea>
                     </div>
-                    <div class="px-4 py-2 border-t border-gray-50 bg-gray-50/30 flex justify-between items-center">
+                    <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/30 flex justify-between items-center flex-shrink-0">
                         <a href="#" id="viewAllNotesBtn" class="text-gray-400 hover:text-icc-yellow text-[10px] font-bold uppercase tracking-widest transition-colors">View All</a>
-                        <button id="saveNotesBtn" class="flex items-center gap-2 px-3 py-1.5 bg-icc text-white text-[10px] font-bold rounded-lg hover:bg-icc-dark transition-all">
+                        <button id="saveNotesBtn" class="flex items-center gap-2 px-4 py-2 bg-icc text-white text-xs font-bold rounded-xl hover:bg-icc-dark transition-all shadow-lg shadow-icc/20">
                             <i class="fa-regular fa-floppy-disk"></i><span>Save Note</span>
                         </button>
                     </div>
@@ -95,15 +105,14 @@
             <!-- Notifications -->
             <div class="relative">
                 <button id="notifDropdownBtn" title="Notifications"
-                    class="relative w-10 h-10 rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center">
-                    <i class="fa-regular fa-bell text-xl text-gray-600 group-[.active]:text-icc-yellow"></i>
+                    class="relative w-[38px] h-[38px] rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center">
+                    <i class="fa-regular fa-bell text-[21px] text-gray-600 group-[.active]:text-icc-yellow"></i>
                     <div id="notifBadge" class="absolute top-2 right-2 w-2 h-2 bg-icc-yellow rounded-full border-2 border-white hidden"></div>
                 </button>
-                <div id="notifDropdownMenu"
-                    class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 hidden z-[100] flex flex-col overflow-hidden"
-                    style="max-height:calc(100vh - 120px)">
-                    <div class="px-4 py-3 border-b border-gray-50 bg-gray-50/50 flex-shrink-0">
-                        <span class="text-sm font-bold text-gray-900 uppercase tracking-widest">Notifications</span>
+                <div id="notifDropdownMenu" class="header-panel hidden">
+                    <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50 flex-shrink-0 flex items-center justify-between">
+                        <span class="text-base font-bold text-gray-900 uppercase tracking-widest">Notifications</span>
+                        <span class="text-xs text-gray-400 font-medium">Auto-refreshes daily</span>
                     </div>
                     <div id="notif-list" class="flex-1 overflow-y-auto">
                         <!-- Notifications will be injected here via teacher.js -->
@@ -114,37 +123,40 @@
             <!-- Mail -->
             <div class="relative">
                 <button id="mailDropdownBtn" title="Mail"
-                    class="relative w-10 h-10 rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center">
-                    <i class="fa-regular fa-envelope text-xl text-gray-600 group-[.active]:text-icc-yellow"></i>
+                    class="relative w-[38px] h-[38px] rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center">
+                    <i class="fa-regular fa-envelope text-[21px] text-gray-600 group-[.active]:text-icc-yellow"></i>
                     <div id="mailBadge" class="absolute top-2 right-2 w-2 h-2 bg-icc-yellow rounded-full border-2 border-white"></div>
                 </button>
-                <div id="mailDropdownMenu"
-                    class="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 hidden z-[100] flex flex-col overflow-hidden"
-                    style="max-height:calc(100vh - 120px)">
-                    <div class="px-4 py-3 border-b border-gray-50 bg-gray-50/50 flex items-center justify-between">
+                <div id="mailDropdownMenu" class="header-panel hidden">
+                    <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50 flex-shrink-0 flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                            <span class="text-sm font-bold text-gray-900 uppercase tracking-widest">Mail</span>
+                            <span class="text-base font-bold text-gray-900 uppercase tracking-widest">Mail</span>
                             <span class="text-[10px] font-bold text-icc bg-icc-light px-2 py-0.5 rounded-full">2 unread</span>
                         </div>
+                        <button id="createMailBtn"
+                            class="w-[38px] h-[38px] rounded-xl bg-white border border-gray-100 flex items-center justify-center text-icc hover:bg-icc hover:text-white transition-all shadow-sm"
+                            title="Create Message">
+                            <i class="fa-regular fa-pen-to-square text-sm"></i>
+                        </button>
                     </div>
                     <div class="flex-1 overflow-y-auto divide-y divide-gray-50">
-                        <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer">
-                            <div class="flex gap-3">
-                                <div class="w-8 h-8 bg-icc-light rounded-full flex items-center justify-center flex-shrink-0 text-icc text-[10px] font-black">AD</div>
+                        <div class="px-6 py-4 hover:bg-gray-50 cursor-pointer transition-colors">
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 bg-icc-light rounded-full flex items-center justify-center flex-shrink-0 text-icc text-xs font-black">AD</div>
                                 <div class="flex-1 min-w-0">
-                                    <div class="flex justify-between items-center mb-0.5">
-                                        <p class="text-xs font-bold text-gray-800">Admin Office</p>
-                                        <span class="text-[9px] text-gray-400 flex-shrink-0">10:45 AM</span>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <p class="text-sm font-bold text-gray-800">Admin Office</p>
+                                        <span class="text-[10px] text-gray-400 flex-shrink-0">10:45 AM</span>
                                     </div>
-                                    <p class="text-[11px] text-gray-500 truncate">Quarterly clearance update...</p>
+                                    <p class="text-xs text-gray-500 truncate">Quarterly clearance update...</p>
                                 </div>
-                                <div class="w-2 h-2 bg-icc rounded-full flex-shrink-0 mt-1.5"></div>
+                                <div class="w-2.5 h-2.5 bg-icc rounded-full flex-shrink-0 mt-1.5"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="px-4 py-3 border-t border-gray-50 bg-gray-50/30">
-                        <button id="viewAllMailBtn" onclick="switchTab('nav-mail'); document.getElementById('mailDropdownMenu').classList.add('hidden')"
-                            class="w-full py-2 text-xs font-bold text-icc hover:text-icc-dark transition-colors uppercase tracking-widest">View All Messages →</button>
+                    <div class="px-6 py-4 border-t border-gray-50 bg-gray-50/30 flex-shrink-0">
+                        <button id="viewAllMailBtn"
+                            class="w-full py-3 text-xs font-bold text-icc hover:text-icc-dark transition-colors uppercase tracking-widest bg-white border border-gray-100 rounded-xl shadow-sm">View All Messages →</button>
                     </div>
                 </div>
             </div>
@@ -152,36 +164,43 @@
             <!-- Profile -->
             <div class="relative">
                 <button id="profileDropdownBtn"
-                    class="relative w-10 h-10 rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center text-icc text-lg font-bold bg-icc-light">
+                    class="relative w-[38px] h-[38px] rounded-full hover:bg-gray-200/50 focus:outline-none group flex items-center justify-center text-icc text-base font-bold bg-icc-light">
                     M
                     <div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 bg-white rounded-full border border-gray-100 shadow-sm flex items-center justify-center">
-                        <i class="fa-solid fa-chevron-down text-[8px] text-gray-400 group-hover:text-icc-yellow" id="dropdownChevron"></i>
+                        <i class="fa-solid fa-chevron-down text-[10px] text-gray-400 group-hover:text-icc-yellow" id="dropdownChevron"></i>
                     </div>
                 </button>
-                <div id="profileDropdownMenu"
-                    class="absolute right-0 mt-2 w-60 bg-white rounded-xl shadow-lg border border-gray-100 py-2 hidden z-[100]">
-                    <div class="px-4 py-3 border-b border-gray-100 mb-2">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-icc-light flex items-center justify-center text-icc text-sm font-bold border border-icc/10 flex-shrink-0 uppercase"><span>M</span></div>
-                            <div class="flex flex-col justify-center">
-                                <span class="text-sm font-bold text-gray-800 leading-tight">Maria Reyes</span>
-                                <span class="text-[11px] text-gray-500 mt-0.5">maria.reyes@icc.edu</span>
+                <div id="profileDropdownMenu" class="header-panel hidden">
+                    <div class="px-6 py-4 border-b border-gray-50 bg-gray-50/50 flex-shrink-0">
+                        <span class="text-base font-bold text-gray-900 uppercase tracking-widest">Profile</span>
+                    </div>
+                    <div class="flex-1 overflow-y-auto">
+                        <div class="px-6 py-8 border-b border-gray-100 mb-2 bg-gray-50/30">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-2xl bg-icc-light flex items-center justify-center text-icc text-2xl font-black shadow-sm border border-icc/10 uppercase"><span>M</span></div>
+                                <div class="flex flex-col justify-center">
+                                    <span class="text-lg font-black text-gray-900 leading-tight">Maria Reyes</span>
+                                    <span class="text-xs text-gray-500 mt-1 font-medium">maria.reyes@icc.edu</span>
+                                </div>
                             </div>
                         </div>
+                        <div class="px-4 py-2 space-y-1">
+                            <a href="#" class="flex items-center gap-4 px-4 py-3 text-gray-700 hover:bg-icc/5 hover:text-icc transition-all rounded-xl group no-underline">
+                                <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center group-hover:bg-icc-light transition-colors"><i class="fa-solid fa-user text-sm"></i></div>
+                                <span class="text-sm font-bold">My Profile</span>
+                            </a>
+                            <a href="#" class="flex items-center gap-4 px-4 py-3 text-gray-700 hover:bg-icc/5 hover:text-icc transition-all rounded-xl group no-underline">
+                                <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center group-hover:bg-icc-light transition-colors"><i class="fa-solid fa-gear text-sm"></i></div>
+                                <span class="text-sm font-bold">Settings</span>
+                            </a>
+                        </div>
                     </div>
-                    <a href="#" class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-icc/5 hover:text-icc transition-colors no-underline">
-                        <div class="w-10 flex justify-center flex-shrink-0"><i class="fa-solid fa-user"></i></div>
-                        <span class="text-sm font-medium">Profile</span>
-                    </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-icc/5 hover:text-icc transition-colors no-underline">
-                        <div class="w-10 flex justify-center flex-shrink-0"><i class="fa-solid fa-gear"></i></div>
-                        <span class="text-sm font-medium">Settings</span>
-                    </a>
-                    <hr class="my-1 border-gray-100">
-                    <a href="index.html" class="flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors no-underline font-medium">
-                        <div class="w-10 flex justify-center flex-shrink-0"><i class="fa-solid fa-right-from-bracket"></i></div>
-                        <span class="text-sm">Logout</span>
-                    </a>
+                    <div class="p-6 border-t border-gray-100 flex-shrink-0">
+                        <a href="index.html" class="flex items-center justify-center gap-3 w-full py-4 text-red-600 bg-red-50 hover:bg-red-100 transition-all rounded-xl font-black uppercase tracking-widest text-xs no-underline">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -193,49 +212,49 @@
         <nav class="py-4 flex flex-col h-full">
             <a href="#" id="nav-dashboard" title="Dashboard" class="flex items-center gap-0 h-14 text-white transition-all no-underline bg-white/20 group">
                 <div class="sidebar-icon-container">
-                    <i class="fa-solid fa-house text-lg opacity-90"></i>
+                    <i class="fa-solid fa-house text-xl opacity-90"></i>
                     <span class="rail-label">Home</span>
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Dashboard</span>
             </a>
             <a href="#" id="nav-classes" title="Classes" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
                 <div class="sidebar-icon-container">
-                    <i class="fa-regular fa-bookmark text-lg"></i>
+                    <i class="fa-regular fa-bookmark text-xl"></i>
                     <span class="rail-label">Classes</span>
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Classes</span>
             </a>
             <a href="#" id="nav-subjects" title="Subjects" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
                 <div class="sidebar-icon-container">
-                    <i class="fa-regular fa-clipboard text-lg"></i>
+                    <i class="fa-regular fa-clipboard text-xl"></i>
                     <span class="rail-label">Subjects</span>
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Subjects</span>
             </a>
             <a href="#" id="nav-gradebook" title="Gradebook" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
                 <div class="sidebar-icon-container">
-                    <i class="fa-regular fa-chart-bar text-lg"></i>
+                    <i class="fa-regular fa-chart-bar text-xl"></i>
                     <span class="rail-label">Grades</span>
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Gradebook</span>
             </a>
             <a href="#" id="nav-analytics" title="Analytics" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
                 <div class="sidebar-icon-container">
-                    <i class="fa-solid fa-chart-line text-lg"></i>
+                    <i class="fa-solid fa-chart-line text-xl"></i>
                     <span class="rail-label">Analytics</span>
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Analytics</span>
             </a>
             <a href="#" id="nav-advisory" title="Advisory" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
                 <div class="sidebar-icon-container">
-                    <i class="fa-solid fa-users-rectangle text-lg"></i>
+                    <i class="fa-solid fa-users-rectangle text-xl"></i>
                     <span class="rail-label">Advisory</span>
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Advisory</span>
             </a>
             <a href="#" id="nav-attendance" title="Attendance" class="flex items-center gap-0 h-14 text-white transition-all no-underline hover:bg-white/10 group">
                 <div class="sidebar-icon-container">
-                    <i class="fa-regular fa-calendar-check text-lg"></i>
+                    <i class="fa-regular fa-calendar-check text-xl"></i>
                     <span class="rail-label">Attend.</span>
                 </div>
                 <span class="full-label text-[13px] whitespace-nowrap overflow-hidden font-medium">Attendance</span>
@@ -257,9 +276,9 @@
 
     <!-- ═══ LAYOUT WRAPPER ═══════════════════════════════════════ -->
     <div id="layout-wrapper"
-        class="flex-1 mt-20 ml-[82px] flex flex-col min-h-[calc(100vh-80px)] transition-all duration-300">
-        <main class="flex-1 p-8">
-            <div id="content-sections" class="w-full h-full">
+        class="flex-1 ml-[82px] flex flex-col h-[calc(100vh-100px)] overflow-hidden transition-all duration-300">
+        <main class="flex-1 p-0 overflow-hidden">
+            <div id="content-sections" class="w-full h-full p-2">
 
                 <!-- DASHBOARD SECTION -->
                 <section id="section-dashboard" class="dynamic-section">
@@ -778,59 +797,341 @@
                 </section>
 
                 <!-- GRADEBOOK SECTION -->
-                <section id="section-gradebook" class="dynamic-section hidden space-y-8">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h2 class="text-2xl font-black text-gray-800 tracking-tight leading-tight">Gradebook</h2>
-                            <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Grade 11 - ICT A • Programming 1</p>
+                <section id="section-gradebook" class="dynamic-section hidden h-[calc(100vh-100px)] overflow-hidden">
+                    <div id="gradebook-content-wrapper" class="h-full flex flex-col space-y-1 p-1">
+                        <!-- Top Toolbar -->
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-2 rounded-none border border-gray-100 shadow-sm flex-shrink-0">
+                            <div class="flex flex-col md:flex-row md:items-center gap-4">
+                                <!-- Select Section & Subject -->
+                                <div class="relative w-48">
+                                    <select id="gradebook-section-selector" class="w-full pl-4 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-none text-[12px] font-bold text-gray-800 focus:outline-none focus:border-icc appearance-none cursor-pointer transition-all hover:bg-white shadow-sm">
+                                        <option value="" disabled selected>Select Section</option>
+                                        <option value="Grade 11 - ICT A">Grade 11 - ICT A</option>
+                                        <option value="Grade 11 - STEM A">Grade 11 - STEM A</option>
+                                        <option value="Grade 11 - HUMSS B">Grade 11 - HUMSS B</option>
+                                    </select>
+                                    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                                        <i class="fa-solid fa-chevron-down text-gray-400 text-[9px]"></i>
+                                    </div>
+                                </div>
+                                <div class="relative w-56">
+                                    <select id="gradebook-subject-selector" class="w-full pl-4 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-none text-[12px] font-bold text-gray-800 focus:outline-none focus:border-icc appearance-none cursor-not-allowed transition-all opacity-50 shadow-sm" disabled>
+                                        <option value="" disabled selected>Select Subject (Locked)</option>
+                                        <option value="Programming 1">Programming 1</option>
+                                        <option value="General Mathematics">General Mathematics</option>
+                                        <option value="Oral Communication">Oral Communication</option>
+                                    </select>
+                                    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                                        <i class="fa-solid fa-chevron-down text-gray-400 text-[9px]"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Selection Quarters and Terms -->
+                                <div class="relative w-40">
+                                    <select id="gradebook-mode-selector" class="w-full pl-4 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-none text-[12px] font-bold text-gray-800 focus:outline-none focus:border-icc appearance-none cursor-not-allowed transition-all opacity-50 shadow-sm" disabled>
+                                        <option value="" disabled selected>Select Mode</option>
+                                        <option value="quarters">Quarters</option>
+                                        <option value="terms">Terms</option>
+                                        <option value="immersion">Work Immersion</option>
+                                    </select>
+                                    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                                        <i class="fa-solid fa-layer-group text-gray-400 text-[9px]"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div id="gradebook-term-tabs" class="hidden flex bg-gray-100 p-1 rounded-none border border-gray-200">
+                                    <button onclick="setGradebookTerm(1)" id="term-btn-1" class="px-4 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all bg-white text-icc shadow-sm">1st Term</button>
+                                    <button onclick="setGradebookTerm(2)" id="term-btn-2" class="px-4 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all text-gray-400 hover:text-gray-600">2nd Term</button>
+                                    <button onclick="setGradebookTerm(3)" id="term-btn-3" class="px-4 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all text-gray-400 hover:text-gray-600">3rd Term</button>
+                                    <button onclick="setGradebookTerm(4)" id="term-btn-4" class="hidden px-4 py-1.5 text-[10px] font-black uppercase tracking-widest transition-all text-gray-400 hover:text-gray-600">4th Quarter</button>
+                                </div>
+                                <button onclick="exportGradebook()" class="p-2 bg-white border border-gray-200 text-gray-500 hover:text-icc hover:border-icc transition-all shadow-sm" title="Export to Excel">
+                                    <i class="fa-solid fa-file-excel"></i>
+                                </button>
+                                <button onclick="saveGrades()" class="px-5 py-2 bg-icc text-white text-[10px] font-black uppercase tracking-widest hover:bg-icc-dark transition-all shadow-md">Save Changes</button>
+                            </div>
                         </div>
-                        <button class="px-4 py-2 bg-icc text-white rounded-xl text-xs font-bold hover:bg-icc-dark transition-all">Save Changes</button>
-                    </div>
-                    <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="bg-gray-50 border-b border-gray-100">
-                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Student Name</th>
-                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Quiz 1</th>
-                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Quiz 2</th>
-                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Lab 1</th>
-                                        <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-50">
-                                    <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="px-6 py-4"><p class="text-sm font-bold text-gray-800">Dela Cruz, Juan</p><p class="text-[10px] text-gray-400">ID: 2024-001</p></td>
-                                        <td class="px-6 py-4 text-center"><input type="text" value="18" class="w-12 py-1 bg-gray-100 border-none rounded text-xs font-bold text-center focus:ring-1 focus:ring-icc/30 outline-none"></td>
-                                        <td class="px-6 py-4 text-center"><input type="text" value="17" class="w-12 py-1 bg-gray-100 border-none rounded text-xs font-bold text-center focus:ring-1 focus:ring-icc/30 outline-none"></td>
-                                        <td class="px-6 py-4 text-center"><input type="text" value="45" class="w-12 py-1 bg-gray-100 border-none rounded text-xs font-bold text-center focus:ring-1 focus:ring-icc/30 outline-none"></td>
-                                        <td class="px-6 py-4 text-center text-sm font-black text-icc">91.4%</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
+                        <!-- Main Table Area -->
+                        <div class="flex-1 bg-white border border-gray-100 shadow-sm overflow-hidden flex flex-col min-h-0">
+                            <!-- Table Header Stats -->
+                            <div class="px-4 py-2 bg-gray-50 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
+                                <div class="flex items-center gap-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-[8px] font-black text-gray-400 uppercase tracking-widest">Class Average</span>
+                                        <span id="gradebook-avg" class="text-sm font-black text-icc">--</span>
+                                    </div>
+                                    <div class="h-6 w-px bg-gray-200"></div>
+                                    <div class="flex flex-col">
+                                        <span class="text-[8px] font-black text-gray-400 uppercase tracking-widest">Passing Rate</span>
+                                        <span id="gradebook-passing" class="text-sm font-black text-blue-600">--</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="flex items-center gap-2 px-2 py-1 bg-white border border-gray-200 text-[9px] font-bold text-gray-500">
+                                        <i class="fa-solid fa-filter text-[8px]"></i>
+                                        <span>Filter: All Students</span>
+                                    </div>
+                                    <div class="relative">
+                                        <input type="text" placeholder="Search student..." class="pl-7 pr-3 py-1 bg-white border border-gray-200 rounded-none text-[10px] font-medium focus:outline-none focus:border-icc w-40">
+                                        <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-300 text-[9px]"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Tool Bar (Reduced to just Draggable Statuses) -->
+                            <div id="gradebook-drag-toolbar" class="hidden px-4 py-1.5 bg-white border-b border-gray-100 flex items-center justify-end flex-shrink-0">
+                                <!-- Draggable Statuses -->
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[8px] font-black text-gray-300 uppercase tracking-widest mr-1">Drag to table:</span>
+                                    <div draggable="true" ondragstart="handleGradebookDragStart(event, 'missing')" class="flex items-center gap-2 px-2 py-1 bg-red-50 border border-red-100 rounded-md cursor-grab active:cursor-grabbing hover:shadow-sm transition-all group">
+                                        <i class="fa-solid fa-circle-xmark text-red-500 text-[10px]"></i>
+                                        <span class="text-[9px] font-bold text-red-700 uppercase tracking-tight">Missing</span>
+                                    </div>
+                                    <div draggable="true" ondragstart="handleGradebookDragStart(event, 'incomplete')" class="flex items-center gap-2 px-2 py-1 bg-amber-50 border border-amber-100 rounded-md cursor-grab active:cursor-grabbing hover:shadow-sm transition-all group">
+                                        <i class="fa-solid fa-circle-exclamation text-amber-500 text-[10px]"></i>
+                                        <span class="text-[9px] font-bold text-amber-700 uppercase tracking-tight">Incomplete</span>
+                                    </div>
+                                    <div draggable="true" ondragstart="handleGradebookDragStart(event, 'absent')" class="flex items-center gap-2 px-2 py-1 bg-gray-50 border border-gray-100 rounded-md cursor-grab active:cursor-grabbing hover:shadow-sm transition-all group">
+                                        <i class="fa-solid fa-user-slash text-gray-500 text-[10px]"></i>
+                                        <span class="text-[9px] font-bold text-gray-700 uppercase tracking-tight">Absent</span>
+                                    </div>
+                                    <div draggable="true" ondragstart="handleGradebookDragStart(event, 'excuse')" class="flex items-center gap-2 px-2 py-1 bg-blue-50 border border-blue-100 rounded-md cursor-grab active:cursor-grabbing hover:shadow-sm transition-all group">
+                                        <i class="fa-solid fa-file-signature text-blue-500 text-[10px]"></i>
+                                        <span class="text-[9px] font-bold text-blue-700 uppercase tracking-tight">Excuse</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Spreadsheet View -->
+                            <div class="flex-1 overflow-auto bg-[#F9FAFB]">
+                                <table id="gradebook-spreadsheet" class="w-full text-left border-collapse">
+                                    <thead class="sticky top-0 z-20 bg-white shadow-sm">
+                                        <tr class="border-b border-gray-100">
+                                            <th class="w-48 px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest bg-white border-r border-gray-50">Student Name</th>
+                                            <!-- Dynamic Columns will be injected here -->
+                                            <th class="w-24 px-4 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center bg-gray-50 border-l border-gray-100">WW (25%)</th>
+                                            <th class="w-24 px-4 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center bg-gray-50 border-l border-gray-100">PT (50%)</th>
+                                            <th class="w-24 px-4 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center bg-gray-50 border-l border-gray-100">QA (25%)</th>
+                                            <th class="w-28 px-4 py-4 text-[10px] font-black text-icc uppercase tracking-widest text-center bg-icc/5 border-l border-icc/10">Initial</th>
+                                            <th class="w-28 px-4 py-4 text-[10px] font-black text-icc uppercase tracking-widest text-center bg-icc/10 border-l border-icc/10">Quarterly</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="gradebook-body" class="divide-y divide-gray-100">
+                                        <!-- Spreadsheet rows will be injected here -->
+                                        <tr>
+                                            <td colspan="10" class="py-20 text-center">
+                                                <div class="flex flex-col items-center gap-4 text-gray-300">
+                                                    <i class="fa-solid fa-table-list text-4xl opacity-20"></i>
+                                                    <p class="text-[11px] font-black uppercase tracking-widest">Select a section and subject to view grades</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- ANALYTICS SECTION -->
-                <section id="section-analytics" class="dynamic-section hidden space-y-8">
-                    <h2 class="text-2xl font-black text-gray-800 tracking-tight">Performance Analytics</h2>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                            <h3 class="text-sm font-bold text-gray-800 uppercase tracking-widest mb-6">Grade Distribution</h3>
-                            <div class="h-48 flex items-end justify-between gap-4">
-                                <div class="flex-1 bg-red-100 rounded-t-lg" style="height:10%"></div>
-                                <div class="flex-1 bg-orange-100 rounded-t-lg" style="height:25%"></div>
-                                <div class="flex-1 bg-yellow-100 rounded-t-lg" style="height:50%"></div>
-                                <div class="flex-1 bg-icc-light rounded-t-lg" style="height:80%"></div>
-                                <div class="flex-1 bg-icc rounded-t-lg" style="height:30%"></div>
+                <section id="section-analytics" class="dynamic-section hidden space-y-6">
+                    <!-- Branding Header -->
+                    <div class="bg-gradient-to-r from-icc to-icc-dark p-8 rounded-3xl text-white shadow-lg relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-12 opacity-10 pointer-events-none">
+                            <i class="fa-solid fa-chart-pie text-9xl"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <h2 class="text-[10px] font-black uppercase tracking-[0.3em] opacity-80 mb-2">Capstone Project • Interface Computer College</h2>
+                            <h1 class="text-3xl font-black tracking-tight leading-tight mb-2">SIGMA: AI-Integrated ELMS</h1>
+                            <p class="text-sm font-medium opacity-90 max-w-2xl leading-relaxed">
+                                Student Information and Grade Monitoring Analytics for Senior High School. 
+                                <span class="block mt-1 font-bold text-icc-yellow">AI-Powered insights for better educational outcomes.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- LEFT: AI Performance Insights -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- AI Summary Card -->
+                            <div class="bg-white rounded-2xl border border-indigo-100 p-6 shadow-sm relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
+                                    <i class="fa-solid fa-bolt text-8xl text-indigo-600"></i>
+                                </div>
+                                <div class="flex items-center gap-3 mb-6">
+                                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                                        <i class="fa-solid fa-robot text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-black text-gray-800 uppercase tracking-widest">SIGMA AI Insights</h3>
+                                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Performance Analysis • March 2026</p>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="space-y-4">
+                                        <div class="p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100/50">
+                                            <div class="flex items-center gap-2 mb-2">
+                                                <i class="fa-solid fa-chart-line text-indigo-600 text-xs"></i>
+                                                <span class="text-xs font-bold text-indigo-700 uppercase">Class Trend</span>
+                                            </div>
+                                            <p class="text-xs text-gray-600 leading-relaxed">
+                                                Overall performance is <span class="font-black text-green-600">+4.2%</span> compared to previous month. Most students show improvement in <span class="font-bold">Programming Logic</span>.
+                                            </p>
+                                        </div>
+                                        <div class="p-4 bg-amber-50/50 rounded-2xl border border-amber-100/50">
+                                            <div class="flex items-center gap-2 mb-2">
+                                                <i class="fa-solid fa-triangle-exclamation text-amber-600 text-xs"></i>
+                                                <span class="text-xs font-bold text-amber-700 uppercase">Intervention Needed</span>
+                                            </div>
+                                            <p class="text-xs text-gray-600 leading-relaxed">
+                                                <span class="font-black text-amber-600">3 students</span> are struggling with "Object-Oriented Programming" concepts. Suggesting additional exercises.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50/50 rounded-2xl border border-gray-100 p-4">
+                                        <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">Competency Mastery</h4>
+                                        <div class="space-y-4">
+                                            <div class="space-y-1.5">
+                                                <div class="flex justify-between text-[10px] font-bold uppercase">
+                                                    <span class="text-gray-500">Database Systems</span>
+                                                    <span class="text-icc">92%</span>
+                                                </div>
+                                                <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-icc rounded-full" style="width: 92%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="space-y-1.5">
+                                                <div class="flex justify-between text-[10px] font-bold uppercase">
+                                                    <span class="text-gray-500">Web Development</span>
+                                                    <span class="text-blue-500">78%</span>
+                                                </div>
+                                                <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-blue-500 rounded-full" style="width: 78%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="space-y-1.5">
+                                                <div class="flex justify-between text-[10px] font-bold uppercase">
+                                                    <span class="text-gray-500">Systems Analysis</span>
+                                                    <span class="text-amber-500">65%</span>
+                                                </div>
+                                                <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-amber-500 rounded-full" style="width: 65%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Grade Monitoring Analytics -->
+                            <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-sm font-black text-gray-800 uppercase tracking-widest">Grade Monitoring</h3>
+                                    <div class="flex gap-2">
+                                        <button class="px-3 py-1 bg-gray-50 text-[10px] font-bold text-gray-400 rounded-lg hover:bg-gray-100 transition-all">Daily</button>
+                                        <button class="px-3 py-1 bg-icc text-[10px] font-bold text-white rounded-lg shadow-sm">Weekly</button>
+                                    </div>
+                                </div>
+                                <div class="h-64 flex items-end justify-between gap-3 px-2">
+                                    <div class="flex-1 group relative">
+                                        <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">75%</div>
+                                        <div class="w-full bg-red-100 group-hover:bg-red-200 transition-colors rounded-t-xl" style="height: 15%"></div>
+                                        <p class="text-[8px] font-bold text-gray-400 text-center mt-2 uppercase tracking-tighter">Failing</p>
+                                    </div>
+                                    <div class="flex-1 group relative">
+                                        <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">82%</div>
+                                        <div class="w-full bg-orange-100 group-hover:bg-orange-200 transition-colors rounded-t-xl" style="height: 35%"></div>
+                                        <p class="text-[8px] font-bold text-gray-400 text-center mt-2 uppercase tracking-tighter">Below Avg</p>
+                                    </div>
+                                    <div class="flex-1 group relative">
+                                        <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">88%</div>
+                                        <div class="w-full bg-yellow-100 group-hover:bg-yellow-200 transition-colors rounded-t-xl" style="height: 65%"></div>
+                                        <p class="text-[8px] font-bold text-gray-400 text-center mt-2 uppercase tracking-tighter">Average</p>
+                                    </div>
+                                    <div class="flex-1 group relative">
+                                        <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">94%</div>
+                                        <div class="w-full bg-icc-light group-hover:bg-icc/20 transition-colors rounded-t-xl" style="height: 85%"></div>
+                                        <p class="text-[8px] font-bold text-gray-400 text-center mt-2 uppercase tracking-tighter">Above Avg</p>
+                                    </div>
+                                    <div class="flex-1 group relative">
+                                        <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">98%</div>
+                                        <div class="w-full bg-icc group-hover:bg-icc-dark transition-colors rounded-t-xl" style="height: 45%"></div>
+                                        <p class="text-[8px] font-bold text-gray-400 text-center mt-2 uppercase tracking-tighter">Exceptional</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                            <h3 class="text-sm font-bold text-gray-800 uppercase tracking-widest mb-6">Top Performers</h3>
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 font-bold text-xs">1</div><p class="text-sm font-bold text-gray-800">Dela Cruz, Juan</p></div><span class="text-sm font-black text-icc">96.5</span></div>
-                                <div class="flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 font-bold text-xs">2</div><p class="text-sm font-bold text-gray-800">Santos, Maria</p></div><span class="text-sm font-black text-icc">94.2</span></div>
+
+                        <!-- RIGHT: AI-Driven Action Center -->
+                        <div class="space-y-6">
+                            <!-- AI At-Risk Prediction -->
+                            <div class="bg-white rounded-2xl border border-red-100 p-6 shadow-sm">
+                                <h3 class="text-sm font-black text-red-600 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> AI Risk Prediction
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between p-3 bg-red-50 rounded-xl border border-red-100">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-red-200 flex items-center justify-center text-red-700 font-bold text-xs">JS</div>
+                                            <div>
+                                                <p class="text-xs font-bold text-gray-800 leading-tight">Juan Santos</p>
+                                                <p class="text-[9px] text-red-500 font-bold uppercase mt-0.5">High Risk (85%)</p>
+                                            </div>
+                                        </div>
+                                        <button class="p-2 text-red-400 hover:text-red-600 transition-colors">
+                                            <i class="fa-solid fa-envelope-circle-check"></i>
+                                        </button>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-amber-50 rounded-xl border border-amber-100">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-amber-200 flex items-center justify-center text-amber-700 font-bold text-xs">CD</div>
+                                            <div>
+                                                <p class="text-xs font-bold text-gray-800 leading-tight">Carlo Diaz</p>
+                                                <p class="text-[9px] text-amber-500 font-bold uppercase mt-0.5">Medium Risk (42%)</p>
+                                            </div>
+                                        </div>
+                                        <button class="p-2 text-amber-400 hover:text-amber-600 transition-colors">
+                                            <i class="fa-solid fa-envelope-circle-check"></i>
+                                        </button>
+                                    </div>
+                                    <p class="text-[9px] text-gray-400 font-medium text-center italic">Risk factors: Recent quiz scores & Attendance patterns</p>
+                                </div>
+                            </div>
+
+                            <!-- Student Info Analytics -->
+                            <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                                <h3 class="text-sm font-black text-gray-800 uppercase tracking-widest mb-6">Student Information</h3>
+                                <div class="space-y-6">
+                                    <div class="grid grid-cols-2 gap-4 text-center">
+                                        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                            <p class="text-2xl font-black text-gray-800">45</p>
+                                            <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-1">Total Students</p>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                            <p class="text-2xl font-black text-icc">ICT</p>
+                                            <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-1">Primary Strand</p>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div class="space-y-2">
+                                            <div class="flex justify-between text-[10px] font-bold uppercase">
+                                                <span class="text-gray-400">Gender Distribution</span>
+                                            </div>
+                                            <div class="h-3 bg-gray-100 rounded-full flex overflow-hidden">
+                                                <div class="h-full bg-blue-400" style="width: 55%" title="Male (55%)"></div>
+                                                <div class="h-full bg-pink-400" style="width: 45%" title="Female (45%)"></div>
+                                            </div>
+                                            <div class="flex justify-between text-[9px] font-bold uppercase text-gray-400 mt-1">
+                                                <span>Male (25)</span>
+                                                <span>Female (20)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1148,6 +1449,53 @@
 
             </div>
         </main>
+    </div>
+
+    <!-- ═══ SIGMA AI ══════════════════════════════════════════════ -->
+    <div id="sigmaAiPanel">
+        <div class="p-5 bg-icc text-white flex items-center justify-between flex-shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-icc-yellow rounded-xl flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-bolt text-icc-dark text-lg"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-black uppercase tracking-widest">SIGMA AI</h4>
+                    <p class="text-[9px] text-white/60 font-bold">Faculty Assistant</p>
+                </div>
+            </div>
+            <button id="sigmaAiCloseBtn"
+                class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all">
+                <i class="fa-solid fa-xmark text-white text-sm"></i>
+            </button>
+        </div>
+        <div id="sigmaAiMessages" class="flex-1 p-5 overflow-y-auto space-y-4 bg-gray-50/50"></div>
+        <div class="px-4 py-3 space-y-2 border-t border-gray-100 bg-white flex-shrink-0">
+            <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Suggested</p>
+            <button
+                class="sigma-chip w-full p-2.5 bg-white border border-gray-100 rounded-xl text-[10px] font-bold text-gray-700 hover:border-icc text-left flex items-center gap-3 transition-all"><i
+                    class="fa-solid fa-triangle-exclamation text-red-500"></i> Student concerns</button>
+            <button
+                class="sigma-chip w-full p-2.5 bg-white border border-gray-100 rounded-xl text-[10px] font-bold text-gray-700 hover:border-icc text-left flex items-center gap-3 transition-all"><i
+                    class="fa-solid fa-chart-line text-icc"></i> Class analytics</button>
+            <button
+                class="sigma-chip w-full p-2.5 bg-white border border-gray-100 rounded-xl text-[10px] font-bold text-gray-700 hover:border-icc text-left flex items-center gap-3 transition-all"><i
+                    class="fa-solid fa-clipboard-check text-icc"></i> Grading summary</button>
+        </div>
+        <div class="p-4 bg-white border-t border-gray-100 flex-shrink-0">
+            <div class="relative">
+                <input type="text" id="sigmaAiInput" placeholder="Ask SIGMA AI anything..."
+                    class="w-full pl-4 pr-12 py-3 bg-gray-100 border-none rounded-2xl text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-icc/20 transition-all">
+                <button id="sigmaAiSendBtn"
+                    class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-icc text-white rounded-xl flex items-center justify-center hover:bg-icc-dark transition-all shadow-md">
+                    <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="sigmaAiNotch" title="Toggle AI Assistant">
+        <i class="fa-solid fa-bolt text-xl"></i>
+        <span class="text-[9px] font-black uppercase tracking-widest [writing-mode:vertical-lr] mt-2">SIGMA AI</span>
     </div>
 
     <script src="js/teacher.js"></script>
